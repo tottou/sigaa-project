@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+
+
+</h:head>
+<h:body>
+
+
+	<ui:repeat var="passos" value="#{actionPrograma.sequencia.passosTarget}">
+	
+	<h3><h:outputText value="#{passos.nome}"></h:outputText></h3>
+	
+<ui:repeat var="arqz" value="#{passos.arquivos}">
+	<p:panel id="dados" style="border:none">
+
+			<h:panelGrid rendered="#{arqz.tipo==0}">
+	
+
+					<h:outputText value="#{arqz.url}"/>
+
+		
+
+			</h:panelGrid>
+
+			<h:panelGrid rendered="#{arqz.tipo==1}">
+
+				<p:graphicImage value="#{arqz.url}" height="280" width="260"></p:graphicImage>
+
+			</h:panelGrid>
+
+			<h:panelGrid rendered="#{arqz.tipo==2}">
+
+				<p:media value="#{arqz.url}" player="quicktime"
+					></p:media>
+				<br />
+				<h:outputText value="#{passos.inicio} - #{passos.fim}"></h:outputText>
+
+
+			</h:panelGrid>
+
+			<h:panelGrid rendered="#{arqz.tipo==3}">
+
+				<p:media value="#{arqz.url}"
+					 height="344" width="425"></p:media>
+				<br />
+				<h:outputText value="#{passos.inicio} - #{passos.fim}"></h:outputText>
+
+			</h:panelGrid>
+
+			<h:panelGrid rendered="#{arqz.tipo==4}">
+
+				<h:outputLink value="/SiGAA#{arqz.url}">
+					<h:outputText value="#{arqz.nome}"></h:outputText>
+				</h:outputLink>
+
+
+			</h:panelGrid>
+			
+			<h:panelGrid rendered="#{arqz.tipo==5}">
+					
+				<p:media value="#{arqz.url}" player="flash" height="344" width="425"></p:media>
+				<br/>				
+				<h:outputText value="#{passos.inicio} - #{passos.fim}"></h:outputText>
+
+			</h:panelGrid>
+			
+
+
+		</p:panel>
+		</ui:repeat>
+		<h:outputText value="#{passos.descricao}"></h:outputText>
+	
+	</ui:repeat>
+		<br/><br/><br/>
+		<p:commandButton id="showDialogButtonS" value="Excluir Sequência" onclick="confirmationSeq.show()" type="button" />
+	     <p:confirmDialog id="confirmDialogS" appendToBody="true" message= " Você tem certeza que deseja excluir permanentemente a sequência selecionada?"
+    		      header="Exclusão de usuário" severity="alert" widgetVar="confirmationSeq">  
+                  
+        <p:commandButton id="confirms" value="Sim" update="growl,:formC:dois,:formC:um" oncomplete="confirmationSeq.hide()"  
+                    actionListener="#{actionPrograma.deletarSequencia}" />  
+        <p:commandButton id="declines" value="Não" onclick="confirmationSeq.hide()" type="button" />   
+                  
+    </p:confirmDialog> 
+
+
+</h:body>
+</html>

@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:p="http://primefaces.org/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"  xmlns:ui="http://java.sun.com/jsf/facelets">
+
+   <h:head>  
+  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>login</title>
+    </h:head>  
+      
+<h:body>  
+	<h:form>
+	
+		<p:panel header="Cadastro de programa de ensino">
+			<h:panelGrid columns="2" columnClasses="label, value" styleClass="grid">
+			
+            	<p:tabView id="tabView">  
+	   				<p:tab id="tab1" title="Nome/Desc">  
+	   					<h:panelGrid columns="2" cellpadding="10">
+	   					
+	   						<h:panelGrid columns="1" cellpadding="10">
+		       				
+		       					<h:outputText value="Categoria*: " />
+		       				
+			       				<p:tree value="#{treeBean.root}" var="node" id="tree">  
+							        <p:treeNode id="treeNode">  
+							            <h:outputText value="#{node}" id="lblNode"/>  
+							        </p:treeNode>  
+							    </p:tree>
+						    </h:panelGrid>
+	   					
+		   					<h:panelGrid columns="2" cellpadding="10">
+		   					
+		   						<h:outputText value="Id: " />  
+		   						<h:outputText value="00001 " />
+		   						
+		   						<h:outputText value="Nome*: " />
+								<p:inputText id="input_nome_pe"/>
+								
+								<h:outputText value="Tags*: " />
+								<p:inputText id="input_pe_tag"/>
+	                      
+								<h:outputText value="Descrição*: " />  
+								<p:inputTextarea id="inputarea_desc_pe" rows="5" cols="50"/>
+		       				</h:panelGrid>
+	       				</h:panelGrid>  
+	       				
+	       				<h:panelGrid columns="2" cellpadding="10">
+		       				
+						</h:panelGrid>  
+						
+						<h3>TipText para cada campo</h3>  
+						<p:separator id="separator"/>
+	       				
+	       				
+						<h:outputText value="Nome*: " /><br></br>
+						<h:outputText value="Nome do programa de ensino. Exemplo: Abotoar calça - calça fora do corpo" /><br></br>
+						
+						<h:outputText value="Tags*: " /><br></br>
+						<h:outputText value="Palavras chave que identifiquem o plano de ensino, separadas por ponto e vírgula. Por exemplo: abotar; calça " /><br></br>
+						
+						<h:outputText value="Descrição*: " /><br></br>
+						<h:outputText value="Descrição geral do programa de ensino. Exemplo: Abotoar a calça. A calça está fora do corpo. Orientação em perspectiva de primeira pessoa. Composto por dois passos: 1. Segurar a calça; 2. Passar o botão pelo buraco." /><br></br>
+						
+						<h:outputText value="Categoria (usar http://www.primefaces.org/showcase-labs/ui/treeSelectionSingle.jsf): " /><br></br>
+						<h:outputText value="Selecione a categoria à qual pertencerá o plano de ensino." />	<br></br>
+	   				</p:tab>  
+  
+    				<p:tab id="tab2" title="Objetivos comportamentais">  
+        				<h:panelGrid columns="2" cellpadding="10">
+        					<h:outputText value="Objetivos comportamentais*: " />
+							<p:inputTextarea id="inputarea_obj_comp" rows="5" cols="50"/>
+						</h:panelGrid>
+						
+						<h3>TipText para cada campo</h3>  
+						<p:separator id="separator"/>
+		       				
+						<h:outputText value="Obejtivos comportamentais*: " />
+						<h:outputText value="Descrição dos objetivos comportamentais do programa de ensino. Exemplo: Abotoar calças é uma habilidade básica de auto-cuidado. Essa atividade permite ao estudante praticar abotoar calças em uma perpectiva de primeira pessoa, mas sem as complicações envolvidas em vestir a calça. Abotoar a calça após vesti-la é o próximo passo. Esse passo somente é necessário se o estudante não está aprendendo a abotoar a calça vestido nela." />
+    				</p:tab>
+  
+				    <p:tab id="tab3" title="Procedimento geral">  
+				        <h:panelGrid columns="1" cellpadding="10">
+				        
+				        	<h:outputText value="Procedimento geral*: " />  
+				            
+				            <p:editor  controls="" id="editor" value="#{editorBean.value}" width="600"/>                  
+						    
+						    <p:commandButton value="Buscar URL de vídeo/Imagem" id="withIcon" icon="ui-icon-disk" /> 
+				        </h:panelGrid>
+				        
+				        <h3>TipText para cada campo</h3>
+				        <p:separator id="separator"/>
+		       				
+						<h:outputText value="Procedimento geral*: " />
+						<h:outputText value="Descrição geral do procedimento de ensino utilizado. Por exemplo: O estudante usa as mão para alinhar o botão da calça à casela do botão da calça. O botão é pressionado pelo buraco." />  
+				    </p:tab>  
+		    
+				    <p:tab id="tab4" title="Materiais">  
+				        <h:panelGrid columns="1" cellpadding="10">
+				        
+				        		<h:outputText value="Materiais*: " />
+				        		  
+				              	<p:editor id="editor2" value="#{editorBean.value}" width="600"/>  
+						  
+						  		<p:commandButton value="Buscar URL de vídeo/Imagem" id="withIcon2" icon="ui-icon-disk" />
+				        </h:panelGrid>
+				        
+				        <h3>TipText para cada campo</h3>
+				        <p:separator id="separator"/>
+		       				
+						<h:outputText value="Materiais*: " />
+						
+						<h:outputText value="Lista/descrição dos materias utilizados na tarefa. Por exemplo: Duas calças com botão acima do zipper (botão aberto e zipper fechado)." />  
+				    </p:tab>
+				    
+				    <p:tab id="tab5" title="Textos">  
+				        <h:panelGrid columns="1" cellpadding="10">
+				        
+				        	<h:outputText value="Nome*: " />  
+							<p:inputText id="input_nome_texto"/>
+							
+							<h:outputText value="texto*: " />  
+							<p:inputTextarea id="inputarea_texto" rows="1" cols="70"/>
+							
+							<p:commandButton value="Inserir" id="Inserir" icon="ui-icon-disk" />
+				        		
+				        </h:panelGrid>
+				       				          
+				    </p:tab>
+		    
+				    <p:tab id="tab6" title="Mídia">  
+				        <h:panelGrid columns="2" cellpadding="10">  
+				        	<h:outputText value="Nome*: " />  
+							<p:inputText id="input_nome_midia"/>
+							
+							<h:outputText value="Descrição*: " />  
+							<p:inputTextarea id="inputarea_desc_midia" rows="5" cols="50"/>
+								
+							<h:outputText value="Tags*: " />
+							<p:inputText id="input_tag_video"/>
+							
+							<h:outputText value="Carregar arquivo de mídia:" />
+				        	<p:fileUpload fileUploadListener="#{fileUploadController.handleFileUpload}"  
+				            mode="advanced"   
+				            update="messages"  
+				            sizeLimit="100000"   
+				            allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>  
+				            
+				            <p:commandButton value="Inserir" id="InserirMidia" icon="ui-icon-disk" />
+				  
+				    		<p:growl id="messages" showDetail="true"/>  
+				        </h:panelGrid>  
+				        Observação: acho interessante termos uma tabela para gerenciamento de arquivos de mídia (url, id da empresa, id, programa de ensino, tags, etc. o que acha?)
+				    </p:tab>
+				    				    	    
+				    <p:tab id="tab8" title="Arquivos">  
+				        <h:panelGrid columns="2" cellpadding="10">  
+				    		  
+				        	<h:outputText value="Nome*: " />  
+							<p:inputText id="input_nome_arq"/>
+							
+							<h:outputText value="Descrição*: " />  
+							<p:inputTextarea id="inputarea_desc_arq" rows="5" cols="50"/>
+								
+							<h:outputText value="Tags*: " />
+							<p:inputText id="input_tag_arq"/>
+							
+							<h:outputText value="Carregar arquivo:" />
+				        	<p:fileUpload fileUploadListener="#{fileUploadController.handleFileUpload}"  
+				            mode="advanced"   
+				            update="messages"  
+				            sizeLimit="100000"   
+				            allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>  
+				  			
+				  			<p:commandButton value="Inserir" id="InserirArquivo" icon="ui-icon-disk" />
+				  			
+				    		<p:growl id="messages" showDetail="true"/>  
+				            
+				        </h:panelGrid>  
+				    </p:tab>
+		    
+				    <p:tab id="tab9" title="Passos">  
+				        <h:panelGrid columns="2" cellpadding="10">  
+				        	 
+				        	<h:outputText value="Nome*: " />  
+							<p:inputText id="input_nome_passo"/>
+							
+							<h:outputText value="Descrição*: " />  
+							<p:inputText id="input_desc_passo"/>
+							
+							<h:outputText value="Vídeo: " />  
+					        <p:selectOneMenu>  
+					            <f:selectItem itemLabel="Selecione um vídeo" itemValue="" />  
+					            <f:selectItem itemLabel="Vìdeo 1" itemValue="1" />  
+					            <f:selectItem itemLabel="Vídeo 2" itemValue="2" />  
+					            <f:selectItem itemLabel="Vìdeo 3" itemValue="3" />  
+					        </p:selectOneMenu> 
+					        
+					        <h:outputText value="Início (00:00): " />  
+							<p:inputText id="input_inicio"/>
+							
+							<h:outputText value="Fim (00:00): " />  
+							<p:inputText id="input_fim"/>
+					        
+					        <h:outputText value="Áudio: " />  
+					        <p:selectOneMenu>  
+					            <f:selectItem itemLabel="Selecione um áudio" itemValue="" />  
+					            <f:selectItem itemLabel="Áudio 1" itemValue="1" />  
+					            <f:selectItem itemLabel="Áudio 2" itemValue="2" />  
+					            <f:selectItem itemLabel="Áudio 3" itemValue="3" />  
+					        </p:selectOneMenu>
+							
+							<h:outputText value="Figura: " />  
+					        <p:selectOneMenu>  
+					            <f:selectItem itemLabel="Selecione uma figura" itemValue="" />  
+					            <f:selectItem itemLabel="Figura 1" itemValue="1" />  
+					            <f:selectItem itemLabel="Figura 2" itemValue="2" />  
+					            <f:selectItem itemLabel="Figura 3" itemValue="3" />  
+					        </p:selectOneMenu>
+					        
+					        <h:outputText value="Texto: " />  
+					        <p:selectOneMenu>  
+					            <f:selectItem itemLabel="Selecione um texto" itemValue="" />  
+					            <f:selectItem itemLabel="Texto 1" itemValue="1" />  
+					            <f:selectItem itemLabel="Texto 2" itemValue="2" />  
+					            <f:selectItem itemLabel="Texto 3" itemValue="3" />  
+					        </p:selectOneMenu>
+							
+							<p:commandButton value="Inserir passo" id="InserirPasso" icon="ui-icon-disk" /> 
+							
+				        </h:panelGrid>  
+				        OBS: videos, audios, textos e figuras são carregados da lista - são os arquivos carregados nas abas anteriores; quando o arquivo de midia foi selecioando, um vídeo por exemplo, mostrar o arquivo abaixo do combo.
+				    </p:tab>
+				    
+				    <p:tab id="tab10" title="Sequências">  
+				        <h:panelGrid columns="2" cellpadding="10">
+				        	
+				        	<h:outputText value="Nome*: " />  
+							<p:inputText id="input_nome_seq"/>
+							
+							<h:outputText value="Descrição*: " />  
+							<p:inputText id="input_desc_seq"/>  
+							
+							<h:outputText value="usar pick listhttp://www.primefaces.org/showcase-labs/ui/picklist.jsf - uma lista com os passos da aba anterior"/>
+				              
+				        </h:panelGrid>  
+				    </p:tab>
+				    
+				    <p:tab id="tab11" title="Instruções para aplicação">  
+				        <h:panelGrid columns="2" cellpadding="10">
+				        	<h:outputText value="Instruções para aplicação*: " />  
+				            <p:editor id="editor" value="#{editorBean.value}" width="600"/>
+				        </h:panelGrid>  
+				    </p:tab>
+				    
+				    <p:tab id="tab12" title="Prompts">  
+				        <h:panelGrid columns="2" cellpadding="10">  
+				            <h:outputText value="Prompts*: " />  
+				            <p:editor id="editor" value="#{editorBean.value}" width="600"/>
+				        </h:panelGrid>  
+				    </p:tab>
+				    
+				    <p:tab id="tab13" title="Planilhas">  
+				        <h:panelGrid columns="2" cellpadding="10">
+				        	<h:outputText value="Construir..: http://www.primefaces.org/showcase-labs/ui/sheet.jsf" />
+				            
+				        </h:panelGrid>  
+				    </p:tab>
+				    
+				    <p:tab id="tab14" title="Observações">  
+				        <h:panelGrid columns="2" cellpadding="10">  
+				            <h:outputText value="Observações: " />  
+				            <p:editor id="editor" value="#{editorBean.value}" width="600"/>
+				        </h:panelGrid>  
+				    </p:tab>
+		  
+				</p:tabView>   
+  			</h:panelGrid>
+		</p:panel>
+	</h:form>
+</h:body>
+</html>

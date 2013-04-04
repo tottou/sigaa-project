@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+
+
+</h:head>
+<h:body>
+	<p:panel id="arquivoy" style="border:none">
+		<h:panelGrid columns="2" columnClasses="label, value"
+			styleClass="grid" id="tres">
+
+			<h:outputText value="Nome: " />
+			<p:inputText id="inputudsNome" value="#{actionPrograma.passos.nome}"
+				validatorMessage="Quantidade de caractéres indevida."
+				required="true" requiredMessage="Campo obrigatório - Nome">
+				<f:validateLength maximum="50" minimum="4"></f:validateLength>
+
+			</p:inputText>
+
+			<h:outputText value="Descrição: " />
+			<p:inputTextarea id="inputasrea_end_user" rows="5" cols="50"
+				value="#{actionPrograma.passos.descricao}"
+				validatorMessage="Quantidade de caractéres indevida."
+				required="true" requiredMessage="Campo obrigatório - Descrição">
+				<f:validateLength maximum="999" minimum="4"></f:validateLength>
+			</p:inputTextarea>
+			</h:panelGrid>
+			
+			<p:panel id="arquivoz">
+		<ui:repeat var="arquivo" value="#{actionPrograma.listaIdArquivos}" varStatus="status">
+		<h:panelGrid columns="2">
+<h:outputText value="Arquivo #{status.index+1}: " />
+<h:outputText value="#{arquivo.nome}" />
+</h:panelGrid>
+</ui:repeat>
+</p:panel>
+<br/>
+	<h:panelGrid columns="2">
+			<h:outputText value="Anexo: " />
+			<p:selectOneMenu value="#{actionPrograma.arquivoId}" effect="fade">
+
+				<f:selectItems value="#{actionPrograma.programa.arquivos}" var="arq"
+					itemLabel="#{arq.nome}" itemValue="#{arq.id}" />
+				<f:selectItem itemLabel="Selecione um arquivo" itemValue="0"
+					noSelectionOption="true" itemDisabled="true" />
+				<p:ajax update="arquivox,arquivoz" event="change"
+					listener="#{actionPrograma.popularPassos}"></p:ajax>
+			</p:selectOneMenu>
+		</h:panelGrid>
+		<center>
+			<p:panel id="arquivox" style="border:none">
+				<p:panel id="txt" rendered="#{actionPrograma.arquivos.tipo==0 }">
+					<h:outputText value="#{actionPrograma.arquivos.url}"></h:outputText>
+				</p:panel>
+
+				<p:panel id="imgz" rendered="#{actionPrograma.arquivos.tipo==1 }">
+					<p:graphicImage value="#{actionPrograma.arquivos.url}"></p:graphicImage>
+				</p:panel>
+
+				<p:panel id="alfaOmega"
+					rendered="#{actionPrograma.arquivos.tipo==2 || actionPrograma.arquivos.tipo==3 || actionPrograma.arquivos.tipo==5 }">
+					<p:media value="#{actionPrograma.arquivos.url}" player="quicktime"
+						rendered="#{actionPrograma.arquivos.tipo==2  }"></p:media>
+						<p:media value="#{actionPrograma.arquivos.url}" 
+						rendered="#{ actionPrograma.arquivos.tipo==3 }"></p:media>
+					<h:panelGrid rendered="#{actionPrograma.arquivos.tipo==5}">
+
+						<p:media value="#{actionPrograma.arquivos.url}" player="flash"
+							height="344" width="425"></p:media>
+						<br />
+
+
+					</h:panelGrid>
+					<h:panelGrid columns="2">
+						<h:outputText value="Iniciar automaticamente? " />
+						<p:selectBooleanCheckbox value="#{actionPrograma.autoStart}"  ></p:selectBooleanCheckbox>
+						<h:outputText value="Início: " />
+						<p:inputMask mask="99:99" value="#{actionPrograma.passos.inicio}"></p:inputMask>						
+						<h:outputText value="Fim: " />
+						<p:inputMask mask="99:99" value="#{actionPrograma.passos.fim}"></p:inputMask>
+					</h:panelGrid>
+
+
+
+
+
+				</p:panel>
+
+				<p:panel id="arq" rendered="#{actionPrograma.arquivos.tipo==4}">
+
+					<h:outputLink value="/SiGAA#{actionPrograma.arquivos.url}"
+						target="_blank">
+						<h:outputText value="#{actionPrograma.arquivos.nome}"></h:outputText>
+					</h:outputLink>
+
+				</p:panel>
+				<p:commandButton id="btnoutro" value="Selecionar anexo" rendered="#{actionPrograma.arquivos.id!=0}"
+		actionListener="#{actionPrograma.outro}"
+		update="arquivoy,growl" />
+			</p:panel>
+		</center>
+		
+		
+		
+	</p:panel>
+		
+		<br/><br/>
+		
+	<p:commandButton id="btnSalvar1" value="Salvar"
+		actionListener="#{actionPrograma.salvarProgramaPassos}"
+		update="growl,um,tres,arquivoy" />
+
+</h:body>
+</html>

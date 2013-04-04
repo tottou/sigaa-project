@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<meta http-equiv="pragma" content="no-cache" />
+	<meta http-equiv="cache-control" content="no-cache,no-store,max-age=0" />
+
+</h:head>
+<h:body>
+
+
+	<p:panel header="Criando sessão" id="paneSs" rendered="#{!actionAgenda.check}">
+	<h:outputText value="#{actionAgenda.event.title}"></h:outputText>
+	<br/>
+<h:outputText value="Início: #{actionAgenda.inicio} - "></h:outputText>
+<h:outputText value="Fim: #{actionAgenda.fim}"></h:outputText>
+<h:panelGrid columns="2" >
+<h:column id="alunoseprofs">
+		<p:panel>
+		<h4>Selecione um aluno para a sessão </h4>
+			<h:panelGrid>
+
+				<p:selectOneMenu value="#{actionAgenda.aluno.id}" effect="fade"
+					rendered="#{sessao.usuario.categoria==0 || sessao.usuario.categoria==1}">
+					<f:selectItem itemValue="0" itemLabel="Selecione um aluno"
+						itemDisabled="true" />
+					<f:selectItems value="#{actionAgenda.listaAluno}" var="aluno"
+						itemLabel="#{aluno.nome}" itemValue="#{aluno.id}" />
+					<p:ajax update="paneSs" event="change"
+						listener="#{actionAgenda.popular}"></p:ajax>
+				</p:selectOneMenu>
+
+				<p:selectOneMenu value="#{actionAgenda.aluno.id}" effect="fade"
+					rendered="#{!(sessao.usuario.categoria==0 || sessao.usuario.categoria==1)}">
+					<f:selectItem itemValue="0" itemLabel="Selecione um aluno"
+						itemDisabled="true" />
+					<f:selectItems value="#{actionAgenda.listaAlunoTutor}" var="aluno"
+						itemLabel="#{aluno.nome}" itemValue="#{aluno.id}" />
+					<p:ajax update="paneSs" event="change"
+						listener="#{actionAgenda.popular}"></p:ajax>
+				</p:selectOneMenu>
+
+				<br />
+				<br />
+				<br />
+				<br />
+				<br />
+
+				<h:panelGrid columns="2" columnClasses="label, value"
+					styleClass="grid" cellspacing="10">
+
+
+					<h:graphicImage value="#{actionAgenda.aluno.foto}" height="180"
+						width="160" alt="Foto de aluno" cache="false"></h:graphicImage>
+
+
+					<h:panelGrid columns="2" columnClasses="label, value"
+						styleClass="grid">
+
+						<h:outputText value="ID: " />
+						<h:outputText value="#{actionAgenda.aluno.id}"></h:outputText>
+
+						<h:outputText value="Nome: " />
+						<h:outputText value="#{actionAgenda.aluno.nome}" />
+
+
+						<h:outputText value="Diagnóstico: " />
+						<h:outputText value="#{actionAgenda.aluno.diagnostico}" />
+
+
+
+						<h:outputText value="Observações: " />
+						<h:outputText value="#{actionAgenda.aluno.observacoes}" />
+
+
+
+					</h:panelGrid>
+
+				</h:panelGrid>
+
+				<br />
+
+
+			</h:panelGrid>
+
+		</p:panel>
+
+		<p:panel rendered="#{not empty actionAgenda.aluno.professores || not empty actionAgenda.listaProfEmp}">
+			<h4>Selecione professores para a sessão</h4>
+			<h:panelGrid columns="2" cellspacing="5" cellpadding="5">
+
+			
+				<p:selectManyCheckbox value="#{actionAgenda.listaProfId}" immediate="true" converter="javax.faces.Long"
+					layout="pageDirection">
+					<f:selectItems value="#{actionAgenda.listaProfEmp}" var="profz" itemLabel="#{profz.nome}" itemValue="#{profz.id}"></f:selectItems>
+					<f:selectItems value="#{actionAgenda.aluno.professores}" var="prof"
+						itemLabel="#{prof.nome}" itemValue="#{prof.id} "></f:selectItems>
+
+
+				</p:selectManyCheckbox>
+
+				<h:panelGrid>
+				<ui:repeat value="#{actionAgenda.listaProfEmp}" var="profe" >
+				<h:panelGrid columns="20" cellspacing="2" cellpadding="2">
+						<h:outputText value="[Administrador]"
+							rendered="#{profe.categoria==1}" />
+						</h:panelGrid>						
+					</ui:repeat>
+					<ui:repeat value="#{actionAgenda.aluno.professores}" var="profe" >
+						<h:panelGrid columns="20" cellspacing="2" cellpadding="2">
+						<h:outputText value="[Professor]" rendered="#{profe.categoria==2}" />
+						<h:outputText value="[Tutor]" rendered="#{profe.categoria==3}" />
+						<h:outputText value="[Tutor]" rendered="#{profe.categoria==4}" />
+						</h:panelGrid>
+					</ui:repeat>
+				</h:panelGrid>
+			</h:panelGrid>
+		
+		</p:panel>
+		
+		</h:column>
+		<h:column id="tarefasebotao" >
+		<p:panel rendered="#{actionAgenda.aluno.id!=0}">
+		<h4>Selecione as tarefas a serem realizadas em cada sessão</h4>
+		    		    <p:pickList id="trPickList" value="#{actionAgenda.listaDualTarefa}" var="tarefa" effect="drop"  
+                    itemValue="#{tarefa}" itemLabel="#{tarefa.nome}" converter="tarefa"  
+                    showSourceControls="true" showTargetControls="true"   
+                    showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" >  
+  
+        <f:facet name="sourceCaption">Tarefas</f:facet>  
+        <f:facet name="targetCaption">Selecionadas</f:facet>          
+  
+        <p:column style="width:25%">  
+            <p:graphicImage value="/imagens/tarefa.jpg" width="30" height="40" />  
+        </p:column>  
+  
+            <p:column style="width:75%;">  
+            #{tarefa.nome}  
+        </p:column>  
+  
+    </p:pickList>  
+		
+		
+		</p:panel>
+		
+		
+		<p:panel rendered="#{actionAgenda.aluno.id!=0}">
+		<h4>Número de sessões</h4>
+		 <h:panelGrid columns="1" style="margin-bottom:10px">  
+        <p:inputText id="txt1" value="#{actionAgenda.agenda.sessoes}" />  
+        <p:slider for="txt1" />  
+    </h:panelGrid> 
+        </p:panel>
+		</h:column>
+		</h:panelGrid>
+		<br/>
+		<p:commandButton value="Salvar"
+				actionListener="#{actionAgenda.salvar}" update=":formC:pnlCorpo,:formC:growl"
+				rendered="#{actionAgenda.aluno.id!=0}"></p:commandButton>
+				
+	</p:panel>
+	
+	<p:panel header="Completado" rendered="#{actionAgenda.check}">
+	<center>
+	<h3>Sessão criada com sucesso. Para modificar horário e data da sessão acesse a agenda.</h3>
+	<br/>
+	<p:commandButton value="Voltar para a agenda" actionListener="#{controladora.schedule}" update=":formC:pnlCorpo">
+	<f:actionListener binding="#{actionAgenda.mudarValor}"></f:actionListener>
+	</p:commandButton>
+		</center>
+	
+	</p:panel>
+	
+	
+
+</h:body>
+</html>

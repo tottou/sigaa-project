@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<script type="text/javascript">
+
+function timed()
+{
+var t=setTimeout("esconder()",5000);
+}
+function esconder()
+{
+statusDialogF.hide();
+remoteC();
+}
+
+</script>
+</h:head>
+<h:body>
+
+
+	<p:panel header="Enviar foto - #{actionAluno.aluno.nome}" id="panelUP">
+
+		 <p:dialog modal="true" widgetVar="statusDialogF" header="Salvando imagem..."   resizable="false" appendToBody="true"
+        draggable="false" closable="false">  
+        <center>
+    <p:graphicImage value="/imagens/ajax-loader.gif" />  
+    </center>
+</p:dialog> 
+
+
+<h:panelGrid columns="2"  cellspacing="100">
+       <p:panel header="Foto de #{actionAluno.aluno.nome}" >
+       <center>
+        <p:graphicImage value="#{actionAluno.aluno.foto}"  id="photosA" height="280" width="260" alt="..." cache="false"  />
+        </center>
+</p:panel >
+  <p:panel>
+  <p:panel header="Opção 1: WebCam">
+  <center>
+        <p:photoCam widgetVar="pc" listener="#{actionAluno.onCapture}" update="photosA" />  
+  
+        <p:commandButton type="button" value="Capturar" onclick="pc.capture();statusDialogF.show();timed();"/>  
+        </center>
+        </p:panel>
+            
+  <br/>
+<br/>
+	<p:panel header="Opção 2: Upload de uma imagem">
+	<center>
+        <p:fileUpload fileUploadListener="#{actionAluno.upload}" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" sizeLimit="300000" auto="true" immediate="true" rendered="true"
+description="Selecione foto do usuário" cancelLabel="Cancelar" label="Escolher arquivo" validatorMessage="Arquivo inválido" invalidFileMessage="Arquivo inválido." update="growl,photosA"
+invalidSizeMessage="tamanho inválido" oncomplete="statusDialogF.show();timed();" />
+</center>
+</p:panel>
+    </p:panel>
+		 
+         </h:panelGrid> 
+    		<p:commandButton id="backz" value="Voltar"  actionListener="#{controladora.editAluno}" update="formC:pnlCorpo" ajax="false"/>
+    		</p:panel>
+    		<p:remoteCommand name="remoteC" update="photosA"></p:remoteCommand>
+</h:body>
+</html>

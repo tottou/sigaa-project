@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<meta http-equiv="pragma" content="no-cache" />
+	<meta http-equiv="cache-control" content="no-cache,no-store,max-age=0" />
+
+    <script type="text/javascript">  
+        PrimeFaces.locales['pt'] = {  
+                        closeText: 'Fechar',  
+                        prevText: 'Anterior',  
+                        nextText: 'Próximo',  
+                        currentText: 'Começo',  
+                        monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],  
+                        monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun', 'Jul','Ago','Set','Out','Nov','Des'],  
+                        dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],  
+                        dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'],  
+                        dayNamesMin: ['D','S','T','Q','Q','S','S'],  
+                        weekHeader: 'Semana',  
+                        firstDay: 1,  
+                        isRTL: false,  
+                        showMonthAfterYear: false,  
+                        yearSuffix: '',  
+                        timeOnlyTitle: 'Só horas',  
+                        timeText: 'Tempo',  
+                        hourText: 'Hora',  
+                        minuteText: 'Minuto',  
+                        secondText: 'Segundo',  
+                        currentText: 'Data atual',  
+                        ampm: false,  
+                        month: 'Mês',  
+                        week: 'Semana',  
+                        day: 'Dia',  
+                        allDayText : 'Dia todo'  
+                    };  
+</script> 
+</h:head>
+<h:body>
+
+
+
+
+			<p:schedule value="#{actionAgenda.eventModel}" widgetVar="myschedule" locale="pt"  >  
+  
+        <p:ajax event="dateSelect" listener="#{actionAgenda.onDateSelect}" update="eventDetails" oncomplete="eventDialog.show()" />  
+        <p:ajax event="eventSelect" listener="#{actionAgenda.onEventSelect}" update="eventDetails" oncomplete="eventDialog.show()" />  
+        <p:ajax event="eventMove" listener="#{actionAgenda.onEventMove}" update="growl" />  
+        <p:ajax event="eventResize" listener="#{actionAgenda.onEventResize}" update="growl" />  
+  
+    </p:schedule>  
+  
+    <p:dialog widgetVar="eventDialog" header="Detalhes da agenda" showEffect="clip" hideEffect="clip">  
+    <p:messages id="messages"  autoUpdate="true" closable="true" />  
+        <h:panelGrid id="eventDetails" columns="2">  
+            <h:outputLabel for="title" value="Título:" />  
+            <p:inputText id="title" value="#{actionAgenda.event.title}" required="true" rendered="#{actionAgenda.event.id==null}"/>
+            <h:outputText id="title2" value="#{actionAgenda.event.title}" rendered="#{actionAgenda.event.id!=null}"/>
+              
+  
+            <h:outputLabel for="from" value="Início:" />  
+            <p:inputMask id="from" value="#{actionAgenda.event.startDate}" mask="99/99/9999" required="true" rendered="#{actionAgenda.event.id==null}">  
+                <f:convertDateTime pattern="dd/MM/yyyy" />  
+            </p:inputMask>  
+  			<h:outputText id="inicioz" value="#{actionAgenda.event.startDate}" rendered="#{actionAgenda.event.id!=null}"/>
+  			
+            <h:outputLabel for="to" value="Fim:" />  
+            <p:inputMask id="to" value="#{actionAgenda.event.endDate}" mask="99/99/9999" required="true" rendered="#{actionAgenda.event.id==null}">  
+                <f:convertDateTime pattern="dd/MM/yyyy" />  
+            </p:inputMask>  
+       		<h:outputText id="titends" value="#{actionAgenda.event.endDate}" rendered="#{actionAgenda.event.id!=null}"/>
+       		
+                 
+            <p:commandButton value="Criar sessão" actionListener="#{controladora.agenda}" oncomplete="myschedule.update();eventDialog.hide();" 
+            update=":formC:pnlCorpo" rendered="#{actionAgenda.event.id==null and (sessao.usuario.categoria==0 || sessao.usuario.categoria==1)}">
+            	<f:actionListener binding="#{actionAgenda.ajustaHora}" />
+            </p:commandButton>  
+        </h:panelGrid>  
+    </p:dialog>  
+		
+
+
+
+</h:body>
+</html>

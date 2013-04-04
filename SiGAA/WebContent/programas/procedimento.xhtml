@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+
+
+</h:head>
+<h:body>
+<h:panelGrid id="tres">
+
+	<p:editor id="ed1" value="#{actionPrograma.programa.procedimentoGeral}" height="500" width="800"  ></p:editor>
+	
+	<h:panelGrid columns="2">
+	<p:commandButton id="btnSalvarprocdz" value="Salvar"  actionListener="#{actionPrograma.salvarPrograma}" update="growl,um,tres" />
+	<p:commandButton id="bttmodal" value="Imagens do SiGAA" onclick="imgz123.show();" type="button"/> 
+	</h:panelGrid>
+	<p:accordionPanel >
+	<p:tab title="Visualização" >
+
+	 <h:outputText id="displaypg" value="#{actionPrograma.programa.procedimentoGeral}" escape="false" /> 	
+	 </p:tab>
+	 </p:accordionPanel>
+		 </h:panelGrid>
+	 
+	
+	 
+	 
+	 <p:dialog modal="true" id="imgzMod" widgetVar="imgz123" appendToBody="true" dynamic="true" header="Imagens do programa de ensino" width="500" height="300" closable="false" resizable="false">
+	
+<ui:repeat var="imagem" value="#{actionPrograma.listaImagens}">
+	<p:commandLink actionListener="#{actionPrograma.imgEditor}" update=":formC:tres" oncomplete="imgz123.hide();">
+	<f:attribute name="valor" value="#{imagem}" />
+	
+	 <p:graphicImage id="img_a" value="#{imagem}" height="80" width="80" >	
+	
+	 </p:graphicImage>	 
+	 </p:commandLink>
+	
+	 </ui:repeat>
+	 <br/>
+	<p:commandButton id="bttmodalhide" value="Cancelar" onclick="imgz123.hide();" type="button"/> 
+	 </p:dialog>
+</h:body>
+</html>

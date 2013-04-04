@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+
+
+</h:head>
+<h:body>
+		<h:panelGrid columns="2" columnClasses="label, value" styleClass="grid" id="tres" rendered="#{actionPrograma.programa.id==0}">
+        		 
+           
+				<h:outputText value="Nome: " />  
+				<p:inputText id="inputudsNome" value="#{actionPrograma.programa.nome}" validatorMessage="Quantidade de caractéres indevida." required="true" requiredMessage="Campo obrigatório - Nome">
+				<f:validateLength maximum="50" minimum="4"></f:validateLength>					
+				</p:inputText>
+			
+                      
+				<h:outputText value="Descrição: " />  
+				<p:inputTextarea id="inputasrea_end_user" rows="5" cols="50" value="#{actionPrograma.programa.descricao}" validatorMessage="Quantidade de caractéres indevida."
+				 required="true" requiredMessage="Campo obrigatório - Descrição">
+				<f:validateLength maximum="999" minimum="4"></f:validateLength>
+				</p:inputTextarea>
+				
+				<h:outputText value="Objetivos: " />  
+				<p:inputTextarea id="inputarObj" rows="5" cols="50" value="#{actionPrograma.programa.objetivos}" validatorMessage="Quantidade de caractéres indevida."
+				 required="true" requiredMessage="Campo obrigatório - Descrição">
+				<f:validateLength maximum="999" minimum="4"></f:validateLength>
+				</p:inputTextarea>
+				
+				<h:outputText value="Tags: " />  
+                <p:inputText id="inputusdTags" value="#{actionPrograma.programa.tags}" />	
+                        
+                         
+					
+				           
+			</h:panelGrid> 
+			
+				<h:panelGrid columns="2" columnClasses="label, value" styleClass="grid" id="quatro" rendered="#{actionPrograma.programa.id!=0}">
+        		 
+        		   
+				<h:outputText value="Nome: " />  
+				<p:inplace editor="true"> 
+				<p:inputText id="inputfudsNome" value="#{actionPrograma.programa.nome}" validatorMessage="Quantidade de caractéres indevida." required="true" requiredMessage="Campo obrigatório - Nome">
+				<f:validateLength maximum="50" minimum="4"></f:validateLength>					
+				</p:inputText>
+				</p:inplace> 
+                     
+                      
+				<h:outputText value="Descrição: " />  
+				<p:inplace editor="true"> 
+				<p:inputTextarea id="inputfasrea_end_user" rows="5" cols="50" value="#{actionPrograma.programa.descricao}" validatorMessage="Quantidade de caractéres indevida."
+				 required="true" requiredMessage="Campo obrigatório - Descrição">
+				<f:validateLength maximum="999" minimum="4"></f:validateLength>
+				</p:inputTextarea>
+				</p:inplace>
+				
+				
+				<h:outputText value="Objetivos: " />  
+				<p:inplace editor="true"> 
+				<p:inputTextarea id="inputfarObj" rows="5" cols="50" value="#{actionPrograma.programa.objetivos}" validatorMessage="Quantidade de caractéres indevida."
+				 required="true" requiredMessage="Campo obrigatório - Descrição">
+				<f:validateLength maximum="999" minimum="4"></f:validateLength>
+				</p:inputTextarea>
+				</p:inplace>
+				
+				
+				<h:outputText value="Tags: " />  
+				<p:inplace editor="true"> 
+                <p:inputText id="inputusfdTags" value="#{actionPrograma.programa.tags}" />	
+                        </p:inplace>
+                         
+					
+				           
+			</h:panelGrid>   
+			
+			<p:commandButton id="btnSalvarnome" value="Salvar"  actionListener="#{actionPrograma.salvarProgramaNome}" update="growl,um,dois,tres,quatro" rendered="#{actionPrograma.programa.id==0}" />
+			<p:commandButton id="btnatlz" value="Atualizar"  actionListener="#{actionPrograma.atualizarProgramaNome}" update="growl,um,dois,tres,quatro"  rendered="#{actionPrograma.programa.id!=0}"/>
+			
+    		
+</h:body>
+</html>

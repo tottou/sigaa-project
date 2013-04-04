@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+
+
+</h:head>
+<h:body>
+
+
+	<p:panel>
+		<h:panelGrid columns="2" columnClasses="label, value"
+			styleClass="grid" id="tres">
+			<h:outputText value="Nome: " />
+
+			<h:outputText id="inputudsNome" value="#{actionPrograma.passos.nome}"/>
+			
+
+
+			<h:outputText value="Descrição: " />
+
+			<h:outputText id="inputasrea_end_user" rows="5" cols="50"
+				value="#{actionPrograma.passos.descricao}"/>
+			
+
+
+
+
+		</h:panelGrid>
+<center>
+
+<ui:repeat var="passarq" value="#{actionPrograma.passos.arquivos}">
+		<p:panel id="dados" style="border:none">
+
+
+
+			<h:panelGrid rendered="#{passarq.tipo==0}"
+				columns="2">
+				<p:panel>
+
+					<h:outputText value="#{passarq.url}"/>
+
+				</p:panel>
+
+			</h:panelGrid>
+
+			<h:panelGrid rendered="#{passarq.tipo==1}">
+
+				<p:graphicImage value="#{passarq.url}" height="250" width="250"></p:graphicImage>
+
+
+
+
+
+			</h:panelGrid>
+
+			<h:panelGrid rendered="#{passarq.tipo==2}">
+
+				<p:media value="#{passarq.url}" player="quicktime"
+					></p:media>
+				<br />
+				
+
+			</h:panelGrid>
+
+			<h:panelGrid rendered="#{passarq.tipo==3}">
+
+				<p:media value="#{passarq.url}"
+					 height="344" width="425"></p:media>
+				<br />
+				
+
+			</h:panelGrid>
+
+			<h:panelGrid rendered="#{passarq.tipo==4}">
+
+				<h:outputLink value="/SiGAA#{passarq.url}">
+					<h:outputText value="#{actionPrograma.passos.arquivos.nome}"></h:outputText>
+				</h:outputLink>
+
+
+			</h:panelGrid>
+			
+			<h:panelGrid rendered="#{passarq.tipo==5}">
+					
+				<p:media value="#{passarq.url}" player="flash" height="344" width="425"></p:media>
+				<br/>				
+
+
+			</h:panelGrid>
+			
+
+
+		</p:panel>
+		</ui:repeat>
+</center>
+
+		<br /><br />
+<p:commandButton id="showDialogButtonP" value="Excluir" onclick="confirmationPas.show()" type="button" />
+
+	</p:panel>
+	
+	     <p:confirmDialog id="confirmDialogP" appendToBody="true" message= " Você tem certeza que deseja excluir permanentemente o passo selecionado?"
+    		      header="Exclusão de usuário" severity="alert" widgetVar="confirmationPas">  
+                  
+        <p:commandButton id="confirmp" value="Sim" update="growl,:formC:dois,:formC:um" oncomplete="confirmationPas.hide()"  
+                    actionListener="#{actionPrograma.deletarPasso}" />  
+        <p:commandButton id="declinep" value="Não" onclick="confirmationPas.hide()" type="button" />   
+                  
+    </p:confirmDialog> 
+
+</h:body>
+</html>

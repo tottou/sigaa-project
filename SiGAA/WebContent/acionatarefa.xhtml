@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<meta http-equiv="pragma" content="no-cache" />
+	<meta http-equiv="cache-control" content="no-cache,no-store,max-age=0" />
+
+</h:head>
+<h:body>
+	<h:form>
+
+
+		<center>
+		<h1>
+		<h:outputText value="#{actionTarefa.passos.nome}"></h:outputText>
+		</h1>
+		</center>
+		<br />
+		<br />
+<table align="center" cellspacing="10">
+		<tr valign="middle" align="center" >
+			<ui:repeat var="arquivo" value="#{actionTarefa.passos.arquivos}">
+				<td><h:graphicImage value="#{arquivo.url}" height="300"
+						width="300" rendered="#{arquivo.tipo==1}" cache="false"></h:graphicImage>
+
+
+
+					<p:media value="#{arquivo.url}"  height="300"
+						rendered="#{arquivo.tipo==3}" width="300">
+						<f:param name="autostart" value="#{arquivo.autoStart}" />
+					</p:media> <p:media value="#{arquivo.url}" player="flash" height="300"
+						rendered="#{arquivo.tipo==5}" width="300">
+						<f:param name="autostart" value="#{arquivo.autoStart}" />
+					</p:media></td>
+			</ui:repeat>
+		</tr>
+
+</table>
+
+
+
+		<br />
+		<ui:repeat var="arquivo" value="#{actionTarefa.passos.arquivos}">
+			<center>
+				<h:outputText value="#{arquivo.url}" rendered="#{arquivo.tipo==0}"></h:outputText>
+			</center>
+
+		</ui:repeat>
+<br/><br/><br/><br/><br/>
+
+<table align="left">
+		<tr  >
+			<ui:repeat var="arquivo" value="#{actionTarefa.passos.arquivos}">
+
+				<td  colspan="30" >
+				<h:outputLink value="/SiGAA#{arquivo.url}" target="_blank"
+						rendered="#{arquivo.tipo==4}">
+						<h:outputText value="Anexo"></h:outputText>
+					</h:outputLink>
+					</td>
+					
+					<td>
+					 <p:media value="#{arquivo.url}" player="quicktime"
+						rendered="#{arquivo.tipo==2}">
+						<f:param name="autostart" value="#{arquivo.autoStart}" />						
+					</p:media>
+					</td>
+					
+
+			</ui:repeat>
+		</tr>
+		</table>
+		<br/><br/><br/><br/>
+		<table align="right" >
+		<tr>
+		<td valign="bottom">
+		<p:commandButton value="Concluído" onclick="confirmaC.show()" type="button"></p:commandButton>
+		
+		</td>
+		
+		</tr>
+		
+		
+		</table>
+			
+ <p:confirmDialog id="confirmaCID" appendToBody="true" message= " Você tem certeza que deseja excluir permanentemente o cadastro de aluno selecionado?"
+    		      header="Exclusão" severity="info" widgetVar="confirmaC">  
+                  
+        <p:commandButton id="sucess" value="Acertou?" action="#{actionTarefa.acertouConcluido}" oncomplete="confirmaC.hide()"  
+                    actionListener="#{actionAluno.deletar}" />  
+        <p:commandButton id="tips" value="Precisou de ajuda/dicas ?" onclick="confirmaC.hide()" type="button" />   
+          <p:commandButton id="time" value="Mostrar tempo" onclick="confirmaC.hide()" type="button" /> 
+                  </p:confirmDialog>
+                  
+                   
+                  <p:dialog appendToBody="true" message= "Descreva o processo de ajuda dado ao aluno" severity="info" widgetVar="confirmaH" >
+                  <h:inputTextarea value="#{actionTarefa.relatorio.observacoes}"></h:inputTextarea>
+                  <p:commandButton id="sendz" value="Enviar" onclick="confirmaH.hide()" type="button" />
+                  </p:dialog>
+</h:form>
+
+
+
+</h:body>
+</html>

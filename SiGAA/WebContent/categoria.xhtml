@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="pragma" content="no-cache"/>
+<meta http-equiv="cache-control" content="no-cache,no-store,max-age=0"/>
+
+</h:head>
+<h:body>
+ 
+ 
+	<p:panel header="Categoria" id="panelCat">
+
+		
+            
+        <br/><br/><br/><br/><br/>
+        
+         
+         <center>
+     
+	<h:outputText id="textoTree1" value="Selecione a categoria "  />
+
+				 <p:tree id="treeS" value="#{actionCategoria.root}" var="node"  
+            selectionMode="single"  
+            selection="#{actionCategoria.noSelecionado}" >  
+<p:ajax update=":formC:painelCat" event="select" listener="#{actionCategoria.popular}" ></p:ajax> 
+        <p:treeNode >  
+            <h:outputText value="#{node}" />  
+        </p:treeNode> 
+
+    </p:tree>     
+    </center>      
+         <br/>  <br/>  <br/>  <br/>  <br/>
+         
+        <h:panelGrid columns="2" columnClasses="label, value" styleClass="grid" id="painelCat">    
+        
+               
+ 		<h:outputText value="Nome: " />  
+ 			<p:inplace editor="true"> 
+				<p:inputText id="inputusNome" value="#{actionCategoria.categoria.nome}" validatorMessage="Quantidade de caractéres indevida." required="true" requiredMessage="Campo obrigatório - Nome">
+				<f:validateLength maximum="50" minimum="4"></f:validateLength>				
+				</p:inputText>
+                      </p:inplace>
+                      
+				<h:outputText value="Descrição: " /> 
+				<p:inplace editor="true"> 
+				<p:inputTextarea id="inputarea_end_user" rows="5" cols="50" value="#{actionCategoria.categoria.descricao}" validatorMessage="Quantidade de caractéres indevida."
+				 required="true" requiredMessage="Campo obrigatório - Descrição">
+				<f:validateLength maximum="999" minimum="4"></f:validateLength>
+				</p:inputTextarea>
+				 </p:inplace>
+				
+				<h:outputText value="Tags: " />  
+				<p:inplace editor="true">
+                <p:inputText id="inputusTags" value="#{actionCategoria.categoria.tags}" />	
+                 </p:inplace>
+                        
+                         
+			
+            
+          
+            
+            
+            
+          </h:panelGrid>
+         
+    
+
+      
+
+    
+		 
+                 
+             <br/>   <br/>   <br/>   <br/>
+              
+                   
+
+    		 <p:commandButton id="btnSalvarcatcgz" value="Atualizar dados"  actionListener="#{actionCategoria.atualizarCat}" update="growl,panelCat" >
+    		 <f:actionListener binding="#{actionPrograma.atualizaTree}"></f:actionListener>
+    		 </p:commandButton>
+    		 
+    		 <p:commandButton id="showDialogButtonCs" value="Excluir" onclick="confirmationCat.show()" type="button"/> 
+    		
+    		</p:panel>
+    		
+    				     <p:confirmDialog id="confirmDialogCat" appendToBody="true" message= " Você tem certeza que deseja excluir permanentemente a categoria selecionada?"
+    		      header="Exclusão" severity="alert" widgetVar="confirmationCat">  
+                  
+        <p:commandButton id="confirm" value="Sim" update="growl,formC:panelCat" oncomplete="confirmationCat.hide()"  
+                    actionListener="#{actionCategoria.deletar}" />  
+        <p:commandButton id="decline" value="Não" onclick="confirmationCat.hide()" type="button" />   
+                  
+    </p:confirmDialog> 
+    		
+</h:body>
+</html>
