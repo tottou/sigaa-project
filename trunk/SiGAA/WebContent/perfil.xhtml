@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="pragma" content="no-cache"/>
+<meta http-equiv="cache-control" content="no-cache,no-store,max-age=0"/>
+
+</h:head>
+<h:body>
+ 
+ 
+	<p:panel header="Usuário" id="panelU" >
+
+		 
+		
+		
+		 
+
+        <p:selectOneMenu value="#{actionPerfil.perfil.id}" effect="fade" rendered="#{sessao.usuario.categoria==0 || sessao.usuario.categoria==1}">      
+        	<f:selectItem itemValue="0" itemLabel="Selecione um usuário"  itemDisabled="true"/>         	        
+            <f:selectItems value="#{actionPerfil.listaPerfil}" var="perfil" itemLabel="#{perfil.nome}" itemValue="#{perfil.id}"/>  
+              <p:ajax update="panelU" event="change" listener="#{actionPerfil.popular}"></p:ajax>
+        </p:selectOneMenu>  
+      
+        
+        <br/><br/><br/><br/><br/>
+        
+         <h:panelGrid columns="2"  styleClass="grid" cellspacing="10"> 
+         
+     
+         <h:graphicImage value="#{actionPerfil.perfil.foto}" height="280" width="260" alt="Foto de perfil"  cache="false"></h:graphicImage>
+         
+        
+        <h:panelGrid columns="2"  styleClass="grid">    
+        
+               
+         <h:outputText value="Nome: " />  
+            <p:inplace id="ajaxNome" editor="true" saveLabel="Confirmar" cancelLabel="Cancelar"  >  
+                <p:inputText id="inputus1" value="#{actionPerfil.perfil.nome}" validatorMessage="Quantidade de caractéres indevida." required="true" requiredMessage="Campo 'Nome' obrigatório">
+				<f:validateLength maximum="50" minimum="4"></f:validateLength>				
+				
+				</p:inputText>  
+            </p:inplace> 
+            
+             <h:outputText value="E-mail: " />  
+            <p:inplace id="ajaxEmail" editor="true" saveLabel="Confirmar" cancelLabel="Cancelar"  >  
+               <p:inputText id="inputus7" value="#{actionPerfil.perfil.email}" validatorMessage="E-mail inválido." required="true" requiredMessage="Campo 'E-mail' obrigatório">
+				<f:validateRegex pattern="^(([A-Za-z0-9]+_+)|([A-Za-z0-9]+\-+)|([A-Za-z0-9]+\.+)|([A-Za-z0-9]+\++))*[A-Za-z0-9]+@((\w+\-+)|(\w+\.))*\w{1,63}\.[a-zA-Z]{2,6}$"></f:validateRegex>
+				</p:inputText> 
+            </p:inplace> 
+            
+             <h:outputText value="Telefone: " />  
+            <p:inplace id="ajaxTelefone" editor="true" saveLabel="Confirmar" cancelLabel="Cancelar"  >  
+                <p:inputMask mask="(999)9999-9999" id="inputus3" value="#{actionPerfil.perfil.telefone}" required="true" requiredMessage="Campo 'Telefone' obrigatório" validatorMessage="É necessário fornecer o número de telefone." /> 
+            </p:inplace> 
+            
+             <h:outputText value="Celular: " />  
+            <p:inplace id="ajaxCelular" editor="true" saveLabel="Confirmar" cancelLabel="Cancelar"  >  
+                <p:inputMask mask="(999)9999-9999" id="inputus4" value="#{actionPerfil.perfil.celular}" required="true" requiredMessage="Campo 'Celular' obrigatório" validatorMessage="É necessário fornecer o número de telefone." />  
+            </p:inplace> 
+            
+             <h:outputText value="Endereço: " />  
+            <p:inplace id="ajaxEnd" editor="true" saveLabel="Confirmar" cancelLabel="Cancelar"  >  
+            <p:inputTextarea id="inputarea_end_user" rows="5" cols="50" value="#{actionPerfil.perfil.endereco}" validatorMessage="Quantidade de caractéres indevida."
+				 required="true" requiredMessage="Campo 'Endereço' obrigatório">
+				<f:validateLength maximum="200" minimum="4"></f:validateLength>
+				</p:inputTextarea> 
+            </p:inplace> 
+            <h:panelGrid rendered="#{sessao.usuario.categoria==0 || sessao.usuario.categoria==1}">     
+              <p:commandButton id="btnselect59" value="" icon="ui-icon-mail-closed" onclick="confirmaemail.show()" update="growl" rendered="#{actionPerfil.perfil.id!=0}"/>
+                  </h:panelGrid>
+                      	<p:dialog id="senhaDialog"   widgetVar="senha">
+    			
+    		     		  
+    		  	<h:panelGrid columns="2" id="matchGrid">
+    				<h:outputText value="Senha atual: "/>
+    		<p:password id="pwdOld" value="#{actionPerfil.senhaAntiga}" ></p:password>
+    		<h:outputText value="Nova senha: "/>
+    		<p:password id="pwd1" value="#{actionPerfil.senhaNova}" feedback="true" weakLabel="Senha fraca" match="pwd2" validatorMessage="Confirmação de senha falhou."
+                 goodLabel="Senha razoável" strongLabel="Senha segura" promptLabel="Por favor, insira a nova senha." ></p:password> 
+                
+                	<h:outputText value="Confirma senha: " />
+    		<p:password id="pwd2" value="#{actionPerfil.senhaNova}" feedback="true" weakLabel="Senha fraca" 
+                 goodLabel="Senha razoável" strongLabel="Senha segura" promptLabel="Por favor, insira a nova senha." ></p:password>
+    		</h:panelGrid>
+    		<p:commandButton id="btnSalvars" value="Alterar Senha"  actionListener="#{actionPerfil.mudarSenha}" update="growl,:formC:panelU" 
+    		 oncosucess="senha.hide()"  />
+    		 <p:commandButton id="declines" value="Cancelar" onclick="senha.hide()" type="button" />
+    		</p:dialog>
+    		
+                    
+            
+            
+          </h:panelGrid>
+          
+          </h:panelGrid>
+
+      
+   
+		 
+                 
+             <br/>   
+              
+ 
+
+
+    		 <p:commandButton id="btnSalvarp" value="Atualizar dados"  actionListener="#{actionPerfil.atualizar}" update="growl,panelU" rendered="#{actionPerfil.selecionado}"/>
+    		 <p:commandButton id="addPicp" value="Alterar foto"  actionListener="#{controladora.fotoUpload}" update="formC:pnlCorpo" rendered="#{actionPerfil.selecionado}" />
+    		 <p:commandButton id="showDialogp" value="Alterar senha" onclick="senha.show()" type="button" rendered="#{actionPerfil.selecionado}"/>
+    		 <p:commandButton id="showDialogButtonp" value="Excluir" onclick="confirmation_dialog.show()" type="button" rendered="#{actionPerfil.selecionado}"/> 
+    		    
+    	 
+    		
+    		</p:panel>
+    		
+    		
+    	 <p:confirmDialog id="confirmeEnvio" appendToBody="true" message= " Re-enviar e-mail para o usuário selecionado com os dados de login?"
+    		      header="Envio de E-mail" severity="alert" widgetVar="confirmaemail">  
+                  
+        <p:commandButton id="confirm_email" value="Enviar" update="growl,:formC:panelU" oncomplete="confirmaemail.hide()"  
+                    actionListener="#{actionPerfil.enviar}" />  
+        <p:commandButton id="decline_email" value="Cancelar" onclick="confirmaemail.hide()" type="button" />   
+                  
+    </p:confirmDialog> 
+    		
+    		
+    			     <p:confirmDialog id="confirmDialog2" appendToBody="true" message= " Você tem certeza que deseja excluir permanentemente o usuário selecionado?"
+    		      header="Exclusão de usuário" severity="alert" widgetVar="confirmation_dialog">  
+                  
+        <p:commandButton id="confirm_p" value="Sim" update="growl,:formC:panelU" oncomplete="confirmation_dialog.hide()"  
+                    actionListener="#{actionPerfil.deletar}" />  
+        <p:commandButton id="decline_p" value="Não" onclick="confirmation_dialog.hide()" type="button" />   
+                  
+    </p:confirmDialog> 
+      
+    
+
+    
+</h:body>
+</html>

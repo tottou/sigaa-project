@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<f:view contentType="text/html" encoding="UTF-8">
+	<h:head>
+		<f:facet name="main">
+			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+			<meta http-equiv="pragma" content="no-cache" />
+			<meta http-equiv="cache-control"
+				content="no-cache,no-store,max-age=0" />
+				<meta http-equiv="refresh" content="${pageContext.session.maxInactiveInterval};url=index.jsf"/>
+
+			<title>Sistema de Gerenciamento de Aceleração da Aprendizagem</title>
+		</f:facet>
+		<link type="text/css" rel="stylesheet" href="/css/default.css" />
+		<link type="text/css" rel="stylesheet"
+			href="/css/syntaxhighlighter/syntaxhighlighter.css" />
+			<link rel="shortcut icon" type="image/png" href="#{request.contextPath}/imagens/favicon.png" />
+
+
+
+		<style type="text/css">
+		
+.ui-widget {
+    font-size: 100% !important;
+ }
+.ui-widget .ui-widget {
+    font-size: 100% !important;
+ }
+.ui-layout-north {
+	z-index: 10 !important;
+	overflow: visible !important;;
+}
+
+.ui-layout-north .ui-layout-unit-content {
+	overflow: visible !important;
+}
+
+.ui-growl {
+	position: fixed !important;
+	top: 0% !important;
+	left: 50% !important;
+	width: 360px !important;
+	height: 110px !important;
+	z-index: 9999 !important;
+}
+
+.botao {
+      border-width: 0px;
+      border-color: #000000;
+      border-style: solid;
+      text-align: center;
+      font-weight: bold;
+      background: #FF800F;
+      color: #FFFFFF;
+      width: 100%;
+}
+
+.ui-logado {
+	background-image: url('./imagens/user.png') !important;
+}
+
+.ui-sigaa {
+	background-image: url('./imagens/sigaa_small.jpg') !important;
+}
+
+
+</style>
+
+
+	</h:head>
+
+
+	<h:body>
+	<p:panel id="cripto">
+		<h:form>
+	<h:panelGrid columns="2">
+		<p:panel>
+		<p:inputText value="#{teste.senhaCripto}"></p:inputText>
+		<p:commandButton value="Gerar md5" actionListener="#{teste.criptografia}" update="@all"></p:commandButton>
+		
+		</p:panel>
+		
+		<p:panel>
+		<ui:repeat var="senha" value="#{teste.listaSenhas}">
+		<h:outputText value="#{senha}"></h:outputText>
+		</ui:repeat>
+		
+		</p:panel>
+		
+		</h:panelGrid>
+		
+</h:form>
+		</p:panel>
+		
+		
+		
+		
+		
+	</h:body>
+
+</f:view>
+</html>

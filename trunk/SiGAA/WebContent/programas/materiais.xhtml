@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+
+
+</h:head>
+<h:body>
+
+	
+
+	<p:panel>
+		<h:panelGrid columns="2" columnClasses="label, value"
+			styleClass="grid" id="tres">
+			<h:outputText value="Nome: " />
+			<p:inputText id="inputudsNome"
+				value="#{actionPrograma.arquivos.nome}">
+
+			</p:inputText>
+
+			<h:outputText value="Descrição: " />
+			<p:inputTextarea id="inputasrea_end_user" rows="5" cols="50"
+				value="#{actionPrograma.arquivos.descricao}">
+			</p:inputTextarea>
+
+
+			<h:outputText value="Tags: " />
+			<p:inputText id="inputusdTags"
+				value="#{actionPrograma.arquivos.tags}" />
+
+		</h:panelGrid>
+
+		<p:panel id="dados" style="border:none">
+
+			<h:panelGrid id="dados2"
+				rendered="#{actionPrograma.arquivos.url==null}">
+
+				<h:panelGrid rendered="#{actionPrograma.selecaoMaterial==0}" columns="2">
+			<h:outputText value="Texto: " />
+					<p:inputTextarea value="#{actionPrograma.arquivos.url}"  rows="6" cols="50"></p:inputTextarea>
+
+
+				</h:panelGrid>
+
+				<h:panelGrid rendered="#{actionPrograma.selecaoMaterial==1}">
+
+					<p:fileUpload fileUploadListener="#{actionPrograma.uploadImg}" rendered="true" immediate="true"
+						allowTypes="/(\.|\/)(gif|jpe?g|png)$/" sizeLimit="3000000"
+						auto="true" description="Selecione uma imagem"
+						cancelLabel="Cancelar" label="Escolher arquivo"
+						validatorMessage="Arquivo inválido"
+						invalidFileMessage="Arquivo inválido." update="growl,checkz,dados"
+						invalidSizeMessage="tamanho inválido" />
+
+
+
+
+
+				</h:panelGrid>
+
+				<h:panelGrid rendered="#{actionPrograma.selecaoMaterial==2}">
+
+					<p:fileUpload fileUploadListener="#{actionPrograma.uploadSom}" rendered="true" immediate="true"
+						allowTypes="/(\.|\/)(wav|mp3|wma)$/" sizeLimit="15000000"
+						auto="true" description="Selecione um arquivo de audio"
+						cancelLabel="Cancelar" label="Escolher arquivo"
+						validatorMessage="Arquivo inválido"
+						invalidFileMessage="Arquivo inválido." update="growl,checkz,dados"
+						invalidSizeMessage="tamanho inválido" />
+
+
+
+				</h:panelGrid>
+
+				<h:panelGrid rendered="#{actionPrograma.selecaoMaterial==3}" columns="2">
+
+					<p:fileUpload fileUploadListener="#{actionPrograma.uploadVideo}" rendered="true" immediate="true"
+						allowTypes="/(\.|\/)(mp4|wmv|avi|mov)$/" sizeLimit="128000000"
+						auto="true" description="Selecione um vídeo"
+						cancelLabel="Cancelar" label="Escolher arquivo"
+						validatorMessage="Arquivo inválido"
+						invalidFileMessage="Arquivo inválido." update="growl,checkz,dados"
+						invalidSizeMessage="tamanho inválido" />
+					<p:commandButton value="Link de vídeo" actionListener="#{actionPrograma.videoLink}" update="dados"></p:commandButton>
+
+				</h:panelGrid>
+
+				<h:panelGrid rendered="#{actionPrograma.selecaoMaterial==4}">
+
+					<p:fileUpload fileUploadListener="#{actionPrograma.uploadArq}" rendered="true" immediate="true"
+						allowTypes="/(\.|\/)(pdf|doc|txt|docx|xls|xlsx|ppt|pptx|rtf)$/" sizeLimit="15000000"
+						auto="true" description="Selecione um arquivo"
+						cancelLabel="Cancelar" label="Escolher arquivo"
+						validatorMessage="Arquivo inválido"
+						invalidFileMessage="Arquivo inválido." update="growl,checkz,dados"
+						invalidSizeMessage="tamanho inválido" />
+
+				</h:panelGrid>
+			</h:panelGrid>
+			
+				<h:panelGrid rendered="#{actionPrograma.selecaoMaterial==5}">
+				<h:panelGrid columns="3">
+				<h:outputText value="Link do vídeo: " />
+			<p:inputText id="linkz0r"
+				value="#{actionPrograma.arquivos.url}" title="Forneça o link completo no formato padrão. Exemplo: http://www.youtube.com/v/A1b2C3d4 ou http://vimeo.com/moogaloop.swf?clip_id=12345">
+				<p:ajax event="keyup" listener="#{actionPrograma.tratarLink}" update="dados"></p:ajax>
+				</p:inputText>
+			
+				</h:panelGrid>				
+				<p:media value="#{actionPrograma.arquivos.url}" width="320" height="215" player="flash"/>  
+				
+				</h:panelGrid>
+
+		</p:panel>
+		<p:panel id="checkz" style="border:none">
+			<h:panelGrid id="checkz2"
+				rendered="#{actionPrograma.arquivos.url!=null and actionPrograma.selecaoMaterial!=0}">
+            
+                Arquivo enviado.
+                <p:commandButton id="btnCancelx" value="Cancelar"
+					actionListener="#{actionPrograma.anular}" update="dados,checkz" />
+
+			</h:panelGrid>
+		</p:panel>
+
+		<br />
+		<p:commandButton id="btnSalvard" value="Salvar"
+			actionListener="#{actionPrograma.salvarProgramaUpload}"
+			update="growl,um,tres,dados,checkz" />
+
+	</p:panel>
+
+</h:body>
+</html>

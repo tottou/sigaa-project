@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="pragma" content="no-cache"/>
+<meta http-equiv="cache-control" content="no-cache,no-store,max-age=0"/>
+
+</h:head>
+<h:body>
+ 
+ 
+	<p:panel header="Empresa" id="panelEm" rendered="#{sessao.usuario.categoria==0}"> 
+		
+		
+		 
+<h:panelGrid columns="2">
+        <p:selectOneMenu value="#{actionEmpresa.empresa.id}" effect="fade" >      
+        	<f:selectItem itemValue="0" itemLabel="Selecione uma empresa"  itemDisabled="true"/>         	        
+            <f:selectItems value="#{actionEmpresa.listaEmpresa}" var="empresa" itemLabel="#{empresa.nome}" itemValue="#{empresa.id}"/>  
+              <p:ajax update="panelEm" event="change" listener="#{actionEmpresa.popular}"></p:ajax>
+        </p:selectOneMenu> 
+        <p:commandButton id="btnselectz" value="Selecionar" icon="ui-icon-home" actionListener="#{actionEmpresa.selecionarEmpresa}" update="growl,:barra" rendered="#{actionEmpresa.empresa.id!=0}"/>
+        </h:panelGrid> 
+        
+        <br/><br/><br/><br/><br/>
+        
+         <h:panelGrid columns="2" columnClasses="label, value" styleClass="grid" cellspacing="10"> 
+         
+              	<h:outputText value="Opção: " /> 
+			                     <p:selectOneRadio id="selectz" value="#{actionEmpresa.selecao}">
+                  		<f:selectItem itemLabel="CPF" itemValue="1"></f:selectItem>
+                  		<f:selectItem itemLabel="CNPJ" itemValue="2"></f:selectItem>
+                  		<p:ajax update=":formC:escolha1,:formC:escolha2" event="change" listener="#{actionEmpresa.mudar}"></p:ajax>
+                      </p:selectOneRadio> 
+                        <h:panelGrid id="escolha1">
+				<h:outputText id="cpf" value="CPF: " rendered="#{actionEmpresa.qual}" />  				 
+				<h:outputText id="cnpj" value="CNPJ: " rendered="#{!actionEmpresa.qual}"/>  
+				</h:panelGrid>
+				<h:panelGrid id="escolha2">
+				 <p:inplace  editor="true">  
+				<p:inputMask id="inputcnpj" mask="99.999.999/9999-99"  value="#{actionEmpresa.empresa.CPFCNPJ}" rendered="#{!actionEmpresa.qual}"/>					   		
+				<p:inputMask id="inputcpf" mask="999.999.999-99"  value="#{actionEmpresa.empresa.CPFCNPJ}" rendered="#{actionEmpresa.qual}"/>
+				  </p:inplace>
+				</h:panelGrid>
+				
+				<h:outputText value="Razão Social/Nome: " />  
+				 <p:inplace  editor="true">  
+				<p:inputText id="input1" value="#{actionEmpresa.empresa.nome}" validatorMessage="Tamanho inválido." required="true" requiredMessage="Campo Razão Social/Nome obrigatório">
+				<f:validateLength maximum="50" minimum="4" ></f:validateLength>
+				</p:inputText>
+				  </p:inplace>
+                      
+				<h:outputText value="Telefone: " />  
+				 <p:inplace  editor="true">  				
+				<p:inputMask mask="(999)9999-9999" id="inputus3" value="#{actionEmpresa.empresa.telefone}" required="true" requiredMessage="Campo Telefone obrigatório" validatorMessage="É necessário fornecer o número de telefone." />
+				   </p:inplace>
+           
+				<h:outputText value="Celular: " />  
+				 <p:inplace  editor="true">  			
+				<p:inputMask mask="(999)9999-9999" id="inputus4" value="#{actionEmpresa.empresa.celular}" required="true" requiredMessage="Campo Celular obrigatório" validatorMessage="É necessário fornecer o número de telefone." />
+				  </p:inplace>
+           
+				<h:outputText value="Nome do responsável: " />  
+				 <p:inplace  editor="true">  
+				<p:inputText id="input6" value="#{actionEmpresa.empresa.nomeResponsavel}">
+				<f:validateLength maximum="50" minimum="4"></f:validateLength>
+				</p:inputText>
+             </p:inplace>
+           
+				<h:outputText value="E-mail: " />  
+				 <p:inplace  editor="true">  
+				<p:inputText id="inputus7" value="#{actionEmpresa.empresa.email}" validatorMessage="E-mail inválido." required="true" requiredMessage="Campo obrigatório">
+				<f:validateRegex pattern="^(([A-Za-z0-9]+_+)|([A-Za-z0-9]+\-+)|([A-Za-z0-9]+\.+)|([A-Za-z0-9]+\++))*[A-Za-z0-9]+@((\w+\-+)|(\w+\.))*\w{1,63}\.[a-zA-Z]{2,6}$"></f:validateRegex>
+				</p:inputText>
+				  </p:inplace>
+                      
+			<h:outputText value="Endereço: " />  
+			 <p:inplace  editor="true">  
+				<p:inputTextarea id="inputarea_end_user" rows="5" cols="50" value="#{actionEmpresa.empresa.endereco}" validatorMessage="Quantidade de caractéres indevida."
+				 required="true" requiredMessage="Campo endereço obrigatório">
+				<f:validateLength maximum="200" minimum="4"></f:validateLength>
+				</p:inputTextarea> 
+       </p:inplace>
+            
+            
+ 
+          
+          </h:panelGrid>
+
+      
+
+    
+		 
+                 
+             <br/>   <br/>   <br/>   <br/>
+              
+                   
+
+
+    		 <p:commandButton id="btnSalvarEmp" value="Atualizar dados"  actionListener="#{actionEmpresa.atualizar}" update="growl,panelEm,:barra" />
+    		 <p:commandButton id="showDialogButtonEmp" value="Excluir" onclick="confirmationEmpz.show()" type="button"/> 
+    		
+    		</p:panel>
+    		
+    				     <p:confirmDialog id="confirmDialog" appendToBody="true" message= " Você tem certeza que deseja excluir permanentemente o cadastro empresa selecionado?"
+    		      header="Exclusão" severity="alert" widgetVar="confirmationEmpz">  
+                  
+        <p:commandButton id="confirm" value="Sim" update="growl,panelEm,:barra" oncomplete="confirmationEmpz.hide()"  
+                    actionListener="#{actionEmpresa.deletar}" />  
+        <p:commandButton id="decline" value="Não" onclick="confirmationEmpz.hide()" type="button" />   
+                  
+    </p:confirmDialog> 
+    		
+</h:body>
+</html>

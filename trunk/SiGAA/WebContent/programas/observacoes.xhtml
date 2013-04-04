@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+
+
+</h:head>
+<h:body>
+	<h:panelGrid id="tres">
+	<h:outputText value="Descrição: " />
+			<p:inputTextarea id="inputasrea_end_user" rows="5" cols="50"
+				value="#{actionPrograma.programa.observacoes}">				
+			</p:inputTextarea>
+			</h:panelGrid>
+			<p:commandButton id="btnSalvarobsz" value="Salvar"  actionListener="#{actionPrograma.salvarPrograma}" update="growl,um,tres" />
+</h:body>
+</html>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+
+</h:head>
+<h:body>
+
+	<h:panelGrid columns="2">
+		<p:panel header="Categorias">
+
+			<p:tree id="treeSz" value="#{actionPrograma.root}" var="node" 
+				dynamic="true" selectionMode="single"
+				selection="#{actionPrograma.noSelecionado}">
+				<p:ajax update=":formC:programas" event="select"
+					listener="#{actionPrograma.popular}"></p:ajax>
+				<p:treeNode>
+					<h:outputText value="#{node}" />
+				</p:treeNode>
+			</p:tree>
+		</p:panel>
+
+		<p:panel id="programas" header="Programas de ensino">
+			<p:tree id="treezz" value="#{actionPrograma.prog}" var="node" 
+				dynamic="true" selectionMode="single"
+				selection="#{actionPrograma.noProg}">
+				<p:ajax update=":formC:botoes" event="select"
+					listener="#{actionPrograma.popularProg}"></p:ajax>
+				<p:treeNode>
+					<h:outputText value="#{node}" />
+				</p:treeNode>
+			</p:tree>
+
+			<p:panel id="botoes" style="border:none">
+
+				<p:commandButton value="Criar novo" actionListener="#{controladora.programa2}" update=":formC:pnlCorpo, growl"
+					rendered="#{actionPrograma.categoria.id != 0}">
+					<f:actionListener binding="#{actionPrograma.nulificar}"></f:actionListener>
+				</p:commandButton>
+
+				<p:commandButton value="Editar " actionListener="#{controladora.programa2}" update=":formC:pnlCorpo, growl"
+					 rendered="#{actionPrograma.programa.id != 0}">
+					<f:actionListener binding="#{actionPrograma.editarProg}"></f:actionListener>
+
+				</p:commandButton>
+
+			</p:panel>
+		</p:panel>
+	</h:panelGrid>
+	
+	<p:ajaxStatus onstart="statusDialog11.show();"
+			onsuccess="statusDialog11.hide();" />
+
+		<p:dialog modal="true" widgetVar="statusDialog11"
+			header="Carregando..." resizable="false" appendToBody="true"
+			draggable="false" closable="false">
+			<center>
+				<p:graphicImage value="/imagens/ajax-loader.gif" />
+			</center>
+		</p:dialog>
+
+
+
+
+</h:body>
+</html>

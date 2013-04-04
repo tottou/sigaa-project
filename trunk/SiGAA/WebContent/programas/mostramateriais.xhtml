@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+
+
+</h:head>
+<h:body>
+
+
+	<p:panel id="wat">
+		<h:panelGrid columns="2" columnClasses="label, value"
+			styleClass="grid" id="tres">
+			<h:outputText value="Nome: " />
+			<p:inplace editor="true">
+				<p:inputText id="inputudsNome"
+					value="#{actionPrograma.arquivos.nome}">
+				</p:inputText>
+			</p:inplace>
+
+			<h:outputText value="Descrição: " />
+			<p:inplace editor="true">
+				<p:inputTextarea id="inputasrea_end_user" rows="5" cols="50"
+					value="#{actionPrograma.arquivos.descricao}">
+				</p:inputTextarea>
+			</p:inplace>
+
+
+			<h:outputText value="Tags: " />
+			<p:inplace editor="true">
+				<p:inputText id="inputusdTags"
+					value="#{actionPrograma.arquivos.tags}" />
+			</p:inplace>
+						
+			<h:outputText value="Url: " rendered="#{actionPrograma.arquivos.tipo==5}"/>
+			<p:inplace editor="true" rendered="#{actionPrograma.arquivos.tipo==5}">
+				<p:inputText id="inputusdTurls"
+					value="#{actionPrograma.arquivos.url}" rendered="#{actionPrograma.arquivos.tipo==5}"/>
+			</p:inplace>
+
+		</h:panelGrid>
+
+		<p:panel id="dados" style="border:none">
+
+
+
+			<h:panelGrid rendered="#{actionPrograma.arquivos.tipo==0}"
+				columns="2">
+				<p:panel>
+				<p:inplace editor="true">
+					<h:inputTextarea value="#{actionPrograma.arquivos.url}"></h:inputTextarea>
+				</p:inplace>
+				</p:panel>
+				
+			</h:panelGrid>
+
+			<h:panelGrid rendered="#{actionPrograma.arquivos.tipo==1}">
+
+				<p:graphicImage value="#{actionPrograma.arquivos.url}" height="280" width="260"></p:graphicImage>
+
+
+
+
+
+			</h:panelGrid>
+
+	
+			<h:panelGrid rendered="#{actionPrograma.arquivos.tipo==2}">
+			
+
+			
+				<p:media value="#{actionPrograma.arquivos.url}" player="quicktime">
+				<f:param name="autostart" value="false" /></p:media>
+<br/>
+				<h:outputLink value="/SiGAA#{actionPrograma.arquivos.url}" target="_blank">
+				<h:outputText value="Download"></h:outputText>
+				</h:outputLink>
+
+
+			</h:panelGrid>
+
+			<h:panelGrid rendered="#{actionPrograma.arquivos.tipo==3}">
+
+				<p:media value="#{actionPrograma.arquivos.url}"  height="344" width="425">
+				<f:param name="autostart" value="false" /></p:media>
+				<br/>
+				<h:outputLink value="/SiGAA#{actionPrograma.arquivos.url}" target="_blank">
+				<h:outputText value="Download"></h:outputText>
+				</h:outputLink>
+
+
+			</h:panelGrid>
+
+			<h:panelGrid rendered="#{actionPrograma.arquivos.tipo==4}">
+				
+				<h:outputLink value="/SiGAA#{actionPrograma.arquivos.url}" target="_blank">
+				<h:outputText value="Download"></h:outputText>
+				</h:outputLink>
+				
+
+			</h:panelGrid>
+		
+			
+				<h:panelGrid rendered="#{actionPrograma.arquivos.tipo==5}">
+					
+				<p:media value="#{actionPrograma.arquivos.url}" player="flash" height="344" width="425">
+				<f:param name="autostart" value="false" /></p:media>
+				<br/>				
+
+
+			</h:panelGrid>
+
+
+		</p:panel>
+
+
+		<br />
+		<p:commandButton id="atulz" value="Atualizar" actionListener="#{actionPrograma.atualizarMaterial}" update="growl,wat,um,dois"/> 
+		<p:commandButton id="showDialogButtonM" value="Excluir" onclick="confirmationMat.show()" type="button" /> 
+	</p:panel>
+	     <p:confirmDialog id="confirmDialogM" appendToBody="true" message= " Você tem certeza que deseja excluir permanentemente o material selecionado?"
+    		      header="Exclusão de usuário" severity="alert" widgetVar="confirmationMat">  
+                  
+        <p:commandButton id="confirm" value="Sim" update="growl,:formC:dois,:formC:um" oncomplete="confirmationMat.hide()"  
+                    actionListener="#{actionPrograma.deletarMaterial}" />  
+        <p:commandButton id="decline" value="Não" onclick="confirmationMat.hide()" type="button" />   
+                  
+    </p:confirmDialog> 
+</h:body>
+</html>

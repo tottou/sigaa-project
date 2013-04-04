@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+
+</h:head>
+<h:body>
+    	<p:panel header="Cadastro de aluno" id="panelA" rendered="#{sessao.usuario.categoria==0 || sessao.usuario.categoria==1}">
+			<h:panelGrid columns="2" columnClasses="label, value" styleClass="grid">
+        		        
+				<h:outputText value="Nome do aluno: " />  
+				<p:inputText id="inputal1a" value="#{actionAluno.aluno.nome}" required="true" requiredMessage="Campo obrigatório" >
+				<f:validateLength maximum="50" minimum="4"></f:validateLength>
+				</p:inputText>
+				
+				<h:outputText value="Data de nascimento: " />
+    			<p:calendar value="#{actionAluno.dataNascimento}" id="popupCala" alt=" "  locale="pt_BR" navigator="true" maxdate="#{actionAluno.hoje}" required="true" requiredMessage="Campo obrigatório" yearRange="c-80:c+10" /> 
+                      
+				<h:outputText value="Nome do responsável: " />  
+				<p:inputText id="inputal2a" value="#{actionAluno.aluno.nomeResponsavel}">
+				<f:validateLength maximum="50" minimum="4"></f:validateLength>
+				</p:inputText>  
+                      
+				<h:outputText value="Telefone: " />  
+				<p:inputMask mask="(999)9999-9999" id="inputalTela" value="#{actionAluno.aluno.telefone}" 
+				required="true" requiredMessage="Campo obrigatório" validatorMessage="É necessário fornecer o número de telefone." ></p:inputMask> 
+           
+				<h:outputText value="Celular: " />  
+				<p:inputMask mask="(999)9999-9999" id="inputalCela" value="#{actionAluno.aluno.celular}"
+				required="true" requiredMessage="Campo obrigatório" validatorMessage="É necessário fornecer o número de telefone."></p:inputMask>
+           
+				<h:outputText value="E-mail: " />  				
+				<p:inputText id="inputal7a" value="#{actionAluno.aluno.email}" validatorMessage="E-mail inválido." required="true" requiredMessage="Campo obrigatório" >
+				<f:validateRegex pattern="^(([A-Za-z0-9]+_+)|([A-Za-z0-9]+\-+)|([A-Za-z0-9]+\.+)|([A-Za-z0-9]+\++))*[A-Za-z0-9]+@((\w+\-+)|(\w+\.))*\w{1,63}\.[a-zA-Z]{2,6}$"></f:validateRegex>
+				</p:inputText>
+                      
+				<h:outputText value="Endereço: " />  
+				<p:inputTextarea id="inputarea_end_al" rows="5" cols="50" value="#{actionAluno.aluno.endereco}" validatorMessage="Quantidade de caractéres indevida."
+				 required="true" requiredMessage="Campo obrigatório">
+				<f:validateLength maximum="200" minimum="4"></f:validateLength>
+				</p:inputTextarea>
+				
+				<h:outputText value="Diagnóstico: " />
+				<p:inputTextarea id="inputarea_diag" rows="5" cols="50" value="#{actionAluno.aluno.diagnostico}">
+				<f:validateLength maximum="9000"></f:validateLength>
+				</p:inputTextarea>
+				 
+				
+				<h:outputText value="Observações: " />  
+				<p:inputTextarea id="inputarea_obs" rows="5" cols="50" value="#{actionAluno.aluno.observacoes}">
+				<f:validateLength maximum="9000"></f:validateLength>
+				</p:inputTextarea>   
+								
+				           </h:panelGrid>
+			 
+			<br/><br/> <br/><br/>
+    		<p:commandButton id="btnSalvarA" value="Cadastrar"  actionListener="#{actionAluno.save}" update="growl,panelA" />
+    		<p:commandButton id="btnLimparA" value="Limpar campos"  type="reset" update="panelA" />
+    		 
+		</p:panel>
+</h:body>
+</html>

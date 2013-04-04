@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<f:view contentType="text/html" encoding="UTF-8">
+	<h:head>
+	<meta http-equiv="Pragma" content="no-cache" />
+   		   <meta http-equiv="Expires" content="-1" />
+			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+			<meta http-equiv="pragma" content="no-cache" />
+			<meta http-equiv="cache-control"
+				content="no-cache,no-store,max-age=0" />
+		<f:facet name="main">
+		
+			<title>Sistema de Gerenciamento de Aceleração da Aprendizagem</title>
+		</f:facet>
+		<link type="text/css" rel="stylesheet" href="/css/default.css" />
+		<link type="text/css" rel="stylesheet"
+			href="/css/syntaxhighlighter/syntaxhighlighter.css" />
+			<link rel="shortcut icon" type="image/png" href="#{request.contextPath}/imagens/favicon.png" />
+
+
+
+		<style type="text/css">
+.ui-layout-north {
+	z-index: 20 !important;
+	overflow: visible !important;;
+}
+
+.ui-layout-north .ui-layout-unit-content {
+	overflow: visible !important;
+}
+
+.ui-growl {
+	position: fixed;
+	top: 60%;
+	left: 37%;
+	width: 360px;
+	height: 110px;
+	z-index: 9999;
+}
+
+.ui-logado {
+	background-image: url('./imagens/user.png') !important;
+}
+
+.ui-sigaa {
+	background-image: url('./imagens/sigaa_small.jpg') !important;
+}
+</style>
+
+    </h:head>  
+      
+    <h:body>
+ 
+    <center>
+    <p:graphicImage value="/imagens/sigaa_logo.jpg" />
+   
+   </center>
+    <br/><br/>
+<center>
+ <h:form >
+ 
+ <p:panel id="loginPanel" header="Login"  style="width: 25%" rendered="true" visible="true" >  
+ <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"  />  
+  <h:panelGrid columns="2" cellpadding="4" >  
+ <h:outputText value =" Usuário : "  />
+ <h:inputText value ="#{loginBean.usuario}" id="usuario" />
+
+ <h:outputText value =" Senha : " />
+ <h:inputSecret value ="#{loginBean.senha}" id="senha" />
+
+<br/> <h:commandButton value =" Entrar " action ="#{loginBean.autenticar}"/>
+   </h:panelGrid>  
+   </p:panel>
+ </h:form >
+   
+ </center>
+  
+     
+  
+ 
+ 
+    </h:body>
+    </f:view>
+</html>
+
+
+

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<meta http-equiv="pragma" content="no-cache" />
+	<meta http-equiv="cache-control" content="no-cache,no-store,max-age=0" />
+
+</h:head>
+<h:body>
+
+
+	<p:panel header="Cadastro de tarefa" id="panelCTa">
+
+		<h:panelGrid columns="2" columnClasses="label, value"
+			styleClass="grid">
+
+			<h:outputText value="Nome da tarefa: " />
+			<p:inputText id="inputal12a" value="#{actionTarefa.tarefa.nome}"
+				required="true" requiredMessage="Campo obrigatório">
+				<f:validateLength maximum="50" minimum="4"></f:validateLength>
+			</p:inputText>
+
+			<h:outputText value="Data de início: " />
+			<p:calendar value="#{actionTarefa.inicio}" id="popupCala23" alt=" "
+				locale="pt_BR" navigator="true" required="true"
+				requiredMessage="Campo obrigatório" yearRange="c-10:c+10" />
+
+			<h:outputText value="Data de fim: " />
+			<p:calendar value="#{actionTarefa.fim}" id="popupCala2ss" alt=" "
+				locale="pt_BR" navigator="true" required="true"
+				requiredMessage="Campo obrigatório" yearRange="c-10:c+10" />
+
+			<h:outputText value="Sessões: " />
+			<h:panelGrid columns="1" style="margin-bottom:10px">
+				<p:inputText id="txt1" value="#{actionTarefa.tarefa.sessoes}" />
+				<p:slider for="txt1" />
+			</h:panelGrid>
+
+		</h:panelGrid>
+
+	</p:panel>
+
+
+</h:body>
+</html>

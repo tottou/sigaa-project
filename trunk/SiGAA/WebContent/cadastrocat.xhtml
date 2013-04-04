@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+
+</h:head>
+<h:body>
+		<p:panel header="Cadastro de categoria" id="panelC">
+			<h:panelGrid columns="2" columnClasses="label, value" styleClass="grid">
+        		        
+				<h:outputText value="Nome: " />  
+				<p:inputText id="inputusNome" value="#{actionCategoria.categoria.nome}" validatorMessage="Quantidade de caractéres indevida." required="true" requiredMessage="Campo obrigatório - Nome">
+				<f:validateLength maximum="50" minimum="4"></f:validateLength>				
+				
+				</p:inputText>
+                      
+				<h:outputText value="Descrição: " />  
+				<p:inputTextarea id="inputarea_end_user" rows="5" cols="50" value="#{actionCategoria.categoria.descricao}" validatorMessage="Quantidade de caractéres indevida."
+				 required="true" requiredMessage="Campo obrigatório - Descrição">
+				<f:validateLength maximum="999" minimum="4"></f:validateLength>
+				</p:inputTextarea>
+				
+				<h:outputText value="Tags: " />  
+                <p:inputText id="inputusTags" value="#{actionCategoria.categoria.tags}" />	
+                        
+                         
+				<h:outputText id="textoTree" value="Sub-categoria de: "  />
+				 <p:tree id="treeSingle" value="#{actionCategoria.root}" var="node"  
+            selectionMode="single"  
+            selection="#{actionCategoria.noSelecionado}">  
+  
+        <p:treeNode>  
+            <h:outputText value="#{node}" />  
+        </p:treeNode>  
+    </p:tree>  
+    
+				
+				           
+			</h:panelGrid>  
+			
+			<p:commandButton id="btnSalvarcat" value="Cadastrar"  actionListener="#{actionCategoria.save}" update="growl,panelC" >
+			<f:actionListener binding="#{actionPrograma.atualizaTree}"></f:actionListener>
+			</p:commandButton>
+    		<p:commandButton id="btnLimparcat" value="Limpar campos" type="reset"  update="panelC" />
+		</p:panel>
+		
+		<p:ajaxStatus onstart="statusDialogcat.show();"
+			onsuccess="statusDialogcat.hide();" />
+
+		<p:dialog modal="true" widgetVar="statusDialogcat"
+			header="Carregando..." resizable="false" appendToBody="true"
+			draggable="false" closable="false">
+			<center>
+				<p:graphicImage value="/imagens/ajax-loader.gif" />
+			</center>
+		</p:dialog>
+</h:body>
+</html>

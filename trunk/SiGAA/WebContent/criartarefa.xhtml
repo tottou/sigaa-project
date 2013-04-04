@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<meta http-equiv="pragma" content="no-cache" />
+	<meta http-equiv="cache-control" content="no-cache,no-store,max-age=0" />
+
+</h:head>
+<h:body>
+
+	<p:panel id="painelT">
+
+
+		<h:panelGrid columns="2">
+			<h:outputText value="Inserir nome da tarefa: "></h:outputText>
+			<p:inputText value="#{actionTarefa.tarefa.nome}"></p:inputText>
+		</h:panelGrid>
+
+
+	</p:panel>
+
+	<p:panel id="panelNTar">
+		<center>
+			<ui:repeat var="seq" value="#{actionTarefa.listaSequencia}"
+				varStatus="status">
+				<h:panelGrid columns="3">
+					<h:outputText value="Sequencia #{status.index+1}: " />
+					<h:outputText value="#{seq.nome}"></h:outputText>
+					<p:commandButton icon="ui-icon-circle-close" styleClass="botao"
+						actionListener="#{actionTarefa.removeSeq(status.index)}"
+						update=":formC:panelNTar,:formC:growl"></p:commandButton>
+				</h:panelGrid>
+			</ui:repeat>
+		</center>
+
+
+
+		<p:panel header="Selecionar Sequências" id="seseq">
+			<h:panelGrid columns="3">
+				<p:tree id="tree_tar" value="#{actionTarefa.tarefaTree}" var="node"
+					dynamic="true" selectionMode="single"
+					selection="#{actionTarefa.tarefaTreeSelect}">
+					<p:ajax update=":formC:panelNTar" event="select"
+						listener="#{actionTarefa.popularProg}"></p:ajax>
+					<p:treeNode>
+						<h:outputText value="#{node}" />
+					</p:treeNode>
+				</p:tree>
+
+				<p:tree id="tree_seqz0r" value="#{actionTarefa.seqTree}" var="node"
+					dynamic="true" selectionMode="single"
+					selection="#{actionTarefa.seqTreeSelect}">
+					<p:ajax update=":formC:panelNTar,:formC:growl" event="select"
+						listener="#{actionTarefa.popularSeq}"></p:ajax>
+					<p:treeNode>
+						<h:outputText value="#{node}" />
+					</p:treeNode>
+				</p:tree>
+
+				<p:tree id="tree_seq" value="#{actionTarefa.passosTree}" var="node"
+					dynamic="true" selectionMode="single"
+					selection="#{actionTarefa.passosTreeSelect}">
+					<p:ajax update=":formC:panelNTar,:formC:growl" event="select"
+						listener="#{actionTarefa.popularPas}"></p:ajax>
+					<p:treeNode>
+						<h:outputText value="#{node}" />
+					</p:treeNode>
+				</p:tree>
+
+				<br />
+				<br />
+				<br />
+				<p:commandButton value="Selecionar Sequência"
+					actionListener="#{actionTarefa.addSeq}"
+					rendered="#{actionTarefa.sequencia.id!=0}"
+					update=":formC:panelNTar,:formC:growl"></p:commandButton>
+				<p:commandButton value="Mostrar passo" type="button"
+					onclick="window.open('/SiGAA/visualizarpasso.jsf');"
+					rendered="#{actionTarefa.passos.id!=0}"></p:commandButton>
+				<p:commandButton value="Criar tarefa"
+					rendered="#{not empty actionTarefa.listaSequencia}"
+					actionListener="#{actionTarefa.salvarTarefa}"
+					update=":formC:panelNTar,:formC:painelT,:formC:growl"></p:commandButton>
+
+
+			</h:panelGrid>
+		</p:panel>
+
+
+
+
+	</p:panel>
+	<p:dialog header="Tarefa" appendToBody="true" dynamic="true"
+		widgetVar="dialogo10">
+
+
+		<h:panelGrid columns="2">
+			<h:outputText value="Inserir nome da tarefa: "></h:outputText>
+			<p:inputText value="#{actionTarefa.tarefa.nome}"></p:inputText>
+		</h:panelGrid>
+		<h:outputText value="Sequências selecionadas"></h:outputText>
+		<ui:repeat var="seq" value="#{actionTarefa.listaSequencia}"
+			varStatus="status">
+			<h:panelGrid columns="2">
+				<h:outputText value="Sequencia #{status.index+1}: " />
+				<h:outputText value="#{seq.nome}"></h:outputText>
+
+			</h:panelGrid>
+		</ui:repeat>
+
+		<br />
+		<h:panelGrid columns="2">
+			<p:commandButton value="Confirmar"
+				actionListener="#{actionTarefa.salvarTarefa}"
+				update=":formC:panelNTar,:formC:growl"
+				rendered="#{not empty actionTarefa.listaSequencia}"
+				oncomplete="dialogo10.hide();"></p:commandButton>
+			<p:commandButton value="Cancelar" onclick="dialogo10.hide();"></p:commandButton>
+		</h:panelGrid>
+	</p:dialog>
+
+
+</h:body>
+</html>

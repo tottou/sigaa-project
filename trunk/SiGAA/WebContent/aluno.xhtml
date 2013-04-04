@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="pragma" content="no-cache"/>
+<meta http-equiv="cache-control" content="no-cache,no-store,max-age=0"/>
+
+</h:head>
+<h:body>
+ 
+ 
+	<p:panel header="Aluno" id="panelA">
+
+		 <h:panelGrid columns="2"> 
+		<h:panelGrid>
+		
+		 
+
+        <p:selectOneMenu value="#{actionAluno.aluno.id}" effect="fade" rendered="#{sessao.usuario.categoria==0 || sessao.usuario.categoria==1}">      
+        	<f:selectItem itemValue="0" itemLabel="Selecione um aluno"  itemDisabled="true"/>         	        
+            <f:selectItems value="#{actionAluno.listaAluno}" var="aluno" itemLabel="#{aluno.nome}" itemValue="#{aluno.id}"/>  
+              <p:ajax update="panelA" event="change" listener="#{actionAluno.popular}"></p:ajax>
+        </p:selectOneMenu> 
+        
+              <p:selectOneMenu value="#{actionAluno.aluno.id}" effect="fade" rendered="#{!(sessao.usuario.categoria==0 || sessao.usuario.categoria==1)}" >      
+        	<f:selectItem itemValue="0" itemLabel="Selecione um aluno"  itemDisabled="true"/>         	        
+            <f:selectItems value="#{actionAluno.listaAlunoTutor}" var="aluno" itemLabel="#{aluno.nome}" itemValue="#{aluno.id}"/>  
+              <p:ajax update="panelA" event="change" listener="#{actionAluno.popular}"></p:ajax>
+        </p:selectOneMenu> 
+        
+        <br/><br/><br/><br/><br/>
+        
+         <h:panelGrid columns="2" columnClasses="label, value" styleClass="grid" cellspacing="10"> 
+         
+     
+         <h:graphicImage value="#{actionAluno.aluno.foto}" height="280" width="260" alt="Foto de aluno" cache="false" ></h:graphicImage>
+         
+        
+        <h:panelGrid columns="2" columnClasses="label, value" styleClass="grid">    
+        
+               
+               	<h:outputText value="Nome: " /> 
+               	<p:inplace  editor="true" > 
+				<p:inputText id="inputal1a" value="#{actionAluno.aluno.nome}" required="true" requiredMessage="Campo obrigatório" >
+				<f:validateLength maximum="50" minimum="4"></f:validateLength>
+				</p:inputText>
+				 </p:inplace> 
+				
+				<h:outputText value="Data de nascimento: " />
+				<p:inplace  editor="true" >
+					<p:inputMask id="inputal1nasc" value="#{actionAluno.aluno.nascimento}" mask="99/99/9999" required="true" requiredMessage="Campo obrigatório" />
+    			
+                     </p:inplace> 
+                       
+				<h:outputText value="Nome do responsável: " />  
+				<p:inplace  editor="true" >
+				<p:inputText id="inputal2a" value="#{actionAluno.aluno.nomeResponsavel}">
+				<f:validateLength maximum="50" minimum="4"></f:validateLength>
+				</p:inputText> 
+ </p:inplace> 
+                      
+				<h:outputText value="Telefone: " /> 
+				<p:inplace  editor="true" > 
+				<p:inputMask mask="(999)9999-9999" id="inputalTela" value="#{actionAluno.aluno.telefone}" 
+				required="true" requiredMessage="Campo obrigatório" validatorMessage="É necessário fornecer o número de telefone." ></p:inputMask> 
+				 </p:inplace> 
+           
+				<h:outputText value="Celular: " /> 
+				<p:inplace  editor="true" > 
+				<p:inputMask mask="(999)9999-9999" id="inputalCela" value="#{actionAluno.aluno.celular}"
+				required="true" requiredMessage="Campo obrigatório" validatorMessage="É necessário fornecer o número de telefone."></p:inputMask>
+				 </p:inplace> 
+           
+				<h:outputText value="E-mail: " />  
+				<p:inplace  editor="true" >				
+				<p:inputText id="inputal7a" value="#{actionAluno.aluno.email}" validatorMessage="E-mail inválido." required="true" requiredMessage="Campo obrigatório" >
+				<f:validateRegex pattern="^(([A-Za-z0-9]+_+)|([A-Za-z0-9]+\-+)|([A-Za-z0-9]+\.+)|([A-Za-z0-9]+\++))*[A-Za-z0-9]+@((\w+\-+)|(\w+\.))*\w{1,63}\.[a-zA-Z]{2,6}$"></f:validateRegex>
+				</p:inputText>
+				 </p:inplace> 
+                      
+				<h:outputText value="Endereço: " /> 
+				<p:inplace  editor="true" > 
+				<p:inputTextarea id="inputarea_end_al" rows="5" cols="50" value="#{actionAluno.aluno.endereco}" validatorMessage="Quantidade de caractéres indevida."
+				 required="true" requiredMessage="Campo obrigatório">
+				<f:validateLength maximum="200" minimum="4"></f:validateLength>
+				</p:inputTextarea>
+				 </p:inplace> 
+				 
+				<h:outputText value="Diagnóstico: " />
+				<p:inplace  editor="true" >
+				<p:inputTextarea id="inputarea_diag" rows="5" cols="50" value="#{actionAluno.aluno.diagnostico}">
+				<f:validateLength maximum="9000"></f:validateLength>
+				</p:inputTextarea>
+				  </p:inplace> 
+				
+				<h:outputText value="Observações: " />  
+				<p:inplace  editor="true" >
+				<p:inputTextarea id="inputarea_obs" rows="5" cols="50" value="#{actionAluno.aluno.observacoes}">
+				<f:validateLength maximum="9000"></f:validateLength>
+				</p:inputTextarea>   
+					 </p:inplace> 			
+               
+               
+        
+            
+          </h:panelGrid>
+          
+          </h:panelGrid>
+
+      
+
+    
+		 
+                 
+             <br/>  
+              
+                  
+	<h:panelGrid columns="3">
+
+    		 <p:commandButton id="btnSalvarAluno" value="Atualizar dados"  actionListener="#{actionAluno.atualizar}" update="growl,panelA" rendered="#{(actionAluno.selecionado) and 
+    		 ((sessao.usuario.categoria==2)||(sessao.usuario.categoria==1)||(sessao.usuario.categoria==0))}"  />
+    		 <p:commandButton id="addPicA" value="Alterar foto"  actionListener="#{controladora.fotoUploadAluno}" update="formC:pnlCorpo" rendered="#{(actionAluno.selecionado) and 
+    		 ((sessao.usuario.categoria==2)||(sessao.usuario.categoria==1)||(sessao.usuario.categoria==0))}"  />
+    		 <p:commandButton id="showDialogButtonAl" value="Excluir" onclick="confirmationA.show()" type="button" rendered="#{(actionAluno.selecionado) and 
+    		 ((sessao.usuario.categoria==1)||(sessao.usuario.categoria==0))}"/> 
+    		 </h:panelGrid>
+    		</h:panelGrid>
+    		
+    		<h:panelGrid  rendered="#{(actionAluno.selecionado) and 
+    		 ((sessao.usuario.categoria==1)||(sessao.usuario.categoria==0))}">
+    		 
+    		  <p:panel header="Atribuir Professores e Tutores" toggleable="true" toggleOrientation="horizontal" collapsed="true" >
+    		    <p:pickList id="profPickList" value="#{actionAluno.listaProfessor}" var="professor" effect="drop"  
+                    itemValue="#{professor}" itemLabel="#{professor.nome}" converter="perfil"  
+                    showSourceControls="true" showTargetControls="true"   
+                    showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" >  
+  
+        <f:facet name="sourceCaption">Professores</f:facet>  
+        <f:facet name="targetCaption">Selecionados</f:facet>          
+  
+        <p:column style="width:25%">  
+            <p:graphicImage value="#{professor.foto}" width="30" height="40" />  
+        </p:column>  
+  
+            <p:column style="width:75%;">  
+            #{professor.nome}  
+        </p:column>  
+  
+    </p:pickList>  
+    
+    <p:pickList id="tutorPickList" value="#{actionAluno.listaTutor}" var="tutor" effect="drop"  
+                    itemValue="#{tutor}" itemLabel="#{tutor.nome}" converter="perfil"  
+                    showSourceControls="true" showTargetControls="true"   
+                    showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" >  
+  
+        <f:facet name="sourceCaption">Tutores</f:facet>  
+        <f:facet name="targetCaption">Selecionados</f:facet>          
+  
+        <p:column style="width:25%">  
+            <p:graphicImage value="#{tutor.foto}" width="30" height="40" />  
+        </p:column>  
+  
+            <p:column style="width:75%;">  
+            #{tutor.nome}  
+        </p:column>  
+  
+    </p:pickList>  
+    		</p:panel>
+    		
+    		</h:panelGrid>
+    		
+    		</h:panelGrid>
+    		</p:panel>
+    			     <p:confirmDialog id="confirmDialog" appendToBody="true" message= " Você tem certeza que deseja excluir permanentemente o cadastro de aluno selecionado?"
+    		      header="Exclusão" severity="alert" widgetVar="confirmationA">  
+                  
+        <p:commandButton id="confirm" value="Sim" update="growl,:formC:panelA" oncomplete="confirmationA.hide()"  
+                    actionListener="#{actionAluno.deletar}" />  
+        <p:commandButton id="decline" value="Não" onclick="confirmationA.hide()" type="button" />   
+                  
+    </p:confirmDialog> 
+    		
+</h:body>
+</html>
