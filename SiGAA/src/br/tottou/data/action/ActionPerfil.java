@@ -222,12 +222,14 @@ public void atualizar(ActionEvent actionEvent) {
 	 }
 	 
 	 public void mudarSenha(ActionEvent ae) {
-		 if (perfil.getSenha().equals(getSenhaAntiga())) {
-			 
-			 perfil.setSenha(getSenhaNova());
+		 if (PerfilDao.getPerfil(getPerfil().getId()).getSenha().equals(getSenhaAntiga())) {
+			 Perfil perfilSenha = new Perfil();
+			 perfilSenha = PerfilDao.getPerfil(getPerfil().getId());			 
+			 perfilSenha.setSenha(getSenhaNova());
+			 PerfilDao.atualizarPerfil(perfilSenha);
 			 FacesContext context = FacesContext.getCurrentInstance();
-		        context.addMessage(null, new FacesMessage("Alteração de senha", "Senha alterada." )); 
-		        context.addMessage(null, new FacesMessage("Atualização requirida", "Atualize o perfil para a modificação de senha surtir efeito." ));
+		        context.addMessage(null, new FacesMessage("Alteração de senha", "Senha alterada com sucesso." )); 
+		       // context.addMessage(null, new FacesMessage("Atualização requirida", "Atualize o perfil para a modificação de senha surtir efeito." ));
 			 
 			 
 		 } else {

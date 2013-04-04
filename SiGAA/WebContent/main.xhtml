@@ -8,8 +8,7 @@
 
 <f:view contentType="text/html" encoding="UTF-8">
 	<h:head>
-		<meta http-equiv="Pragma" content="no-cache" />
-   		   <meta http-equiv="Expires" content="-1" />
+		<meta http-equiv="Pragma" content="no-cache" />   		  
 			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 			<meta http-equiv="pragma" content="no-cache" />
 			<meta http-equiv="cache-control"
@@ -146,7 +145,7 @@
 						backLabel="voltar">
 						<p:submenu label="Usuários" icon="ui-icon-person"
 							rendered="#{sessao.usuario.categoria==0 || sessao.usuario.categoria==1}">
-							<p:menuitem value="Cadastrar Novo"
+							<p:menuitem value="Novo Cadastro"
 								actionListener="#{controladora.usuario}"
 								update=":formC:pnlCorpo" icon="ui-icon-disk">
 								<f:actionListener binding="#{actionPerfil.limpaBean}" />
@@ -157,7 +156,7 @@
 								update=":formC:pnlCorpo" icon="ui-icon-pencil" />
 						</p:submenu>
 						<p:submenu label="Alunos" icon="ui-icon-person">
-							<p:menuitem value="Cadastrar Novo"
+							<p:menuitem value="Novo Cadastro"
 								rendered="#{sessao.usuario.categoria==0 || sessao.usuario.categoria==1}"
 								actionListener="#{controladora.aluno}" update=":formC:pnlCorpo"
 								icon="ui-icon-disk">
@@ -170,7 +169,7 @@
 						</p:submenu>
 						<p:submenu label="Empresas" icon="ui-icon-home"
 							rendered="#{sessao.usuario.categoria==0}">
-							<p:menuitem value="Cadastrar Novo"
+							<p:menuitem value="Novo Cadastro"
 								actionListener="#{controladora.empresa}"
 								update=":formC:pnlCorpo" icon="ui-icon-disk">
 								<f:actionListener binding="#{actionEmpresa.limpaBean}" />
@@ -189,7 +188,7 @@
 							</p:menuitem>
 											
 						<p:submenu label="Categoria" icon="ui-icon-document-b">
-							<p:menuitem value="Cadastrar Novo"
+							<p:menuitem value="Novo Cadastro"
 								actionListener="#{controladora.categoria}"
 								update=":formC:pnlCorpo" icon="ui-icon-disk">
 								<f:actionListener binding="#{actionCategoria.limpaBean}" />

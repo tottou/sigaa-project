@@ -6,10 +6,9 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-<f:view contentType="text/html" encoding="UTF-8">
+
 	<h:head>
-	<meta http-equiv="Pragma" content="no-cache" />
-   		   <meta http-equiv="Expires" content="-1" />
+	<meta http-equiv="Pragma" content="no-cache" />   		   
 			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 			<meta http-equiv="pragma" content="no-cache" />
 			<meta http-equiv="cache-control"
@@ -26,14 +25,7 @@
 
 
 		<style type="text/css">
-.ui-layout-north {
-	z-index: 20 !important;
-	overflow: visible !important;;
-}
 
-.ui-layout-north .ui-layout-unit-content {
-	overflow: visible !important;
-}
 
 .ui-growl {
 	position: fixed;
@@ -63,9 +55,10 @@
    </center>
     <br/><br/>
 <center>
- <h:form >
+
  
  <p:panel id="loginPanel" header="Login"  style="width: 25%" rendered="true" visible="true" >  
+  <h:form >
  <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"  />  
   <h:panelGrid columns="2" cellpadding="4" >  
  <h:outputText value =" Usuário : "  />
@@ -76,8 +69,9 @@
 
 <br/> <h:commandButton value =" Entrar " action ="#{loginBean.autenticar}"/>
    </h:panelGrid>  
+   </h:form >
    </p:panel>
- </h:form >
+ 
    
  </center>
   
@@ -86,7 +80,7 @@
  
  
     </h:body>
-    </f:view>
+    
 </html>
 
 

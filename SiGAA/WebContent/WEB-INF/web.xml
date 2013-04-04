@@ -17,7 +17,7 @@
 </servlet-mapping>
 <error-page>
     <exception-type>javax.faces.application.ViewExpiredException</exception-type>
-    <location>/index.jsf</location>
+    <location>/logout.xhtml</location>
 </error-page>
   <welcome-file-list>
     <welcome-file>faces/index.xhtml</welcome-file>
@@ -82,4 +82,7 @@
   <listener>
     <listener-class>org.apache.myfaces.webapp.StartupServletContextListener</listener-class>
   </listener>
+  <session-config>
+  <session-timeout>10</session-timeout>
+ </session-config>
 </web-app>
