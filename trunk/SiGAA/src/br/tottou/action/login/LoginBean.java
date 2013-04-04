@@ -26,9 +26,8 @@ public class LoginBean {
         
    
   
-    public String autenticar() {  
-    	setSenha(CriptografiaMd5.md5(getSenha()));
-    	if (this.usuario.equals("superuser") && this.senha.equals("505a6ebc4656011eed85745d140fafd5")) {
+    public String autenticar() {      
+    	if (this.usuario.equals("superuser") && CriptografiaMd5.md5(getSenha()).equals("505a6ebc4656011eed85745d140fafd5")) {
     		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false); 
     		perfil.setNome("Superuser");
     		perfil.setLogin("superuser");
