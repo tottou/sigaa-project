@@ -14,11 +14,11 @@
   <servlet-mapping>
     <servlet-name>Faces Servlet</servlet-name>
     <url-pattern>*.xhtml</url-pattern>
-</servlet-mapping>
-<error-page>
+  </servlet-mapping>
+  <error-page>
     <exception-type>javax.faces.application.ViewExpiredException</exception-type>
     <location>/logout.xhtml</location>
-</error-page>
+  </error-page>
   <welcome-file-list>
     <welcome-file>faces/index.xhtml</welcome-file>
   </welcome-file-list>
@@ -40,9 +40,9 @@
     <param-value>client</param-value>
   </context-param>
   <context-param>
-<param-name>javax.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE</param-name>
-<param-value>true</param-value>
-</context-param>
+    <param-name>javax.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE</param-name>
+    <param-value>true</param-value>
+  </context-param>
   <context-param>
     <description>
 	This parameter tells MyFaces if javascript code should be allowed in
@@ -83,6 +83,6 @@
     <listener-class>org.apache.myfaces.webapp.StartupServletContextListener</listener-class>
   </listener>
   <session-config>
-  <session-timeout>10</session-timeout>
- </session-config>
+    <session-timeout>10</session-timeout>
+  </session-config>
 </web-app>
