@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<meta http-equiv="pragma" content="no-cache" />
+	<meta http-equiv="cache-control" content="no-cache,no-store,max-age=0" />
+
+
+</h:head>
+<h:body>
+
+	<p:tabView>
+		<p:tab title="Cards">
+			<ui:repeat var="aluno" value="#{actionCard.listaAluno}">
+			
+			<p:panel >
+				<p:panelGrid columns="2">
+					<h:graphicImage value="#{aluno.foto}" height="180"
+						width="160" alt="Foto de aluno" cache="false"></h:graphicImage>
+					<p:panelGrid columns="2">
+						<h:outputText value="Nome: " />
+						<h:outputText value="#{aluno.nome}" />
+						<h:outputText value="Nome do Responsável: " />
+						<h:outputText value="#{aluno.nomeResponsavel}" />
+						<h:outputText value="Nascimento: " />
+						<h:outputText value="#{aluno.nascimento}" />
+						<h:outputText value="Diagnóstico: " />
+						<h:outputText value="#{aluno.diagnostico}" />
+					</p:panelGrid>
+
+				</p:panelGrid>
+
+
+			</p:panel>
+
+</ui:repeat>
+
+		</p:tab>
+
+		<p:tab title="Agenda">
+
+		</p:tab>
+
+
+	</p:tabView>
+
+
+
+
+
+</h:body>
+</html>
