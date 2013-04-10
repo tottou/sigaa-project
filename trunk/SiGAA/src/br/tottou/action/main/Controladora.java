@@ -51,7 +51,9 @@ public class Controladora {
 	public void agenda (ActionEvent e) {
 		setTarget("agenda.xhtml");
 	}
-	
+	public void card (ActionEvent e) {
+		setTarget("card.xhtml");
+	}
 	public void schedule (ActionEvent e) {
 		setTarget("schedule.xhtml");
 	}

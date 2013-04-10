@@ -11,6 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -67,8 +68,11 @@ public class Aluno implements Serializable {
 	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_empresaa")
 	private Empresa empresa;
-
+	
 	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+	@JoinTable(name="alunos_professores", 
+    joinColumns={@JoinColumn(name="aluno_id")}, 
+    inverseJoinColumns={@JoinColumn(name="perfil_id")})	
 	@IndexColumn(base = 1, name = "profs")
 	private List<Perfil> professores;
 
