@@ -66,7 +66,9 @@ public class Perfil implements Serializable{
 	private Empresa empresa;
 	
 	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-	@JoinColumn(name = "id_alunos")
+	@JoinTable(name="alunos_professores", 
+    joinColumns={@JoinColumn(name="perfil_id")}, 
+    inverseJoinColumns={@JoinColumn(name="aluno_id")})
 	private Set<Aluno> alunos;
 	
 	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)

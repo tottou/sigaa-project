@@ -25,7 +25,8 @@
 		<br />
 <table align="center" cellspacing="10">
 		<tr valign="middle" align="center" >
-			<ui:repeat var="arquivo" value="#{actionTarefa.passos.arquivos}">
+			<ui:repeat var="arquivo" value="#{actionTarefa.passos.arquivos}" >
+			
 				<td><h:graphicImage value="#{arquivo.url}" height="300"
 						width="300" rendered="#{arquivo.tipo==1}" cache="false"></h:graphicImage>
 

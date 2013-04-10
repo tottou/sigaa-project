@@ -8,29 +8,30 @@
 
 <f:view contentType="text/html" encoding="UTF-8">
 	<h:head>
-		<meta http-equiv="Pragma" content="no-cache" />   		  
-			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-			<meta http-equiv="pragma" content="no-cache" />
-			<meta http-equiv="cache-control"
-				content="no-cache,no-store,max-age=0" />				
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta http-equiv="pragma" content="no-cache" />
+		<meta http-equiv="cache-control" content="no-cache,no-store,max-age=0" />
 		<f:facet name="main">
 			<title>Sistema de Gerenciamento de Aceleração da Aprendizagem</title>
 		</f:facet>
 		<link type="text/css" rel="stylesheet" href="/css/default.css" />
 		<link type="text/css" rel="stylesheet"
 			href="/css/syntaxhighlighter/syntaxhighlighter.css" />
-			<link rel="shortcut icon" type="image/png" href="#{request.contextPath}/imagens/favicon.png" />
+		<link rel="shortcut icon" type="image/png"
+			href="#{request.contextPath}/imagens/favicon.png" />
 
 
 
 		<style type="text/css">
-		
 .ui-widget {
-    font-size: 100% !important;
- }
+	font-size: 100% !important;
+}
+
 .ui-widget .ui-widget {
-    font-size: 100% !important;
- }
+	font-size: 100% !important;
+}
+
 .ui-layout-north {
 	z-index: 10 !important;
 	overflow: visible !important;;
@@ -50,14 +51,14 @@
 }
 
 .botao {
-      border-width: 0px;
-      border-color: #000000;
-      border-style: solid;
-      text-align: center;
-      font-weight: bold;
-      background: #FF800F;
-      color: #FFFFFF;
-      width: 100%;
+	border-width: 0px;
+	border-color: #000000;
+	border-style: solid;
+	text-align: center;
+	font-weight: bold;
+	background: #FF800F;
+	color: #FFFFFF;
+	width: 100%;
 }
 
 .ui-logado {
@@ -67,8 +68,6 @@
 .ui-sigaa {
 	background-image: url('./imagens/sigaa_small.jpg') !important;
 }
-
-
 </style>
 
 
@@ -76,11 +75,11 @@
 
 
 	<h:body>
-		<p:layout fullPage="true" id="fl" >
+		<p:layout fullPage="true" id="fl">
 
-			<p:layoutUnit id="top" position="north" size="50" >
+			<p:layoutUnit id="top" position="north" size="50">
 				<h:form id="barra">
-				<p:menubar autoSubmenuDisplay="true">
+					<p:menubar autoSubmenuDisplay="true">
 						<p:submenu label="#{sessao.usuario.login}" icon="ui-logado">
 							<p:menuitem value="Editar dados"
 								actionListener="#{controladora.editUsuario}"
@@ -95,43 +94,41 @@
 						<p:submenu label="#{sessao.usuario.empresa.nome}"
 							icon="ui-icon-home" rendered="#{sessao.usuario.categoria==0}">
 
-								<p:menuitem>
+							<p:menuitem>
 								<ui:repeat var="empresa" value="#{actionEmpresa.listaEmpresa}">
-								<p:commandButton value="#{empresa.nome}" action="#{actionEmpresa.selecionarEmpresaId(empresa.id)}" update=":formC:growl,:barra" styleClass="botao" ></p:commandButton>
-								
+									<p:commandButton value="#{empresa.nome}"
+										action="#{actionEmpresa.selecionarEmpresaId(empresa.id)}"
+										update=":formC:growl,:barra" styleClass="botao"></p:commandButton>
+
 								</ui:repeat>
-										</p:menuitem>				
+							</p:menuitem>
 						</p:submenu>
-						
-						<p:submenu label="Sobre"
-							icon="ui-icon-info">
 
-							<p:menuitem value="SiGAA" onclick="diagSigaa.show()"
-								 />
-								 
-								 <p:menuitem value="FAQ" 
-								 />
-								 <p:menuitem value="Ajuda" 
-								 />
-								 
-								 <p:menuitem value="Contato" onclick="diagContato.show()"
-								 />
+						<p:submenu label="Sobre" icon="ui-icon-info">
+
+							<p:menuitem value="SiGAA" onclick="diagSigaa.show()" />
+
+							<p:menuitem value="FAQ" />
+							<p:menuitem value="Ajuda" />
+
+							<p:menuitem value="Contato" onclick="diagContato.show()" />
 
 						</p:submenu>
-												
+
 
 					</p:menubar>
-					
-					
+
+
 				</h:form>
-		
+
 			</p:layoutUnit>
-			
+
 
 			<p:layoutUnit id="bottom" position="south" size="55">
 				<center>
 					<h:outputText
-						value="SiGAA - Sistema de Gerenciamento de Aceleração da Aprendizagem" style="font-size: 15px"></h:outputText>
+						value="SiGAA - Sistema de Gerenciamento de Aceleração da Aprendizagem"
+						style="font-size: 15px"></h:outputText>
 					<br />
 					<h:outputText value=" 2012" style="font-size: 15px"></h:outputText>
 				</center>
@@ -141,7 +138,7 @@
 				closable="true" collapsible="true" header="Menu" minSize="200">
 
 				<h:form>
-					<p:menu type="sliding" style="width:280px; height: 230px;" 
+					<p:menu type="sliding" style="width:280px; height: 230px;"
 						backLabel="voltar">
 						<p:submenu label="Usuários" icon="ui-icon-person"
 							rendered="#{sessao.usuario.categoria==0 || sessao.usuario.categoria==1}">
@@ -185,8 +182,12 @@
 							actionListener="#{controladora.schedule}"
 							update=":formC:pnlCorpo">
 							<f:actionListener binding="#{actionAgenda.limpaCache}" />
-							</p:menuitem>
-											
+						</p:menuitem>
+
+						<p:menuitem value="Cards" icon="ui-icon-calendar"
+							actionListener="#{controladora.card}" update=":formC:pnlCorpo">
+
+						</p:menuitem>
 						<p:submenu label="Categoria" icon="ui-icon-document-b">
 							<p:menuitem value="Novo Cadastro"
 								actionListener="#{controladora.categoria}"
@@ -195,24 +196,24 @@
 							</p:menuitem>
 							<p:menuitem value="Editar/Excluir"
 								actionListener="#{controladora.editCategoria}"
-								update=":formC:pnlCorpo" icon="ui-icon-pencil" >
+								update=":formC:pnlCorpo" icon="ui-icon-pencil">
 								<f:actionListener binding="#{actionCategoria.instanciarS}" />
-								</p:menuitem>
+							</p:menuitem>
 						</p:submenu>
 
 						<p:menuitem value="Programas de ensino" icon="ui-icon-note"
 							actionListener="#{controladora.programa}"
 							update=":formC:pnlCorpo">
 							<f:actionListener binding="#{actionPrograma.instanciarS}" />
-							</p:menuitem>
-							<p:menuitem value="Tarefas" icon="ui-icon-clipboard"
+						</p:menuitem>
+						<p:menuitem value="Tarefas" icon="ui-icon-clipboard"
 							actionListener="#{controladora.criaTarefa}"
 							update=":formC:pnlCorpo">
 							<f:actionListener binding="#{actionTarefa.instanciar}" />
-							</p:menuitem>
-							
-							
-						
+						</p:menuitem>
+
+
+
 
 
 					</p:menu>
@@ -230,8 +231,8 @@
 
 
 
-				<p:commandButton id="basic" value="" icon="ui-icon-gear" onclick="dlg1.show();"
-					type="button" style="margin-top:10px" />
+				<p:commandButton id="basic" value="" icon="ui-icon-gear"
+					onclick="dlg1.show();" type="button" style="margin-top:10px" />
 
 			</p:layoutUnit>
 
@@ -248,7 +249,7 @@
 							<ui:include src="#{controladora.target}" />
 						</ui:insert>
 					</p:outputPanel>
-				
+
 
 
 				</h:form>
@@ -280,46 +281,62 @@
 				<p:graphicImage value="/imagens/ajax-loader.gif" />
 			</center>
 		</p:dialog>
-		
-			<p:dialog id="diagempres" header="Empresas" widgetVar="diagEmpz" modal="true" height="300" width="550" visible="true" rendered="#{sessao.usuario.categoria==0 and sessao.usuario.empresa.id==0}" >  
+
+		<p:dialog id="diagempres" header="Empresas" widgetVar="diagEmpz"
+			modal="true" height="300" width="550" visible="true"
+			rendered="#{sessao.usuario.categoria==0 and sessao.usuario.empresa.id==0}">
 			<h:form>
-	<center>
-				        <h3>
-				        Cadastre ou selecione um empresa do SiGAA para acessar as funcionalidades.
-				        </h3>
-				        <br/> <br/>
-				        <h:panelGrid columns="2">
-				        <p:commandButton value="Selecionar empresa" actionListener="#{controladora.editEmpresa}" update=":formC:pnlCorpo" onsuccess="diagEmpz.hide();"></p:commandButton>
-				       <p:commandButton value="Cadastrar nova empresa" actionListener="#{controladora.empresa}" update=":formC:pnlCorpo" onsuccess="diagEmpz.hide();"></p:commandButton>
-				       </h:panelGrid>
-				       </center>
-     </h:form>
-</p:dialog>  
-		
-		
-		<p:dialog id="diagsi" header="SiGAA" widgetVar="diagSigaa" modal="true" height="290" width="650">  
-		 <p:graphicImage value="/imagens/sigaa_small.jpg" />
-    <h:outputText value="Software desenvolvido para a criação, aplicação, gerenciamento e análise de tarefas educacionais voltadas para indivíduos com atraso no desenvolvimento." />
-    <br/><br/><br/>
-    <h:outputText value="Projeto idealizado pelo Professor Dr. Márcio Borges Moreira e desenvolvido pelo Engenheiro Arthur Heleno L. R. de Souza  "/>
-     
-</p:dialog>  
-
-<p:dialog id="diagsicont" header="Contato" widgetVar="diagContato" modal="true" height="280" width="500">  
-    <h:outputText value="CAMPUS EDSON MACHADO (ASA SUL) - Coordenação de Psicologia " style="font-weight:bold"/>
-    <br/><br/>
-    <h:outputText value="SGAS Quadra 613/614 – Lotes 97 e 98 Av. L2 Sul " />
-    <br/>
-    <h:outputText value="Brasília - DF "/>
-    <br/>
-    <h:outputText value="CEP: 70.200-730"/>
-    <br/><br/><br/>
-    <h:outputText value="E-mail: sigaa@walden4.com.br" />
+				<center>
+					<h3>Cadastre ou selecione um empresa do SiGAA para acessar as
+						funcionalidades.</h3>
+					<br /> <br />
+					<h:panelGrid columns="2">
+						<p:commandButton value="Selecionar empresa"
+							actionListener="#{controladora.editEmpresa}"
+							update=":formC:pnlCorpo" onsuccess="diagEmpz.hide();"></p:commandButton>
+						<p:commandButton value="Cadastrar nova empresa"
+							actionListener="#{controladora.empresa}" update=":formC:pnlCorpo"
+							onsuccess="diagEmpz.hide();"></p:commandButton>
+					</h:panelGrid>
+				</center>
+			</h:form>
+		</p:dialog>
 
 
+		<p:dialog id="diagsi" header="SiGAA" widgetVar="diagSigaa"
+			modal="true" height="290" width="650">
+			<p:graphicImage value="/imagens/sigaa_small.jpg" />
+			<h:outputText
+				value="Software desenvolvido para a criação, aplicação, gerenciamento e análise de tarefas educacionais voltadas para indivíduos com atraso no desenvolvimento." />
+			<br />
+			<br />
+			<br />
+			<h:outputText
+				value="Projeto idealizado pelo Professor Dr. Márcio Borges Moreira e desenvolvido pelo Engenheiro Arthur Heleno L. R. de Souza  " />
+
+		</p:dialog>
+
+		<p:dialog id="diagsicont" header="Contato" widgetVar="diagContato"
+			modal="true" height="280" width="500">
+			<h:outputText
+				value="CAMPUS EDSON MACHADO (ASA SUL) - Coordenação de Psicologia "
+				style="font-weight:bold" />
+			<br />
+			<br />
+			<h:outputText value="SGAS Quadra 613/614 – Lotes 97 e 98 Av. L2 Sul " />
+			<br />
+			<h:outputText value="Brasília - DF " />
+			<br />
+			<h:outputText value="CEP: 70.200-730" />
+			<br />
+			<br />
+			<br />
+			<h:outputText value="E-mail: sigaa@walden4.com.br" />
 
 
-</p:dialog>
+
+
+		</p:dialog>
 
 
 
