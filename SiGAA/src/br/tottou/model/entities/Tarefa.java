@@ -37,7 +37,10 @@ public class Tarefa implements Serializable {
 	private String nome;
 	
 	@Column(name="STATUS")
-	private String status; //data de criação
+	private String status; 
+	
+	@Column(name="IMAGEM")
+	private String imagem;
 	
 	@Column(name = "SESSOES")
 	private long sessoes;
@@ -140,6 +143,14 @@ public class Tarefa implements Serializable {
 
 	public void setAlunos(Set<Aluno> alunos) {
 		this.alunos = alunos;
+	}
+
+	public String getImagem() {
+		return imagem;
+	}
+
+	public void setImagem(String imagem) {
+		this.imagem = imagem;
 	}
 	
 	

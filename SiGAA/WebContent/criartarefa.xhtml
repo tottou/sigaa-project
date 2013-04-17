@@ -16,12 +16,20 @@
 
 	<p:panel id="painelT">
 
+		<h:panelGrid columns="3">
+			<h:panelGrid columns="2">
+				<h:graphicImage value="#{actionTarefa.tarefa.imagem}" height="100"
+					width="80" alt="Tarefa" cache="false"></h:graphicImage>
+				<p:commandButton id="bttmodalt" value="Selecionar imagem"
+					onclick="imgz12.show();" type="button" />
+			</h:panelGrid>
+			<h:panelGrid width="200"></h:panelGrid>
+			<h:panelGrid columns="2">
+				<h:outputText value="Inserir nome da tarefa: "></h:outputText>
+				<p:inputText value="#{actionTarefa.tarefa.nome}"></p:inputText>
+			</h:panelGrid>
 
-		<h:panelGrid columns="2">
-			<h:outputText value="Inserir nome da tarefa: "></h:outputText>
-			<p:inputText value="#{actionTarefa.tarefa.nome}"></p:inputText>
 		</h:panelGrid>
-
 
 	</p:panel>
 
@@ -32,7 +40,7 @@
 				<h:panelGrid columns="3">
 					<h:outputText value="Sequencia #{status.index+1}: " />
 					<h:outputText value="#{seq.nome}"></h:outputText>
-					<p:commandButton icon="ui-icon-circle-close" styleClass="botao"
+					<p:commandButton icon="ui-icon-circle-close"
 						actionListener="#{actionTarefa.removeSeq(status.index)}"
 						update=":formC:panelNTar,:formC:growl"></p:commandButton>
 				</h:panelGrid>
@@ -125,6 +133,26 @@
 		</h:panelGrid>
 	</p:dialog>
 
+
+	<p:dialog modal="true" id="imgzMod" widgetVar="imgz12"
+		appendToBody="true" dynamic="true" header="Imagens do SiGAA"
+		width="500" height="300" closable="false" resizable="false">
+
+		<ui:repeat var="imagem" value="#{actionTarefa.listaImagens}">
+			<p:commandLink actionListener="#{actionTarefa.selecionarImg}"
+				update=":formC:painelT" oncomplete="imgz12.hide();">
+				<f:attribute name="valor" value="#{imagem}" />
+
+				<p:graphicImage id="img_a" value="#{imagem}" height="80" width="80">
+
+				</p:graphicImage>
+			</p:commandLink>
+
+		</ui:repeat>
+		<br />
+		<p:commandButton id="bttmodalhide" value="Cancelar"
+			onclick="imgz12.hide();" type="button" />
+	</p:dialog>
 
 </h:body>
 </html>

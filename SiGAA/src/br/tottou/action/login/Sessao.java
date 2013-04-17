@@ -11,7 +11,7 @@ import br.tottou.model.entities.Perfil;
 @ManagedBean
 public class Sessao {
 			   
-	    
+	    private String verificaSessao;
 	    
 	    Perfil usuario = new Perfil();
 	    
@@ -40,6 +40,24 @@ public class Sessao {
 			session.setAttribute("usuario", usuario);
 		}
 	
+		private String checkS(){
+			HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false); 
+	
+	      if (session.isNew()) {
+	    	  return "zero";
+	      }
+	      return "um";
+	      
+	       
+		}
 
+		public String getVerificaSessao() {
+			verificaSessao=checkS();			
+			return verificaSessao;
+		}
+
+		public void setVerificaSessao(String verificaSessao) {
+			this.verificaSessao = verificaSessao;
+		}
 	    
 }

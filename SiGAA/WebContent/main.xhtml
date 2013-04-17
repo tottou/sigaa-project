@@ -21,6 +21,23 @@
 		<link rel="shortcut icon" type="image/png"
 			href="#{request.contextPath}/imagens/favicon.png" />
 
+		<script type="text/javascript">
+		 function erro() {
+			 window.location = '/SiGAA/error.xhtml';
+			 };
+			function verificaSessao() {		
+				alert ('#{facesContext.externalContext.getSession(false) == null}');
+				
+				if ('#{facesContext.externalContext.getSession(false) == null}'==true) {
+					alert ("wat");
+					 window.location = '/SiGAA/expired.xhtml';
+					 alert ("wut");
+				}
+			};
+			 
+		
+		</script>
+
 
 
 		<style type="text/css">
@@ -51,15 +68,18 @@
 }
 
 .botao {
-	border-width: 0px;
-	border-color: #000000;
-	border-style: solid;
-	text-align: center;
-	font-weight: bold;
-	background: #FF800F;
-	color: #FFFFFF;
-	width: 100%;
+	border-width: 1px !important;
+	border-color: #000000 !important;
+	border-style: solid !important;
+	text-align: center !important;
+	font-weight: bold !important;	
+	font-size: x-small !important;	
+	background: #FFFFFF !important;	
+	color: #000000 !important;
+	width: 200px !important;
+	height: 30px !important;
 }
+
 
 .ui-logado {
 	background-image: url('./imagens/user.png') !important;
@@ -184,7 +204,7 @@
 							<f:actionListener binding="#{actionAgenda.limpaCache}" />
 						</p:menuitem>
 
-						<p:menuitem value="Cards" icon="ui-icon-calendar"
+						<p:menuitem value="Cards" icon="ui-icon-newwin"
 							actionListener="#{controladora.card}" update=":formC:pnlCorpo">
 
 						</p:menuitem>
@@ -271,8 +291,11 @@
 		</p:dialog>
 
 
-		<p:ajaxStatus onstart="statusDialog1.show();"
+		<p:ajaxStatus onstart="statusDialog1.show();" onerror="erro();"
 			onsuccess="statusDialog1.hide();" />
+			
+			
+			
 
 		<p:dialog modal="true" widgetVar="statusDialog1"
 			header="Carregando..." resizable="false" appendToBody="true"
