@@ -10,38 +10,123 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 	<meta http-equiv="pragma" content="no-cache" />
 	<meta http-equiv="cache-control" content="no-cache,no-store,max-age=0" />
-
+	<script type="text/javascript">
+		PrimeFaces.locales['pt'] = {
+			closeText : 'Fechar',
+			prevText : 'Anterior',
+			nextText : 'Próximo',
+			currentText : 'Começo',
+			monthNames : [ 'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio',
+					'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro',
+					'Novembro', 'Dezembro' ],
+			monthNamesShort : [ 'Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun',
+					'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Des' ],
+			dayNames : [ 'Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta',
+					'Sexta', 'Sábado' ],
+			dayNamesShort : [ 'Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb' ],
+			dayNamesMin : [ 'D', 'S', 'T', 'Q', 'Q', 'S', 'S' ],
+			weekHeader : 'Semana',
+			firstDay : 1,
+			isRTL : false,
+			showMonthAfterYear : false,
+			yearSuffix : '',
+			timeOnlyTitle : 'Só horas',
+			timeText : 'Tempo',
+			hourText : 'Hora',
+			minuteText : 'Minuto',
+			secondText : 'Segundo',
+			currentText : 'Data atual',
+			ampm : false,
+			month : 'Mês',
+			week : 'Semana',
+			day : 'Dia',
+			allDayText : 'Dia todo'
+		};
+	</script>
 
 </h:head>
 <h:body>
 
 	<p:tabView>
 		<p:tab title="Cards">
-		<p:dataGrid var="aluno" value="#{actionCard.listaAluno}" columns="2"  >
-			<p:panel header="ID - #{aluno.id}" >
-						<h:panelGrid columns="2">
-							<h:graphicImage value="#{aluno.foto}" height="100" width="80"
-								alt="Foto de aluno" cache="false"></h:graphicImage>
-							<h:panelGrid columns="2">
-								<h:outputText value="Nome: " />
-								<h:outputText value="#{aluno.nome}" />
-								<h:outputText value="Responsável: " />
-								<h:outputText value="#{aluno.nomeResponsavel}" />
-								<h:outputText value="Nascimento: " />
-								<h:outputText value="#{aluno.nascimento}" />
-							
-							</h:panelGrid>
+			<p:dataGrid var="aluno" value="#{actionCard.listaAluno}" columns="3">
+
+				<p:panel header="ID - #{aluno.id}" style="width:100%">
+					<h:panelGrid columns="2" style="width:100%">
+						<h:graphicImage value="#{aluno.foto}" height="100" width="80"
+							alt="Foto de aluno" cache="false"></h:graphicImage>
+						<h:panelGrid columns="2" style="width:320px">
+							<h:outputText value="Nome: " />
+							<h:outputText value="#{aluno.nome}" />
+							<h:outputText value="Responsável: " />
+							<h:outputText value="#{aluno.nomeResponsavel}" />
+							<h:outputText value="Nascimento: " />
+							<h:outputText value="#{aluno.nascimento}" />
 
 						</h:panelGrid>
-					</p:panel>
-		
-		
-		</p:dataGrid>
-		
-				
+
+					</h:panelGrid>
+					<p:separator id="customSeparator" />
+					<h:panelGrid columns="2">
+						<p:commandButton value="Histórico" styleClass="botao"
+							icon="ui-icon-clock"></p:commandButton>
+						<p:commandButton value="Tarefas" styleClass="botao"
+							icon="ui-icon-clipboard"></p:commandButton>
+
+					</h:panelGrid>
+				</p:panel>
+
+
+			</p:dataGrid>
+
+
 		</p:tab>
 
 		<p:tab title="Agenda">
+			<p:schedule value="#{actionCard.eventModel}" widgetVar="myschedule"
+				locale="pt" draggable="false" resizable="false">
+
+				<p:ajax event="eventSelect" listener="#{actionCard.onEventSelect}"
+					update="eventDetails2" oncomplete="eventDialog2.show()" />
+
+
+			</p:schedule>
+
+			<p:dialog widgetVar="eventDialog2" header="Detalhes da tarefa"
+				showEffect="clip" hideEffect="clip">
+				<h:panelGrid id="eventDetails2">
+					<p:messages id="messages2" autoUpdate="true" closable="true" />
+					
+					<h:panelGrid columns="2">
+					<h:outputText value=" "></h:outputText>
+					<h:outputText value="#{actionCard.agenda.nome}"></h:outputText>
+					<h:outputText value="Total de sessões: "></h:outputText>
+					<h:outputText value="#{actionCard.agenda.sessoes}"></h:outputText>
+					<h:outputText value="Sessão a ser realizada "></h:outputText>
+					<h:outputText value="#{actionCard.agenda.nome}"></h:outputText>
+					</h:panelGrid>
+					<p:dataGrid var="tarefa" value="#{actionCard.listaTarefa}"
+						columns="3">
+						<p:panel>
+
+							<h:graphicImage value="#{tarefa.imagem}" height="100" width="80"
+								alt="Foto de aluno" cache="false"></h:graphicImage>
+
+							<h:outputText value="#{tarefa.nome}" />
+
+
+
+						</p:panel>
+					</p:dataGrid>
+					<h:panelGrid columns="2">
+						<p:commandButton value="Iniciar tarefa" icon="ui-icon-clock"
+							oncomplete="eventDialog2.hide()"></p:commandButton>
+						<p:commandButton value="Cancelar" icon="ui-icon-clipboard"
+							type="button" onclick="eventDialog2.hide()"></p:commandButton>
+
+					</h:panelGrid>
+				</h:panelGrid>
+			</p:dialog>
 
 		</p:tab>
 

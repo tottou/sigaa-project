@@ -63,6 +63,12 @@ public class LoginBean {
        
        return "/logout";  
     }  
+    
+    public void killSession() {
+    	HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+    	session.removeAttribute("usuario");        
+        session.invalidate();         
+    }
   
     public String getSenha() {  
         return senha;  

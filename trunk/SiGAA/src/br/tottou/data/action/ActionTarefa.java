@@ -2,19 +2,23 @@ package br.tottou.data.action;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 
 import br.tottou.action.login.Sessao;
+import br.tottou.data.ArquivosDao;
 import br.tottou.data.CategoriaDao;
 import br.tottou.data.TarefaDao;
 import br.tottou.engine.tree.GeraTree;
 import br.tottou.interfaces.Tipo;
 import br.tottou.model.Arvore;
+import br.tottou.model.entities.Arquivos;
 import br.tottou.model.entities.ProgPassos;
 import br.tottou.model.entities.ProgSequencia;
 import br.tottou.model.entities.Programa;
@@ -44,6 +48,7 @@ public class ActionTarefa {
 	private ProgSequencia sequencia = new ProgSequencia();
 	
 	private List<ProgSequencia> listaSequencia;
+	private List<String> listaImagens;
 
 	public ActionTarefa() {
 
@@ -51,6 +56,11 @@ public class ActionTarefa {
 		sessao.getUsuario().getEmpresa();
 		setTarefaTree(gt.arvoreTarefa(CategoriaDao.listEmpresa(sessao
 				.getUsuario().getEmpresa().getId())));
+	}
+	
+	public void selecionarImg (ActionEvent ae) {
+		String atributo = ae.getComponent().getAttributes().get( "valor" ).toString();		
+		 getTarefa().setImagem(atributo);
 	}
 
 	public void popularProg() {
@@ -123,8 +133,11 @@ public class ActionTarefa {
 		FacesContext context = FacesContext.getCurrentInstance();	
 		getTarefa().setSequencia(getListaSequencia());
 		Sessao sessao = new Sessao();
-		getTarefa().setEmpresa(sessao.getUsuario().getEmpresa());		
-		if (getTarefa().getNome()=="" || getTarefa().getNome()==null) {
+		getTarefa().setEmpresa(sessao.getUsuario().getEmpresa());	
+		if (getTarefa().getImagem().equals("") || getTarefa().getImagem().equals(null)) {
+			getTarefa().setImagem("");
+		}
+		if (getTarefa().getNome().equals("") || getTarefa().getNome().equals(null)) {
 			context.addMessage(null, new FacesMessage("Ocorreu um erro.",
 					 "Insira um nome para a nova Tarefa."));
 		}else {	
@@ -328,6 +341,24 @@ public class ActionTarefa {
 
 	public void setListaSequencia(List<ProgSequencia> listaSequencia) {
 		this.listaSequencia = listaSequencia;
+	}
+
+	public List<String> getListaImagens() {
+	listaImagens = new ArrayList<String>();			
+		Sessao sessao = new Sessao();
+		Iterator<Arquivos> iter = ArquivosDao.listEmpresa(sessao.getUsuario().getEmpresa().getId()).iterator();
+		Arquivos arquivo;
+		while (iter.hasNext()) {
+			arquivo = iter.next();
+			if (arquivo.getTipo()==1) {
+				listaImagens.add(arquivo.getUrl());
+			}
+		}
+		return listaImagens;
+	}
+
+	public void setListaImagens(List<String> listaImagens) {
+		this.listaImagens = listaImagens;
 	}
 
 }

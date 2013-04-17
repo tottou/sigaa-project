@@ -54,7 +54,7 @@ public class ActionAgenda {
 	private List<Long> listaProfId;
 	private List<Perfil> listaProfEmp;
 
-	private ScheduleModel eventModel = new DefaultScheduleModel();;
+	private ScheduleModel eventModel = new DefaultScheduleModel();
 	private ScheduleModel lazyEventModel;
 	private ScheduleEvent event = new EventoAgenda(agenda, null, null);
 	
