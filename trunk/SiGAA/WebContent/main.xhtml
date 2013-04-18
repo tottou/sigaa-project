@@ -118,7 +118,7 @@
 								<ui:repeat var="empresa" value="#{actionEmpresa.listaEmpresa}">
 									<p:commandButton value="#{empresa.nome}"
 										action="#{actionEmpresa.selecionarEmpresaId(empresa.id)}"
-										update=":formC:growl,:barra" styleClass="botao"></p:commandButton>
+										update=":formC:growl,:barra" ></p:commandButton>
 
 								</ui:repeat>
 							</p:menuitem>
@@ -158,7 +158,7 @@
 				closable="true" collapsible="true" header="Menu" minSize="200">
 
 				<h:form>
-					<p:menu type="sliding" style="width:280px; height: 230px;"
+					<p:menu type="sliding" style="width:280px; height: 280px;"
 						backLabel="voltar">
 						<p:submenu label="Usuários" icon="ui-icon-person"
 							rendered="#{sessao.usuario.categoria==0 || sessao.usuario.categoria==1}">
