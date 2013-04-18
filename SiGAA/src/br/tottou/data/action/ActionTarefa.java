@@ -133,11 +133,11 @@ public class ActionTarefa {
 		FacesContext context = FacesContext.getCurrentInstance();	
 		getTarefa().setSequencia(getListaSequencia());
 		Sessao sessao = new Sessao();
-		getTarefa().setEmpresa(sessao.getUsuario().getEmpresa());	
-		if (getTarefa().getImagem().equals("") || getTarefa().getImagem().equals(null)) {
-			getTarefa().setImagem("");
+		getTarefa().setEmpresa(sessao.getUsuario().getEmpresa());		
+		if (getTarefa().getImagem()==null ) {
+			getTarefa().setImagem("/imagens/tarefa.jpg");
 		}
-		if (getTarefa().getNome().equals("") || getTarefa().getNome().equals(null)) {
+		if (getTarefa().getNome().equals("")  ) {
 			context.addMessage(null, new FacesMessage("Ocorreu um erro.",
 					 "Insira um nome para a nova Tarefa."));
 		}else {	
