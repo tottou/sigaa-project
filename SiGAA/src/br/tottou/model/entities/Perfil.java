@@ -171,6 +171,9 @@ public class Perfil implements Serializable{
 	}
 
 	public Set<Agenda> getAgenda() {
+		if (agenda==null) {
+			agenda= new HashSet<Agenda>();
+		}
 		return agenda;
 	}
 

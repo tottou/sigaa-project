@@ -13,98 +13,114 @@
 
 </h:head>
 <h:body>
-	<h:form>
+	<h:form id="formT">
 
 
 		<center>
-		<h1>
-		<h:outputText value="#{actionTarefa.passos.nome}"></h:outputText>
-		</h1>
+			<h1>
+				<h:outputText value="#{actionAgenda.passos.nome}"></h:outputText>
+			</h1>
 		</center>
 		<br />
 		<br />
-<table align="center" cellspacing="10">
-		<tr valign="middle" align="center" >
-			<ui:repeat var="arquivo" value="#{actionTarefa.passos.arquivos}" >
-			
-				<td><h:graphicImage value="#{arquivo.url}" height="300"
-						width="300" rendered="#{arquivo.tipo==1}" cache="false"></h:graphicImage>
+		<table align="center" cellspacing="10">
+			<tr valign="middle" align="center">
+				<ui:repeat var="arquivo" value="#{actionAgenda.passos.arquivos}">
+
+					<td><h:graphicImage value="#{arquivo.url}" height="300"
+							width="300" rendered="#{arquivo.tipo==1}" cache="false"></h:graphicImage>
 
 
 
-					<p:media value="#{arquivo.url}"  height="300"
-						rendered="#{arquivo.tipo==3}" width="300">
-						<f:param name="autostart" value="#{arquivo.autoStart}" />
-					</p:media> <p:media value="#{arquivo.url}" player="flash" height="300"
-						rendered="#{arquivo.tipo==5}" width="300">
-						<f:param name="autostart" value="#{arquivo.autoStart}" />
-					</p:media></td>
-			</ui:repeat>
-		</tr>
+						<p:media value="#{arquivo.url}" height="300"
+							rendered="#{arquivo.tipo==3}" width="300">
+							<f:param name="autostart" value="#{arquivo.autoStart}" />
+						</p:media> <p:media value="#{arquivo.url}" player="flash" height="300"
+							rendered="#{arquivo.tipo==5}" width="300">
+							<f:param name="autostart" value="#{arquivo.autoStart}" />
+						</p:media></td>
+				</ui:repeat>
+			</tr>
 
-</table>
+		</table>
 
 
 
 		<br />
-		<ui:repeat var="arquivo" value="#{actionTarefa.passos.arquivos}">
+		<ui:repeat var="arquivo" value="#{actionAgenda.passos.arquivos}">
 			<center>
 				<h:outputText value="#{arquivo.url}" rendered="#{arquivo.tipo==0}"></h:outputText>
 			</center>
 
 		</ui:repeat>
-<br/><br/><br/><br/><br/>
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
 
-<table align="left">
-		<tr  >
-			<ui:repeat var="arquivo" value="#{actionTarefa.passos.arquivos}">
+		<table align="left">
+			<tr>
+				<ui:repeat var="arquivo" value="#{actionAgenda.passos.arquivos}">
 
-				<td  colspan="30" >
-				<h:outputLink value="/SiGAA#{arquivo.url}" target="_blank"
-						rendered="#{arquivo.tipo==4}">
-						<h:outputText value="Anexo"></h:outputText>
-					</h:outputLink>
-					</td>
-					
-					<td>
-					 <p:media value="#{arquivo.url}" player="quicktime"
-						rendered="#{arquivo.tipo==2}">
-						<f:param name="autostart" value="#{arquivo.autoStart}" />						
-					</p:media>
-					</td>
-					
+					<td colspan="30"><h:outputLink value="/SiGAA#{arquivo.url}"
+							target="_blank" rendered="#{arquivo.tipo==4}">
+							<h:outputText value="Anexo"></h:outputText>
+						</h:outputLink></td>
 
-			</ui:repeat>
-		</tr>
+					<td><p:media value="#{arquivo.url}" player="quicktime"
+							rendered="#{arquivo.tipo==2}">
+							<f:param name="autostart" value="#{arquivo.autoStart}" />
+						</p:media></td>
+
+
+				</ui:repeat>
+			</tr>
 		</table>
-		<br/><br/><br/><br/>
-		<table align="right" >
-		<tr>
-		<td valign="bottom">
-		<p:commandButton value="Concluído" onclick="confirmaC.show()" type="button"></p:commandButton>
-		
-		</td>
-		
-		</tr>
-		
-		
+		<br />
+		<br />
+		<br />
+		<br />
+		<table align="right">
+			<tr>
+				<td valign="bottom"><p:commandButton value="Concluído"
+						onclick="resultp.show();poll.stop();" type="button"></p:commandButton></td>
+
+			</tr>
+
+
 		</table>
-			
- <p:confirmDialog id="confirmaCID" appendToBody="true" message= " Você tem certeza que deseja excluir permanentemente o cadastro de aluno selecionado?"
-    		      header="Exclusão" severity="info" widgetVar="confirmaC">  
-                  
-        <p:commandButton id="sucess" value="Acertou?" action="#{actionTarefa.acertouConcluido}" oncomplete="confirmaC.hide()"  
-                    actionListener="#{actionAluno.deletar}" />  
-        <p:commandButton id="tips" value="Precisou de ajuda/dicas ?" onclick="confirmaC.hide()" type="button" />   
-          <p:commandButton id="time" value="Mostrar tempo" onclick="confirmaC.hide()" type="button" /> 
-                  </p:confirmDialog>
-                  
-                   
-                  <p:dialog appendToBody="true" message= "Descreva o processo de ajuda dado ao aluno" severity="info" widgetVar="confirmaH" >
-                  <h:inputTextarea value="#{actionTarefa.relatorio.observacoes}"></h:inputTextarea>
-                  <p:commandButton id="sendz" value="Enviar" onclick="confirmaH.hide()" type="button" />
-                  </p:dialog>
-</h:form>
+
+		<p:confirmDialog id="resultpid" appendToBody="true"
+			message="Avalie o resultado deste passo" header="Resultado"
+			severity="info" widgetVar="resultp" closable="false">
+			<h:panelGrid columns="2">
+				<h:outputText value="Acertou?"></h:outputText>
+				<p:selectBooleanCheckbox value="#{actionAgenda.acertou}"></p:selectBooleanCheckbox>
+				<h:outputText value="Nível de prompt:"></h:outputText>
+				<p:rating value="#{actionAgenda.rating}"></p:rating>
+				<h:outputText value="Nível de prompt:"></h:outputText>
+				<p:inputTextarea value="#{actionAgenda.observacoes}"></p:inputTextarea>
+				<br />
+				<br />
+				<br />
+
+				<p:commandButton id="repete" value="Repetir passo"
+					action="#{actionAgenda.proximoPasso}" oncomplete="resultp.hide()"
+					actionListener="#{actionAluno.deletar}" />
+				<p:commandButton id="nextbt" value="Próximo passo"
+					action="#{actionAgenda.repetirPasso}" oncomplete="resultp.hide()"
+					actionListener="#{actionAluno.deletar}" />
+
+			</h:panelGrid>
+
+
+		</p:confirmDialog>
+
+		<p:poll interval="1" listener="#{actionAgenda.incrementar}" widgetVar="poll" />
+
+
+	</h:form>
 
 
 

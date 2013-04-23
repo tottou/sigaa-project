@@ -56,7 +56,7 @@ public class Agenda implements Serializable {
 	private long sessoes;
 	
 	@Column(name = "REMAINING")
-	private long remaining;
+	private long remaining; //colocar aqui o dado da sessao atual
 	
 	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_sessaoaluno")
