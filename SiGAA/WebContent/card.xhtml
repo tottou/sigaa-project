@@ -46,11 +46,14 @@
 
 </h:head>
 <h:body>
-
+<p:commandButton value="Tarefas" styleClass="botao" update=":formC:pnlCorpo"
+							icon="ui-icon-clipboard"  actionListener="#{controladora.cardTarefa}"/> 
 	<p:tabView>
 		<p:tab title="Cards">
+		<p:commandButton value="Tarefas" styleClass="botao" update=":formC:pnlCorpo"
+							icon="ui-icon-clipboard"  actionListener="#{controladora.cardTarefa}"/> 
 			<p:dataGrid var="aluno" value="#{actionCard.listaAluno}" columns="3" emptyMessage="Não há alunos atribuidos para este perfil.">
-
+		<p:column>
 				<p:panel header="ID - #{aluno.id}" style="width:100%">
 					<h:panelGrid columns="2" style="width:100%">
 						<h:graphicImage value="#{aluno.foto}" height="100" width="80"
@@ -77,7 +80,7 @@
 
 					</h:panelGrid>
 				</p:panel>
-
+</p:column>
 
 			</p:dataGrid>
 
