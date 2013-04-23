@@ -31,6 +31,7 @@ import br.tottou.model.EventoAgenda;
 import br.tottou.model.entities.Agenda;
 import br.tottou.model.entities.Aluno;
 import br.tottou.model.entities.Perfil;
+import br.tottou.model.entities.ProgPassos;
 import br.tottou.model.entities.Tarefa;
 
 @ManagedBean
@@ -40,7 +41,13 @@ public class ActionAgenda {
 	
 	private Aluno aluno = new Aluno();
 	private Agenda agenda = new Agenda();
+	private ProgPassos passos = new ProgPassos();
+	
 	private String limpaCache;
+	private boolean acertou;
+	private Integer rating;
+	private String observacoes;
+	private int count;
 	
 	private String inicio;
 	private String fim;
@@ -137,7 +144,7 @@ public class ActionAgenda {
 		getAgenda().setInicio(getEvent().getStartDate());
 		getAgenda().setFim(getEvent().getEndDate());
 		getAgenda().setNome(getEvent().getTitle());
-		getAgenda().setRemaining(getAgenda().getSessoes());		
+		getAgenda().setRemaining(1l);		
 		 if(event.getId() == null)  
 	            eventModel.addEvent(event);  
 	        else  
@@ -212,8 +219,18 @@ public class ActionAgenda {
 	    }  
 	      
 	///
-	
-
+	    ///acionando tarefa
+	    
+	    public void proximoPasso(){
+	    	
+	    }
+	    
+	    public void repetirPasso() {
+	    	
+	    }
+	    public void incrementar() {
+	    	count++;
+	    }
 
 
 	public Aluno getAluno() {
@@ -407,6 +424,56 @@ public class ActionAgenda {
 
 	public void setAjustaHora(String ajustaHora) {
 		this.ajustaHora = ajustaHora;
+	}
+
+
+	public boolean isAcertou() {
+		return acertou;
+	}
+
+
+	public void setAcertou(boolean acertou) {
+		this.acertou = acertou;
+	}
+
+
+	public ProgPassos getPassos() {
+		return passos;
+	}
+
+
+	public void setPassos(ProgPassos passos) {
+		this.passos = passos;
+	}
+
+
+	public Integer getRating() {
+		return rating;
+	}
+
+
+	public void setRating(Integer rating) {
+		this.rating = rating;
+	}
+
+
+	public String getObservacoes() {
+		return observacoes;
+	}
+
+
+	public void setObservacoes(String observacoes) {
+		this.observacoes = observacoes;
+	}
+
+
+	public int getCount() {
+		return count;
+	}
+
+
+	public void setCount(int count) {
+		this.count = count;
 	}
 
 

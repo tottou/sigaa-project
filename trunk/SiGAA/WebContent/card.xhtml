@@ -49,7 +49,7 @@
 
 	<p:tabView>
 		<p:tab title="Cards">
-			<p:dataGrid var="aluno" value="#{actionCard.listaAluno}" columns="3">
+			<p:dataGrid var="aluno" value="#{actionCard.listaAluno}" columns="3" emptyMessage="Não há alunos atribuidos para este perfil.">
 
 				<p:panel header="ID - #{aluno.id}" style="width:100%">
 					<h:panelGrid columns="2" style="width:100%">
@@ -70,8 +70,10 @@
 					<h:panelGrid columns="2">
 						<p:commandButton value="Histórico" styleClass="botao"
 							icon="ui-icon-clock"></p:commandButton>
-						<p:commandButton value="Tarefas" styleClass="botao"
-							icon="ui-icon-clipboard"></p:commandButton>
+						<p:commandButton value="Tarefas" styleClass="botao" update=":formC:pnlCorpo"
+							icon="ui-icon-clipboard"  actionListener="#{controladora.cardTarefa}"> 
+											
+							</p:commandButton>
 
 					</h:panelGrid>
 				</p:panel>
@@ -95,36 +97,38 @@
 			<p:dialog widgetVar="eventDialog2" header="Detalhes da tarefa"
 				showEffect="clip" hideEffect="clip">
 				<h:panelGrid id="eventDetails2">
+				
 					<p:messages id="messages2" autoUpdate="true" closable="true" />
 					
 					<h:panelGrid columns="2">
-					<h:outputText value=" "></h:outputText>
+					<h:outputText value="Nome da Sessão: "  style="font-weight:bold;"></h:outputText>
 					<h:outputText value="#{actionCard.agenda.nome}"></h:outputText>
-					<h:outputText value="Total de sessões: "></h:outputText>
+					<h:outputText value="Total de sessões: "  style="font-weight:bold;"></h:outputText>
 					<h:outputText value="#{actionCard.agenda.sessoes}"></h:outputText>
-					<h:outputText value="Sessão a ser realizada "></h:outputText>
-					<h:outputText value="#{actionCard.agenda.nome}"></h:outputText>
+					<h:outputText value="Sessões restantes: " style="font-weight:bold;"></h:outputText>
+					<h:outputText value="#{actionCard.agenda.remaining}"></h:outputText>
 					</h:panelGrid>
+					<br/><br/>
+					<h:outputText value="Tarefas: "  style="font-weight:bold;"></h:outputText>
 					<p:dataGrid var="tarefa" value="#{actionCard.listaTarefa}"
 						columns="3">
 						<p:panel>
 
 							<h:graphicImage value="#{tarefa.imagem}" height="100" width="80"
 								alt="Foto de aluno" cache="false"></h:graphicImage>
-
+								<br/>
 							<h:outputText value="#{tarefa.nome}" />
-
-
 
 						</p:panel>
 					</p:dataGrid>
 					<h:panelGrid columns="2">
-						<p:commandButton value="Iniciar tarefa" icon="ui-icon-clock"
+						<p:commandButton value="Iniciar tarefa(s)" icon="ui-icon-clock"
 							oncomplete="eventDialog2.hide()"></p:commandButton>
 						<p:commandButton value="Cancelar" icon="ui-icon-clipboard"
 							type="button" onclick="eventDialog2.hide()"></p:commandButton>
 
 					</h:panelGrid>
+				
 				</h:panelGrid>
 			</p:dialog>
 

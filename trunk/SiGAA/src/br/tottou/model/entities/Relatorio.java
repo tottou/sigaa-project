@@ -25,14 +25,17 @@ public class Relatorio implements Serializable {
 	@Column(name = "NOME")
 	private String nome;	
 
-	@Column(name = "SUCESS")
-	private boolean sucess;	
+	@Column(name = "SUCCESS")
+	private long success;	// 0 fail - 1 success
 
 	@Column(name = "STATUS")
 	private String status; // data de criação
 
 	@Column(name = "TEMPO")
 	private long tempo;
+	
+	@Column(name = "SCORE")
+	private long score;
 
 	@Column(name = "OBSERVACOES")
 	private String observacoes;
@@ -42,7 +45,14 @@ public class Relatorio implements Serializable {
 
 	@Column(name = "PASSOS_ID")
 	private long passos_id;
-
+	
+	@Column(name="PROF_ID")
+	private long prof_id;
+	
+	@Column(name = "REPETICOES")
+	private long repeticoes;
+	
+	
 	public long getId() {
 		return id;
 	}
@@ -96,13 +106,6 @@ public class Relatorio implements Serializable {
 		this.passos_id = passos_id;
 	}
 
-	public boolean isSucess() {
-		return sucess;
-	}
-
-	public void setSucess(boolean sucess) {
-		this.sucess = sucess;
-	}
 
 	public long getTempo() {
 		return tempo;
@@ -110,6 +113,38 @@ public class Relatorio implements Serializable {
 
 	public void setTempo(long tempo) {
 		this.tempo = tempo;
+	}
+
+	public long getScore() {
+		return score;
+	}
+
+	public void setScore(long score) {
+		this.score = score;
+	}
+
+	public long getSuccess() {
+		return success;
+	}
+
+	public void setSuccess(long success) {
+		this.success = success;
+	}
+
+	public long getRepeticoes() {
+		return repeticoes;
+	}
+
+	public void setRepeticoes(long repeticoes) {
+		this.repeticoes = repeticoes;
+	}
+
+	public long getProf_id() {
+		return prof_id;
+	}
+
+	public void setProf_id(long prof_id) {
+		this.prof_id = prof_id;
 	}
 
 }

@@ -16,29 +16,27 @@
 <h:body>
 
 	
-		<p:dataGrid var="tarefa" value="#{actionCard.listaTarefa}" columns="3" >
+		<p:dataGrid var="agenda" value="#{actionCard.listaAgenda}" columns="3" emptyMessage="Não há tarefas agendadas para este aluno.">
 			
-			<p:panel header="ID - #{tarefa.id}" style="width:100%">
-						<h:panelGrid columns="2" style="width:100%">
-							<h:graphicImage value="#{tarefa.foto}" height="100" width="80"
-								alt="Foto de tarefa" cache="false"></h:graphicImage>
-							<h:panelGrid columns="2" style="width:320px">
-								<h:outputText value="Nome: " />
-								<h:outputText value="#{tarefa.nome}" />
-								<h:outputText value="Sessões: " />
-								<h:outputText value="#{tarefa.nomeResponsavel}" />
-								<h:outputText value="Nascimento: " />
-								<h:outputText value="#{tarefa.nascimento}" />
-							
-							</h:panelGrid>
+			<p:panel header="ID - #{agenda.nome}" style="width:100%">
+			<h:outputText value="Data prevista para o início: #{agenda.inicio} - "></h:outputText>
+			<h:outputText value="Data prevista para o final: #{agenda.fim}"></h:outputText>
+			<ui:repeat var="tarefa" value="agenda.tarefas">
+			
+						<h:panelGrid columns="3" style="width:100%">
+							<h:graphicImage value="#{tarefa.imagem}" height="40" width="40"
+								alt="Imagem tarefa" cache="false"></h:graphicImage>
+							#{tarefa.nome}
 						
 						</h:panelGrid>
-						<p:separator id="customSeparator"  />   
+						</ui:repeat>
+						<p:separator id="customSeparatodr"  />   
 					<h:panelGrid columns="2" >
 					<p:commandButton value="Relatório" styleClass="botao" icon="ui-icon-clock"></p:commandButton>
-					<p:commandButton value="Iniciar Tarefas" styleClass="botao" icon="ui-icon-clipboard" ></p:commandButton>					
+					<p:commandButton value="Iniciar tarefas" styleClass="botao" icon="ui-icon-clipboard" ></p:commandButton>					
 					
 					</h:panelGrid>
+					
 					</p:panel>
 		
 		

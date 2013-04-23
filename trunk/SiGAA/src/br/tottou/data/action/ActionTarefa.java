@@ -164,28 +164,28 @@ public class ActionTarefa {
 		
 	}
 
-	private void persiste() {
-		long result = getTarefa().getSessoes() - getTarefa().getRemaining();
-		getRelatorio().setSessao(result);
-		getRelatorio().setNome(
-				"Relatório da sessão " + result + "- Passo: "
-						+ getPassos().getNome());
-		getRelatorio().setTempo(getTempo());
-		getRelatorio().setPassos_id(getPassos().getId());
-		getTarefa().getRelatorio().add(getRelatorio());
-		getTarefa().setRemaining(getTarefa().getRemaining() - 1);
+//	private void persiste() {
+//		long result = getTarefa().getSessoes() - getTarefa().getRemaining();
+//		getRelatorio().setSessao(result);
+//		getRelatorio().setNome(
+//				"Relatório da sessão " + result + "- Passo: "
+//						+ getPassos().getNome());
+//		getRelatorio().setTempo(getTempo());
+//		getRelatorio().setPassos_id(getPassos().getId());
+//		getTarefa().getRelatorio().add(getRelatorio());
+//		getTarefa().setRemaining(getTarefa().getRemaining() - 1);
 
-	}
+//	}
 
 	public void concluido() {
-		getRelatorio().setSucess(false);
-		persiste();
+//		getRelatorio().setSucess(false);
+//		persiste();
 
 	}
 
 	public void acertouConcluido() {
-		getRelatorio().setSucess(true);
-		persiste();
+//		getRelatorio().setSucess(true);
+//		persiste();
 	}
 
 	public Arvore getTarefaTree() {

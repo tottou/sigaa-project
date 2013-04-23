@@ -54,6 +54,9 @@ public class Controladora {
 	public void card (ActionEvent e) {
 		setTarget("card.xhtml");
 	}
+	public void cardTarefa (ActionEvent e) {
+		setTarget("cardtarefa.xhtml");
+	}
 	public void schedule (ActionEvent e) {
 		setTarget("schedule.xhtml");
 	}
@@ -96,4 +99,5 @@ public class Controladora {
 		setTarget("programa2.xhtml");
 		this.prog2 = prog2;
 	}
+
 }
