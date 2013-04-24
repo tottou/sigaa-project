@@ -46,12 +46,10 @@
 
 </h:head>
 <h:body>
-<p:commandButton value="Tarefas" styleClass="botao" update=":formC:pnlCorpo"
-							icon="ui-icon-clipboard"  actionListener="#{controladora.cardTarefa}"/> 
+
 	<p:tabView>
 		<p:tab title="Cards">
-		<p:commandButton value="Tarefas" styleClass="botao" update=":formC:pnlCorpo"
-							icon="ui-icon-clipboard"  actionListener="#{controladora.cardTarefa}"/> 
+		 
 			<p:dataGrid var="aluno" value="#{actionCard.listaAluno}" columns="3" emptyMessage="Não há alunos atribuidos para este perfil.">
 		<p:column>
 				<p:panel header="ID - #{aluno.id}" style="width:100%">
@@ -73,7 +71,7 @@
 					<h:panelGrid columns="2">
 						<p:commandButton value="Histórico" styleClass="botao"
 							icon="ui-icon-clock"></p:commandButton>
-						<p:commandButton value="Tarefas" styleClass="botao" update=":formC:pnlCorpo"
+						<p:commandButton value="Tarefas" styleClass="botao" update=":formC:pnlCorpo" action="#{actionCard.irTarefas(aluno.id)}"
 							icon="ui-icon-clipboard"  actionListener="#{controladora.cardTarefa}"> 
 											
 							</p:commandButton>
@@ -104,12 +102,13 @@
 					<p:messages id="messages2" autoUpdate="true" closable="true" />
 					
 					<h:panelGrid columns="2">
-					<h:outputText value="Nome da Sessão: "  style="font-weight:bold;"></h:outputText>
+					<h:outputText value="Nome da Tarefa: "  style="font-weight:bold;"></h:outputText>
 					<h:outputText value="#{actionCard.agenda.nome}"></h:outputText>
+					<h:outputText value="Sessão atual: " style="font-weight:bold;"></h:outputText>
+					<h:outputText value="#{actionCard.agenda.remaining}"></h:outputText>
 					<h:outputText value="Total de sessões: "  style="font-weight:bold;"></h:outputText>
 					<h:outputText value="#{actionCard.agenda.sessoes}"></h:outputText>
-					<h:outputText value="Sessões restantes: " style="font-weight:bold;"></h:outputText>
-					<h:outputText value="#{actionCard.agenda.remaining}"></h:outputText>
+					
 					</h:panelGrid>
 					<br/><br/>
 					<h:outputText value="Tarefas: "  style="font-weight:bold;"></h:outputText>
@@ -127,7 +126,7 @@
 					<h:panelGrid columns="2">
 						<p:commandButton value="Iniciar tarefa(s)" icon="ui-icon-clock"
 							oncomplete="eventDialog2.hide()"></p:commandButton>
-						<p:commandButton value="Cancelar" icon="ui-icon-clipboard"
+						<p:commandButton value="Cancelar" 
 							type="button" onclick="eventDialog2.hide()"></p:commandButton>
 
 					</h:panelGrid>
@@ -140,7 +139,7 @@
 
 	</p:tabView>
 
-
+		
 
 
 
