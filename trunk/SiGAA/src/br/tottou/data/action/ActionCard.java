@@ -1,14 +1,12 @@
 package br.tottou.data.action;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
+
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.event.ActionEvent;
+
 
 import org.primefaces.event.ScheduleEntrySelectEvent;
 import org.primefaces.model.DefaultScheduleModel;
@@ -29,6 +27,8 @@ import br.tottou.model.entities.Tarefa;
 @SessionScoped
 public class ActionCard {
 
+	private String instanciar;
+	
 	private Agenda agenda = new Agenda();
 	
 	private List<Aluno> listaAluno;
@@ -36,12 +36,17 @@ public class ActionCard {
 	private ScheduleEvent event = new EventoAgenda(agenda, null, null);
 	private ScheduleModel eventModel = new DefaultScheduleModel();
 	
-	private Set<Agenda> listaAgenda;
+	private List<Agenda> listaAgendaCard;
 	
 	Sessao sessao = new Sessao();
 	
 	
 	public ActionCard() {
+		instanciar();
+		
+	}
+	
+	private void instanciar() {
 		Sessao sessao = new Sessao();
 		long userid=sessao.getUsuario().getId();
 		long empid=sessao.getUsuario().getEmpresa().getId();
@@ -60,7 +65,6 @@ public class ActionCard {
 	}
 	
 	
-	
 	 public void onEventSelect(ScheduleEntrySelectEvent selectEvent) {	    	
 	        setEvent(selectEvent.getScheduleEvent());  
 	        EventoAgenda ea= (EventoAgenda) eventModel.getEvent(event.getId());
@@ -69,24 +73,22 @@ public class ActionCard {
 	        
 	    }  
 	 
-	 public void irTarefas(ActionEvent ae) {	
-		long id_aluno= (long) ae.getComponent().getAttributes().get("id_aluno");
+	 public void irTarefas(long id_aluno) {	
+		//long id_aluno= (long) ae.getComponent().getAttributes().get("id_aluno");
 		 if (sessao.getUsuario().getCategoria()==0) {
-			 listaAgenda = new HashSet<Agenda>();
-			 listaAgenda.addAll(AgendaDao.listEmpresa(sessao.getUsuario().getEmpresa().getId()));
+			 listaAgendaCard = new ArrayList<Agenda>();
+			 listaAgendaCard.addAll(AgendaDao.listEmpresa(sessao.getUsuario().getEmpresa().getId()));
 		 }		
 		 if (sessao.getUsuario().getCategoria()!=0) {
-			 listaAgenda = sessao.getUsuario().getAgenda();
+			 listaAgendaCard = new ArrayList<Agenda>();
+			 sessao.atualizaSessao();
+			 listaAgendaCard.addAll(sessao.getUsuario().getAgenda());
 		 }	
-			 Agenda ag = new Agenda();
-			 Iterator<Agenda> iter = listaAgenda.iterator();			 
-			 while (iter.hasNext()) {
-				ag=iter.next();
-				if (ag.getAluno().getId()!=id_aluno) {
-					listaAgenda.remove(ag);
+		 	for (int i = 0; i <listaAgendaCard.size(); i++) {
+				if (listaAgendaCard.get(i).getAluno().getId()!=id_aluno) {
+					listaAgendaCard.remove(i);
 				}
-			 }
-			
+			}		
 	 }
 	
 	
@@ -153,14 +155,29 @@ public class ActionCard {
 
 
 
-	public Set<Agenda> getListaAgenda() {
-		return listaAgenda;
+
+
+	public List<Agenda> getListaAgendaCard() {
+		return listaAgendaCard;
 	}
 
 
 
-	public void setListaAgenda(Set<Agenda> listaAgenda) {
-		this.listaAgenda = listaAgenda;
+	public void setListaAgendaCard(List<Agenda> listaAgendaCard) {
+		this.listaAgendaCard = listaAgendaCard;
+	}
+
+
+
+	public String getInstanciar() {
+		instanciar();		
+		return instanciar;
+	}
+
+
+
+	public void setInstanciar(String instanciar) {
+		this.instanciar = instanciar;
 	}
 	 
 	

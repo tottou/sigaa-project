@@ -206,7 +206,7 @@
 
 						<p:menuitem value="Cards" icon="ui-icon-newwin"
 							actionListener="#{controladora.card}" update=":formC:pnlCorpo">
-
+						<f:actionListener binding="#{actionCard.instanciar}" />
 						</p:menuitem>
 						<p:submenu label="Categoria" icon="ui-icon-document-b">
 							<p:menuitem value="Novo Cadastro"
