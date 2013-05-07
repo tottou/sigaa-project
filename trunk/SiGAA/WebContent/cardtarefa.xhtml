@@ -54,7 +54,10 @@
 					<td>
 					<p:commandButton value="Relatório" styleClass="botao" icon="ui-icon-clock"></p:commandButton>
 					</td><td>
-					<p:commandButton value="Iniciar tarefas" styleClass="botao" icon="ui-icon-clipboard" ></p:commandButton>	
+					<p:commandButton value="Iniciar tarefa" styleClass="botao" icon="ui-icon-clipboard" action="#{actionCard.iniciarTarefa(agenda.id)}"
+					 onsuccess="window.open('/SiGAA/acionatarefa.jsf');"></p:commandButton>	
+					
+					
 					</td>				
 					</tr>
 					</table>

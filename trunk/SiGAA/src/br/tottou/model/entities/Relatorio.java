@@ -52,6 +52,9 @@ public class Relatorio implements Serializable {
 	@Column(name = "REPETICOES")
 	private long repeticoes;
 	
+	@Column(name="DATA")
+	private String data;
+	
 	
 	public long getId() {
 		return id;
@@ -145,6 +148,14 @@ public class Relatorio implements Serializable {
 
 	public void setProf_id(long prof_id) {
 		this.prof_id = prof_id;
+	}
+
+	public String getData() {
+		return data;
+	}
+
+	public void setData(String data) {
+		this.data = data;
 	}
 
 }
