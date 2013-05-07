@@ -5,27 +5,51 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
-<h:head>
+<f:view contentType="text/html" encoding="UTF-8">
+	<h:head>
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta http-equiv="pragma" content="no-cache" />
+		<meta http-equiv="cache-control" content="no-cache,no-store,max-age=0" />
+		<f:facet name="tarefa">
+			<title>Tarefa</title>
+		</f:facet>
+		<link type="text/css" rel="stylesheet" href="/css/default.css" />
+		<link type="text/css" rel="stylesheet"
+			href="/css/syntaxhighlighter/syntaxhighlighter.css" />
+		<link rel="shortcut icon" type="image/png"
+			href="#{request.contextPath}/imagens/favicon.png" />
+			
+	<script type="text/javascript">
+	
+	
+	</script>
+	
+	<style type="text/css">
+.ui-widget {
+	font-size: 90% !important;
+}
 
-	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-	<meta http-equiv="pragma" content="no-cache" />
-	<meta http-equiv="cache-control" content="no-cache,no-store,max-age=0" />
+.ui-widget .ui-widget {
+	font-size: 90% !important;
+}
+</style>
 
 </h:head>
 <h:body>
 	<h:form id="formT">
-
+<p:commandButton type="button" onclick="maxWindow();"></p:commandButton>
 
 		<center>
 			<h1>
-				<h:outputText value="#{actionAgenda.passos.nome}"></h:outputText>
+				<h:outputText value="#{actionCard.passoAtivo.nome}"></h:outputText>
 			</h1>
 		</center>
 		<br />
 		<br />
 		<table align="center" cellspacing="10">
 			<tr valign="middle" align="center">
-				<ui:repeat var="arquivo" value="#{actionAgenda.passos.arquivos}">
+				<ui:repeat var="arquivo" value="#{actionCard.passoAtivo.arquivos}">
 
 					<td><h:graphicImage value="#{arquivo.url}" height="300"
 							width="300" rendered="#{arquivo.tipo==1}" cache="false"></h:graphicImage>
@@ -47,7 +71,7 @@
 
 
 		<br />
-		<ui:repeat var="arquivo" value="#{actionAgenda.passos.arquivos}">
+		<ui:repeat var="arquivo" value="#{actionCard.passoAtivo.arquivos}">
 			<center>
 				<h:outputText value="#{arquivo.url}" rendered="#{arquivo.tipo==0}"></h:outputText>
 			</center>
@@ -61,7 +85,7 @@
 
 		<table align="left">
 			<tr>
-				<ui:repeat var="arquivo" value="#{actionAgenda.passos.arquivos}">
+				<ui:repeat var="arquivo" value="#{actionCard.passoAtivo.arquivos}">
 
 					<td colspan="30"><h:outputLink value="/SiGAA#{arquivo.url}"
 							target="_blank" rendered="#{arquivo.tipo==4}">
@@ -91,33 +115,34 @@
 
 		</table>
 
-		<p:confirmDialog id="resultpid" appendToBody="true"
+		<p:confirmDialog id="resultpid" appendToBody="true" width="400"
 			message="Avalie o resultado deste passo" header="Resultado"
 			severity="info" widgetVar="resultp" closable="false">
 			<h:panelGrid columns="2">
 				<h:outputText value="Acertou?"></h:outputText>
-				<p:selectBooleanCheckbox value="#{actionAgenda.acertou}"></p:selectBooleanCheckbox>
+				<p:selectBooleanCheckbox value="#{actionCard.acertou}"></p:selectBooleanCheckbox>
 				<h:outputText value="Nível de prompt:"></h:outputText>
-				<p:rating value="#{actionAgenda.rating}"></p:rating>
+				<p:rating value="#{actionCard.rating}"></p:rating>
 				<h:outputText value="Nível de prompt:"></h:outputText>
-				<p:inputTextarea value="#{actionAgenda.observacoes}"></p:inputTextarea>
+				<p:inputTextarea value="#{actionCard.observacoes}"></p:inputTextarea>
 				<br />
 				<br />
-				<br />
+				
 
-				<p:commandButton id="repete" value="Repetir passo"
-					action="#{actionAgenda.proximoPasso}" oncomplete="resultp.hide()"
-					actionListener="#{actionAluno.deletar}" />
-				<p:commandButton id="nextbt" value="Próximo passo"
-					action="#{actionAgenda.repetirPasso}" oncomplete="resultp.hide()"
-					actionListener="#{actionAluno.deletar}" />
+				<p:commandButton id="repete" value="Repetir passo" update="formT"
+					action="#{actionCard.proximoPasso}" oncomplete="resultp.hide()"
+					onclick="poll.start();" />
+				<p:commandButton id="nextbt" value="Próximo passo" update="formT"
+					action="#{actionCard.repetirPasso}" oncomplete="resultp.hide()"
+					onclick="poll.start();" />
 
 			</h:panelGrid>
 
 
 		</p:confirmDialog>
 
-		<p:poll interval="1" listener="#{actionAgenda.incrementar}" widgetVar="poll" />
+		<p:poll interval="1" listener="#{actionCard.incrementar}"
+			widgetVar="poll" />
 
 
 	</h:form>
@@ -125,4 +150,5 @@
 
 
 </h:body>
+</f:view>
 </html>

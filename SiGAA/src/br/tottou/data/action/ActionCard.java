@@ -1,18 +1,19 @@
 package br.tottou.data.action;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
-
+import java.util.Set;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-
 
 import org.primefaces.event.ScheduleEntrySelectEvent;
 import org.primefaces.model.DefaultScheduleModel;
 import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
-
 
 import br.tottou.action.login.Sessao;
 import br.tottou.data.AgendaDao;
@@ -21,6 +22,8 @@ import br.tottou.data.PerfilDao;
 import br.tottou.model.EventoAgenda;
 import br.tottou.model.entities.Agenda;
 import br.tottou.model.entities.Aluno;
+import br.tottou.model.entities.ProgPassos;
+import br.tottou.model.entities.Relatorio;
 import br.tottou.model.entities.Tarefa;
 
 @ManagedBean
@@ -28,81 +31,182 @@ import br.tottou.model.entities.Tarefa;
 public class ActionCard {
 
 	private String instanciar;
-	
+	private int repeticoes;
+	private String observacoes;
+	private Integer rating;
+	private boolean acertou;
+	private int tempo;
+
 	private Agenda agenda = new Agenda();
-	
+
+	private Agenda agendaAtiva = new Agenda();
+	private ProgPassos passoAtivo = new ProgPassos();
+
 	private List<Aluno> listaAluno;
 	private List<Tarefa> listaTarefa;
 	private ScheduleEvent event = new EventoAgenda(agenda, null, null);
 	private ScheduleModel eventModel = new DefaultScheduleModel();
-	
+
 	private List<Agenda> listaAgendaCard;
-	
+
 	Sessao sessao = new Sessao();
-	
-	
+
 	public ActionCard() {
 		instanciar();
+
+	}
+
+	private void instanciar() {
+		Sessao sessao = new Sessao();
+		long userid = sessao.getUsuario().getId();
+		long empid = sessao.getUsuario().getEmpresa().getId();
+		eventModel = new DefaultScheduleModel();
+		List<Agenda> listaAgenda = new ArrayList<Agenda>();
+		if (sessao.getUsuario().getCategoria() == 1
+				|| sessao.getUsuario().getCategoria() == 0) {
+			listaAgenda = AgendaDao.listEmpresa(empid);
+		}
+		if (sessao.getUsuario().getCategoria() > 1) {
+			listaAgenda.addAll(PerfilDao.getPerfil(userid).getAgenda());
+		}
+
+		for (int i = 0; i < listaAgenda.size(); i++) {
+			eventModel
+					.addEvent(new EventoAgenda(listaAgenda.get(i), listaAgenda
+							.get(i).getInicio(), listaAgenda.get(i).getFim()));
+		}
+	}
+
+	public void onEventSelect(ScheduleEntrySelectEvent selectEvent) {
+		setEvent(selectEvent.getScheduleEvent());
+		EventoAgenda ea = (EventoAgenda) eventModel.getEvent(event.getId());
+		agenda = ea.getObjetoAgenda();
+		listaTarefa = agenda.getTarefas();
+
+	}
+
+	public void irTarefas(long id_aluno) {
+		// long id_aluno= (long)
+		// ae.getComponent().getAttributes().get("id_aluno");
+		if (sessao.getUsuario().getCategoria() == 0) {
+			listaAgendaCard = new ArrayList<Agenda>();
+			listaAgendaCard.addAll(AgendaDao.listEmpresa(sessao.getUsuario()
+					.getEmpresa().getId()));
+		}
+		if (sessao.getUsuario().getCategoria() != 0) {
+			listaAgendaCard = new ArrayList<Agenda>();
+			sessao.atualizaSessao();
+			listaAgendaCard.addAll(sessao.getUsuario().getAgenda());
+		}
+		for (int i = 0; i < listaAgendaCard.size(); i++) {
+			if (listaAgendaCard.get(i).getAluno().getId() != id_aluno) {
+				listaAgendaCard.remove(i);
+			}
+		}
+	}
+
+	// iniciando tarefas
+
+	List<ProgPassos> listaP = new ArrayList<ProgPassos>();
+	Set<Relatorio> listaR = new HashSet<Relatorio>();
+	int contP;
+	int maxP;
+
+	public void iniciarTarefa(long id_agenda) {
+		limpaAll();
+		agendaAtiva = AgendaDao.getAgenda(id_agenda);
+		agendaAtiva.getTarefas();
+		for (int i = 0; i < agendaAtiva.getTarefas().size(); i++) {
+			for (int j = 0; j < agendaAtiva.getTarefas().get(i).getSequencia()
+					.size(); j++) {
+				for (int j2 = 0; j2 < agendaAtiva.getTarefas().get(i)
+						.getSequencia().get(j).getPassosTarget().size(); j2++) {
+					listaP.add(agendaAtiva.getTarefas().get(i).getSequencia()
+							.get(j).getPassosTarget().get(j2));
+				}
+			}
+		}
+		maxP = listaP.size();
+		setPassoAtivo(listaP.get(contP));
+
+	}
+
+	public void proximoPasso() {
+		contP++;
+		tempo=0;
+		if (contP < maxP) { // testar se size eh o ultimo elemento da lista
+			listaR.add(gerarRelatorio());
+			setPassoAtivo(listaP.get(contP));
+
+		} else {
+			finalizou();
+		}
+	}
+	
+	public void repetirPasso() {
+		tempo=0;
+		repeticoes++;
+	}
+
+	private void finalizou(){
+		agendaAtiva.setRemaining(agendaAtiva.getRemaining()+1);
+		if (agendaAtiva.getRemaining()==agendaAtiva.getSessoes()) {
+			agendaAtiva.setStatus("Finalizado");			
+		}
+		agendaAtiva.getRelatorio().addAll(listaR);
+		AgendaDao.salvarAgenda(agendaAtiva);
+		agendaAtiva = new Agenda();
+		setPassoAtivo(new ProgPassos());
 		
 	}
 	
-	private void instanciar() {
-		Sessao sessao = new Sessao();
-		long userid=sessao.getUsuario().getId();
-		long empid=sessao.getUsuario().getEmpresa().getId();
-		eventModel= new DefaultScheduleModel();  
-		List<Agenda> listaAgenda= new ArrayList<Agenda>();
-		if (sessao.getUsuario().getCategoria()==1 || sessao.getUsuario().getCategoria()==0) {
-			listaAgenda = AgendaDao.listEmpresa(empid);
+	private Relatorio gerarRelatorio() {
+		Relatorio relatorio = new Relatorio();
+		relatorio.setNome(getPassoAtivo().getNome());
+		relatorio.setPassos_id(getPassoAtivo().getId());
+		relatorio.setRepeticoes(getRepeticoes());
+		relatorio.setObservacoes(getObservacoes());
+		relatorio.setProf_id(sessao.getUsuario().getId());
+		relatorio.setScore(getRating());
+		relatorio.setSessao(getAgendaAtiva().getRemaining());
+		if (isAcertou() == true) {
+			relatorio.setSuccess(1);
+		} else {
+			relatorio.setSuccess(0);
 		}
-		if (sessao.getUsuario().getCategoria()>1) {
-			listaAgenda.addAll(PerfilDao.getPerfil(userid).getAgenda());
-		}
-	
-		for (int i = 0; i < listaAgenda.size(); i++) {
-			eventModel.addEvent(new EventoAgenda(listaAgenda.get(i), listaAgenda.get(i).getInicio(), listaAgenda.get(i).getFim()));  			
-		}
+		relatorio.setTempo(getTempo());
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		relatorio.setData((sdf.format(new Date())));
+		return relatorio;
 	}
-	
-	
-	 public void onEventSelect(ScheduleEntrySelectEvent selectEvent) {	    	
-	        setEvent(selectEvent.getScheduleEvent());  
-	        EventoAgenda ea= (EventoAgenda) eventModel.getEvent(event.getId());
-	        agenda = ea.getObjetoAgenda();
-	        listaTarefa=agenda.getTarefas();
-	        
-	    }  
-	 
-	 public void irTarefas(long id_aluno) {	
-		//long id_aluno= (long) ae.getComponent().getAttributes().get("id_aluno");
-		 if (sessao.getUsuario().getCategoria()==0) {
-			 listaAgendaCard = new ArrayList<Agenda>();
-			 listaAgendaCard.addAll(AgendaDao.listEmpresa(sessao.getUsuario().getEmpresa().getId()));
-		 }		
-		 if (sessao.getUsuario().getCategoria()!=0) {
-			 listaAgendaCard = new ArrayList<Agenda>();
-			 sessao.atualizaSessao();
-			 listaAgendaCard.addAll(sessao.getUsuario().getAgenda());
-		 }	
-		 	for (int i = 0; i <listaAgendaCard.size(); i++) {
-				if (listaAgendaCard.get(i).getAluno().getId()!=id_aluno) {
-					listaAgendaCard.remove(i);
-				}
-			}		
-	 }
-	
-	
-	
-	public List<Aluno> getListaAluno() {		
-		listaAluno = new ArrayList<Aluno>();		
+
+	public void incrementar() {
+		tempo++;
+	}
+	private void limpaAll() {
+		contP = 0;
+		maxP = 0;
+		tempo=0;
+		listaP = new ArrayList<ProgPassos>();
+		agendaAtiva = new Agenda();
+		setRepeticoes(0);
+	}
+
+	// teh end
+
+	// get n setterz
+
+	public List<Aluno> getListaAluno() {
+		listaAluno = new ArrayList<Aluno>();
 		Sessao sessao = new Sessao();
-		if (sessao.getUsuario().getCategoria()<2) {
-			listaAluno.addAll(AlunoDao.listEmpresa(sessao.getUsuario().getEmpresa().getId()));
+		if (sessao.getUsuario().getCategoria() < 2) {
+			listaAluno.addAll(AlunoDao.listEmpresa(sessao.getUsuario()
+					.getEmpresa().getId()));
 		} else {
 			listaAluno.addAll(sessao.getUsuario().getAlunos());
 		}
-		
-				return listaAluno;
+
+		return listaAluno;
 	}
 
 	public void setListaAluno(List<Aluno> listaAluno) {
@@ -117,68 +221,101 @@ public class ActionCard {
 		this.listaTarefa = listaTarefa;
 	}
 
-
-
 	public ScheduleEvent getEvent() {
 		return event;
 	}
-
-
 
 	public void setEvent(ScheduleEvent event) {
 		this.event = event;
 	}
 
-
-
 	public ScheduleModel getEventModel() {
 		return eventModel;
 	}
-
-
 
 	public void setEventModel(ScheduleModel eventModel) {
 		this.eventModel = eventModel;
 	}
 
-
-
 	public Agenda getAgenda() {
 		return agenda;
 	}
-
-
 
 	public void setAgenda(Agenda agenda) {
 		this.agenda = agenda;
 	}
 
-
-
-
-
 	public List<Agenda> getListaAgendaCard() {
 		return listaAgendaCard;
 	}
-
-
 
 	public void setListaAgendaCard(List<Agenda> listaAgendaCard) {
 		this.listaAgendaCard = listaAgendaCard;
 	}
 
-
-
 	public String getInstanciar() {
-		instanciar();		
+		instanciar();
 		return instanciar;
 	}
-
-
 
 	public void setInstanciar(String instanciar) {
 		this.instanciar = instanciar;
 	}
-	 
-	
+
+	public Agenda getAgendaAtiva() {
+		return agendaAtiva;
+	}
+
+	public void setAgendaAtiva(Agenda agendaAtiva) {
+		this.agendaAtiva = agendaAtiva;
+	}
+
+	public ProgPassos getPassoAtivo() {
+		return passoAtivo;
+	}
+
+	public void setPassoAtivo(ProgPassos passoAtivo) {
+		this.passoAtivo = passoAtivo;
+	}
+
+	public int getRepeticoes() {
+		return repeticoes;
+	}
+
+	public void setRepeticoes(int repeticoes) {
+		this.repeticoes = repeticoes;
+	}
+
+	public String getObservacoes() {
+		return observacoes;
+	}
+
+	public void setObservacoes(String observacoes) {
+		this.observacoes = observacoes;
+	}
+
+	public Integer getRating() {
+		return rating;
+	}
+
+	public void setRating(Integer rating) {
+		this.rating = rating;
+	}
+
+	public boolean isAcertou() {
+		return acertou;
+	}
+
+	public void setAcertou(boolean acertou) {
+		this.acertou = acertou;
+	}
+
+	public int getTempo() {
+		return tempo;
+	}
+
+	public void setTempo(int tempo) {
+		this.tempo = tempo;
+	}
+
 }
