@@ -115,7 +115,7 @@
 
 		</table>
 
-		<p:confirmDialog id="resultpid" appendToBody="true" width="400"
+		<p:dialog id="resultpid" appendToBody="true" width="400"
 			message="Avalie o resultado deste passo" header="Resultado"
 			severity="info" widgetVar="resultp" closable="false">
 			<h:panelGrid columns="2">
@@ -130,16 +130,16 @@
 				
 
 				<p:commandButton id="repete" value="Repetir passo" update="formT"
-					action="#{actionCard.proximoPasso}" oncomplete="resultp.hide()"
+					action="#{actionCard.repetirPasso}" oncomplete="resultp.hide();"
 					onclick="poll.start();" />
 				<p:commandButton id="nextbt" value="Próximo passo" update="formT"
-					action="#{actionCard.repetirPasso}" oncomplete="resultp.hide()"
+					action="#{actionCard.proximoPasso}" oncomplete="resultp.hide();"
 					onclick="poll.start();" />
 
 			</h:panelGrid>
 
 
-		</p:confirmDialog>
+		</p:dialog>
 
 		<p:poll interval="1" listener="#{actionCard.incrementar}"
 			widgetVar="poll" />
