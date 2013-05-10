@@ -7,8 +7,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 import org.primefaces.event.ScheduleEntrySelectEvent;
 import org.primefaces.model.DefaultScheduleModel;
@@ -35,13 +37,15 @@ public class ActionCard {
 	private String observacoes;
 	private Integer rating;
 	private boolean acertou;
+	private int iguais;
 	private int tempo;
 
 	private Agenda agenda = new Agenda();
-
 	private Agenda agendaAtiva = new Agenda();
 	private ProgPassos passoAtivo = new ProgPassos();
-
+	private Aluno aluno = new Aluno();
+	private List<Relatorio> listaAlunoRelatorio = new ArrayList<Relatorio>();
+	
 	private List<Aluno> listaAluno;
 	private List<Tarefa> listaTarefa;
 	private ScheduleEvent event = new EventoAgenda(agenda, null, null);
@@ -128,24 +132,34 @@ public class ActionCard {
 		}
 		maxP = listaP.size();
 		setPassoAtivo(listaP.get(contP));
+		contP++;
 
 	}
 
 	public void proximoPasso() {
-		contP++;
-		tempo=0;
-		if (contP < maxP) { // testar se size eh o ultimo elemento da lista
+		
+		if (getIguais()==0) { // testar se size eh o ultimo elemento da lista
 			listaR.add(gerarRelatorio());
 			setPassoAtivo(listaP.get(contP));
 
 		} else {
+			listaR.add(gerarRelatorio());
 			finalizou();
 		}
+		contP++;
+		tempo=0;
+		rating=0;
+		acertou=false;
+		observacoes="";
+		repeticoes=0;
 	}
 	
 	public void repetirPasso() {
 		tempo=0;
 		repeticoes++;
+		rating=0;
+		acertou=false;
+		observacoes="";
 	}
 
 	private void finalizou(){
@@ -154,9 +168,12 @@ public class ActionCard {
 			agendaAtiva.setStatus("Finalizado");			
 		}
 		agendaAtiva.getRelatorio().addAll(listaR);
-		AgendaDao.salvarAgenda(agendaAtiva);
+		AgendaDao.atualizarAgenda(agendaAtiva);
 		agendaAtiva = new Agenda();
 		setPassoAtivo(new ProgPassos());
+		 FacesContext context = FacesContext.getCurrentInstance();
+		 context.addMessage(null, new FacesMessage("",
+		 "Tarefa Concluída com sucesso"));
 		
 	}
 	
@@ -165,6 +182,7 @@ public class ActionCard {
 		relatorio.setNome(getPassoAtivo().getNome());
 		relatorio.setPassos_id(getPassoAtivo().getId());
 		relatorio.setRepeticoes(getRepeticoes());
+		relatorio.setTempo(getTempo());
 		relatorio.setObservacoes(getObservacoes());
 		relatorio.setProf_id(sessao.getUsuario().getId());
 		relatorio.setScore(getRating());
@@ -190,9 +208,19 @@ public class ActionCard {
 		listaP = new ArrayList<ProgPassos>();
 		agendaAtiva = new Agenda();
 		setRepeticoes(0);
+		rating=0;
+		acertou=false;
+		observacoes="";
 	}
 
-	// teh end
+	// historico
+	
+	public void gerarAlunoRelatorio(long aluno_id){
+		
+	}
+	
+	
+	
 
 	// get n setterz
 
@@ -317,5 +345,45 @@ public class ActionCard {
 	public void setTempo(int tempo) {
 		this.tempo = tempo;
 	}
+
+	
+	public int getMaxP() {
+		return maxP; 
+	}
+	
+	public int getContP() {
+		return contP;
+	}
+
+	public int getIguais() {
+		if (getMaxP()==getContP()) {
+			iguais=1;
+		}else {
+			iguais=0;
+		}
+		
+		return iguais;
+	}
+
+	public void setIguais(int iguais) {
+		this.iguais = iguais;
+	}
+
+	public Aluno getAluno() {
+		return aluno;
+	}
+
+	public void setAluno(Aluno aluno) {
+		this.aluno = aluno;
+	}
+
+	public List<Relatorio> getListaAlunoRelatorio() {
+		return listaAlunoRelatorio;
+	}
+
+	public void setListaAlunoRelatorio(List<Relatorio> listaAlunoRelatorio) {
+		this.listaAlunoRelatorio = listaAlunoRelatorio;
+	}
+
 
 }

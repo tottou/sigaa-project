@@ -77,7 +77,7 @@
        		
                  
             <p:commandButton value="Criar sessão" actionListener="#{controladora.agenda}" oncomplete="myschedule.update();eventDialog.hide();" 
-            update=":formC:pnlCorpo" rendered="#{actionAgenda.event.id==null and (sessao.usuario.categoria==0 || sessao.usuario.categoria==1)}">
+            update=":formC:pnlCorpo,growl" rendered="#{actionAgenda.event.id==null and (sessao.usuario.categoria==0 || sessao.usuario.categoria==1)}">
             	<f:actionListener binding="#{actionAgenda.ajustaHora}" />
             </p:commandButton>  
         </h:panelGrid>  
