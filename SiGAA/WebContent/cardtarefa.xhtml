@@ -21,7 +21,8 @@
 			<p:panel header="#{agenda.nome}" >
 				<h:panelGrid columns="2">		
 						<h:outputText value="Sessão atual: " style="font-weight:bold;"></h:outputText>
-					<h:outputText value="#{agenda.remaining}"></h:outputText>			
+					<h:outputText value="#{agenda.remaining}" rendered="#{agenda.remaining!=agenda.sessoes+1}"></h:outputText>
+					<h:outputText value="Sessões finalizadas" rendered="#{agenda.remaining==agenda.sessoes+1}"></h:outputText>
 					<h:outputText value="Total de sessões: "  style="font-weight:bold;"></h:outputText>
 					<h:outputText value="#{agenda.sessoes}"></h:outputText>
 			
@@ -54,9 +55,10 @@
 					<td>
 					<p:commandButton value="Relatório" styleClass="botao" icon="ui-icon-clock"></p:commandButton>
 					</td><td>
-					<p:commandButton value="Iniciar tarefa" styleClass="botao" icon="ui-icon-clipboard" action="#{actionCard.iniciarTarefa(agenda.id)}"
-					 onsuccess="window.open('/SiGAA/acionatarefa.jsf');"></p:commandButton>	
-					
+					<p:commandButton value="Iniciar tarefa" styleClass="botao" icon="ui-icon-clipboard" action="#{actionCard.iniciarTarefa(agenda.id)}" rendered="#{agenda.remaining!=agenda.sessoes+1}"
+					 onsuccess="window.open('/SiGAA/acionatarefa.jsf');" actionListener="#{controladora.card}" update=":formC:pnlCorpo" ></p:commandButton>	
+						<p:commandButton value="Tarefa finalizada" styleClass="botao" icon="ui-icon-clipboard" rendered="#{agenda.remaining==agenda.sessoes+1}"
+					 onclick="donez1.show()"></p:commandButton>	
 					
 					</td>				
 					</tr>
@@ -68,6 +70,10 @@
 		</p:dataGrid>
 		
 				<br/><br/>
+				
+				<p:dialog widgetVar="donez1">
+				Todas sessões para esta tarefa já foram realizadas.
+				</p:dialog>
 		
 
 	<p:commandButton value="Voltar" update=":formC:pnlCorpo"

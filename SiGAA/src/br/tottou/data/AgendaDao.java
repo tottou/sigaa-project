@@ -59,6 +59,17 @@ public class AgendaDao {
 	       
 	    }
 	    
+	    @SuppressWarnings("unchecked")
+	  		public static List<Agenda> listAluno(long id_aluno) {
+	  	        Session session = HibernateUtil.getSessionFactory().openSession();
+	  	        Transaction t = session.beginTransaction();
+	  	        List<Agenda> lista = session.createQuery("from Agenda where id_sessaoaluno ="+id_aluno).list();
+	  	        t.commit();
+	  	       session.close();
+	  	        return lista;
+	  	       
+	  	    }
+	    
 
 	    public static void remove(Agenda agenda) {
 	        Session session = HibernateUtil.getSessionFactory().openSession();

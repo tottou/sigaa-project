@@ -19,13 +19,12 @@
 			href="/css/syntaxhighlighter/syntaxhighlighter.css" />
 		<link rel="shortcut icon" type="image/png"
 			href="#{request.contextPath}/imagens/favicon.png" />
+
+		<script type="text/javascript">
 			
-	<script type="text/javascript">
-	
-	
-	</script>
-	
-	<style type="text/css">
+		</script>
+
+		<style type="text/css">
 .ui-widget {
 	font-size: 90% !important;
 }
@@ -35,120 +34,128 @@
 }
 </style>
 
-</h:head>
-<h:body>
-	<h:form id="formT">
-<p:commandButton type="button" onclick="maxWindow();"></p:commandButton>
+	</h:head>
+	<h:body>
+		<h:form id="formT">
+			<p:commandButton type="button" onclick="maxWindow();"></p:commandButton>
 
-		<center>
-			<h1>
-				<h:outputText value="#{actionCard.passoAtivo.nome}"></h:outputText>
-			</h1>
-		</center>
-		<br />
-		<br />
-		<table align="center" cellspacing="10">
-			<tr valign="middle" align="center">
-				<ui:repeat var="arquivo" value="#{actionCard.passoAtivo.arquivos}">
-
-					<td><h:graphicImage value="#{arquivo.url}" height="300"
-							width="300" rendered="#{arquivo.tipo==1}" cache="false"></h:graphicImage>
-
-
-
-						<p:media value="#{arquivo.url}" height="300"
-							rendered="#{arquivo.tipo==3}" width="300">
-							<f:param name="autostart" value="#{arquivo.autoStart}" />
-						</p:media> <p:media value="#{arquivo.url}" player="flash" height="300"
-							rendered="#{arquivo.tipo==5}" width="300">
-							<f:param name="autostart" value="#{arquivo.autoStart}" />
-						</p:media></td>
-				</ui:repeat>
-			</tr>
-
-		</table>
-
-
-
-		<br />
-		<ui:repeat var="arquivo" value="#{actionCard.passoAtivo.arquivos}">
 			<center>
-				<h:outputText value="#{arquivo.url}" rendered="#{arquivo.tipo==0}"></h:outputText>
+				<h1>
+					<h:outputText value="#{actionCard.passoAtivo.nome}"></h:outputText>
+				</h1>
 			</center>
+			<br />
+			<br />
+			<table align="center" cellspacing="10">
+				<tr valign="middle" align="center">
+					<ui:repeat var="arquivo" value="#{actionCard.passoAtivo.arquivos}">
 
-		</ui:repeat>
-		<br />
-		<br />
-		<br />
-		<br />
-		<br />
-
-		<table align="left">
-			<tr>
-				<ui:repeat var="arquivo" value="#{actionCard.passoAtivo.arquivos}">
-
-					<td colspan="30"><h:outputLink value="/SiGAA#{arquivo.url}"
-							target="_blank" rendered="#{arquivo.tipo==4}">
-							<h:outputText value="Anexo"></h:outputText>
-						</h:outputLink></td>
-
-					<td><p:media value="#{arquivo.url}" player="quicktime"
-							rendered="#{arquivo.tipo==2}">
-							<f:param name="autostart" value="#{arquivo.autoStart}" />
-						</p:media></td>
+						<td><h:graphicImage value="#{arquivo.url}" height="300"
+								width="300" rendered="#{arquivo.tipo==1}" cache="false"></h:graphicImage>
 
 
-				</ui:repeat>
-			</tr>
-		</table>
-		<br />
-		<br />
-		<br />
-		<br />
-		<table align="right">
-			<tr>
-				<td valign="bottom"><p:commandButton value="Concluído"
-						onclick="resultp.show();poll.stop();" type="button"></p:commandButton></td>
 
-			</tr>
+							<p:media value="#{arquivo.url}" height="300"
+								rendered="#{arquivo.tipo==3}" width="300">
+								<f:param name="autostart" value="#{arquivo.autoStart}" />
+							</p:media> <p:media value="#{arquivo.url}" player="flash" height="300"
+								rendered="#{arquivo.tipo==5}" width="300">
+								<f:param name="autostart" value="#{arquivo.autoStart}" />
+							</p:media></td>
+					</ui:repeat>
+				</tr>
+
+			</table>
 
 
-		</table>
 
-		<p:dialog id="resultpid" appendToBody="true" width="400"
-			message="Avalie o resultado deste passo" header="Resultado"
-			severity="info" widgetVar="resultp" closable="false">
-			<h:panelGrid columns="2">
-				<h:outputText value="Acertou?"></h:outputText>
-				<p:selectBooleanCheckbox value="#{actionCard.acertou}"></p:selectBooleanCheckbox>
-				<h:outputText value="Nível de prompt:"></h:outputText>
-				<p:rating value="#{actionCard.rating}"></p:rating>
-				<h:outputText value="Nível de prompt:"></h:outputText>
-				<p:inputTextarea value="#{actionCard.observacoes}"></p:inputTextarea>
-				<br />
-				<br />
+			<br />
+			<ui:repeat var="arquivo" value="#{actionCard.passoAtivo.arquivos}">
+				<center>
+					<h:outputText value="#{arquivo.url}" rendered="#{arquivo.tipo==0}"></h:outputText>
+				</center>
+
+			</ui:repeat>
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+
+			<table align="left">
+				<tr>
+					<ui:repeat var="arquivo" value="#{actionCard.passoAtivo.arquivos}">
+
+						<td colspan="30"><h:outputLink value="/SiGAA#{arquivo.url}"
+								target="_blank" rendered="#{arquivo.tipo==4}">
+								<h:outputText value="Anexo"></h:outputText>
+							</h:outputLink></td>
+
+						<td><p:media value="#{arquivo.url}" player="quicktime"
+								rendered="#{arquivo.tipo==2}">
+								<f:param name="autostart" value="#{arquivo.autoStart}" />
+							</p:media></td>
+
+
+					</ui:repeat>
+				</tr>
+			</table>
+			<br />
+			<br />
+			<br />
+			<br />	<br />
+			<br />	<br />
+			<br />	<br />
+			<br />
+			<table align="right">
+				<tr>
+					<td valign="bottom"><p:commandButton value="Concluído"
+							onclick="resultp.show();poll.stop();" type="button"></p:commandButton></td>
+
+				</tr>
+
+
+			</table>
+
+			<p:dialog id="resultpid" width="500" 
+				message="Avalie o resultado do passo ' #{actionCard.passoAtivo.nome}"
+				header="Resultado do passo #{actionCard.contP} de #{actionCard.maxP} passos "
+				severity="info" widgetVar="resultp" closable="false">
+				<h3>Avalie o resultado do passo ' #{actionCard.passoAtivo.nome} '</h3>
+				<h:panelGrid columns="2">
+					<h:outputText value="Acertou?"></h:outputText>
+					<p:selectBooleanCheckbox value="#{actionCard.acertou}"></p:selectBooleanCheckbox>
+					<h:outputText value="Nível de prompt:"></h:outputText>
+					<p:rating value="#{actionCard.rating}"></p:rating>
+					<h:outputText value="Observações:"></h:outputText>
+					<p:inputTextarea value="#{actionCard.observacoes}"></p:inputTextarea>
 				
 
-				<p:commandButton id="repete" value="Repetir passo" update="formT"
-					action="#{actionCard.repetirPasso}" oncomplete="resultp.hide();"
-					onclick="poll.start();" />
-				<p:commandButton id="nextbt" value="Próximo passo" update="formT"
-					action="#{actionCard.proximoPasso}" oncomplete="resultp.hide();"
-					onclick="poll.start();" />
+					<p:commandButton id="repete" value="Repetir passo" update="formT"
+						action="#{actionCard.repetirPasso}"
+						onclick="resultp.hide();poll.start();" />
+					<p:commandButton id="nextbt" value="Próximo passo" update="formT" rendered="#{actionCard.iguais==0}"
+						action="#{actionCard.proximoPasso}"
+						onclick="resultp.hide();poll.start();" />
+						<p:commandButton id="finaliza" value="Finalizar" update="formT,growl2" rendered="#{actionCard.iguais==1}"
+						action="#{actionCard.proximoPasso}"
+						onclick="resultp.hide();window.close();" />
+						
+						
 
-			</h:panelGrid>
-
-
-		</p:dialog>
-
-		<p:poll interval="1" listener="#{actionCard.incrementar}"
-			widgetVar="poll" />
-
-
-	</h:form>
+				</h:panelGrid>
 
 
+			</p:dialog>
+<p:growl id="growl2" showDetail="true" life="4500" />
+			<p:poll interval="1" listener="#{actionCard.incrementar}"
+				widgetVar="poll" />
 
-</h:body>
+
+		</h:form>
+
+
+
+	</h:body>
 </f:view>
 </html>

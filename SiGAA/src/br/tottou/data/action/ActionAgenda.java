@@ -144,7 +144,8 @@ public class ActionAgenda {
 		getAgenda().setInicio(getEvent().getStartDate());
 		getAgenda().setFim(getEvent().getEndDate());
 		getAgenda().setNome(getEvent().getTitle());
-		getAgenda().setRemaining(1l);		
+		getAgenda().setRemaining(1l);	
+		getAgenda().setStatus("Em andamento");
 		 if(event.getId() == null)  
 	            eventModel.addEvent(event);  
 	        else  
@@ -195,7 +196,7 @@ public class ActionAgenda {
 	      
 	    public void onEventMove(ScheduleEntryMoveEvent event) {  
 	    	EventoAgenda ea= (EventoAgenda) eventModel.getEvent(event.getScheduleEvent().getId());
-	    	Agenda ag=ea.getObjetoAgenda();
+	    	Agenda ag=AgendaDao.getAgenda( ea.getObjetoAgenda().getId());
 	    	ag.setInicio(ea.getStartDate());
 	    	ag.setFim(ea.getEndDate());
 	    	AgendaDao.atualizarAgenda(ag);
@@ -205,7 +206,7 @@ public class ActionAgenda {
 	      
 	    public void onEventResize(ScheduleEntryResizeEvent event) {  
 	    	EventoAgenda ea= (EventoAgenda) eventModel.getEvent(event.getScheduleEvent().getId());
-	    	Agenda ag=ea.getObjetoAgenda();
+	    	Agenda ag=AgendaDao.getAgenda( ea.getObjetoAgenda().getId());
 	    	ag.setInicio(ea.getStartDate());
 	    	ag.setFim(ea.getEndDate());
 	    	AgendaDao.atualizarAgenda(ag);
@@ -416,6 +417,12 @@ public class ActionAgenda {
 
 
 	public String getAjustaHora() {
+		if (event.getStartDate().after(event.getEndDate())) {
+			event.getEndDate().setTime(event.getStartDate().getTime() +(10*3600000));
+			FacesContext context = FacesContext.getCurrentInstance();
+			 context.addMessage(null, new FacesMessage("ERRO: Período inicial posterior ao final",
+			 "Correção realizada (a data pode ser modificada ao final do processo)"));
+		}
 		event.getStartDate().setTime(event.getStartDate().getTime() +(8*3600000));
 		event.getEndDate().setTime(event.getEndDate().getTime() +(9*3600000));		
 		return ajustaHora;
