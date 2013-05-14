@@ -3,9 +3,8 @@ package br.tottou.data.action;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -45,6 +44,7 @@ public class ActionCard {
 	private ProgPassos passoAtivo = new ProgPassos();
 	private Aluno aluno = new Aluno();
 	private List<Relatorio> listaAlunoRelatorio = new ArrayList<Relatorio>();
+	private List<Agenda> listaAgendaAluno = new ArrayList<Agenda>();
 	
 	private List<Aluno> listaAluno;
 	private List<Tarefa> listaTarefa;
@@ -112,7 +112,7 @@ public class ActionCard {
 	// iniciando tarefas
 
 	List<ProgPassos> listaP = new ArrayList<ProgPassos>();
-	Set<Relatorio> listaR = new HashSet<Relatorio>();
+	List<Relatorio> listaR = new ArrayList<Relatorio>();
 	int contP;
 	int maxP;
 
@@ -164,7 +164,7 @@ public class ActionCard {
 
 	private void finalizou(){
 		agendaAtiva.setRemaining(agendaAtiva.getRemaining()+1);
-		if (agendaAtiva.getRemaining()==agendaAtiva.getSessoes()) {
+		if (agendaAtiva.getRemaining()==agendaAtiva.getSessoes()) { 
 			agendaAtiva.setStatus("Finalizado");			
 		}
 		agendaAtiva.getRelatorio().addAll(listaR);
@@ -181,10 +181,10 @@ public class ActionCard {
 		Relatorio relatorio = new Relatorio();
 		relatorio.setNome(getPassoAtivo().getNome());
 		relatorio.setPassos_id(getPassoAtivo().getId());
-		relatorio.setRepeticoes(getRepeticoes());
-		relatorio.setTempo(getTempo());
+		relatorio.setRepeticoes(getRepeticoes());		
 		relatorio.setObservacoes(getObservacoes());
 		relatorio.setProf_id(sessao.getUsuario().getId());
+		relatorio.setProfNome(sessao.getUsuario().getNome());
 		relatorio.setScore(getRating());
 		relatorio.setSessao(getAgendaAtiva().getRemaining());
 		if (isAcertou() == true) {
@@ -192,7 +192,7 @@ public class ActionCard {
 		} else {
 			relatorio.setSuccess(0);
 		}
-		relatorio.setTempo(getTempo());
+		relatorio.setTempo(formatTime(getTempo()));
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		relatorio.setData((sdf.format(new Date())));
 		return relatorio;
@@ -216,11 +216,21 @@ public class ActionCard {
 	// historico
 	
 	public void gerarAlunoRelatorio(long aluno_id){
+		setListaAgendaAluno(AgendaDao.listAluno(aluno_id));
+		setAluno(AlunoDao.getAluno(aluno_id));
+		
+		
 		
 	}
 	
+
 	
-	
+	private String formatTime(long time) {			
+		long seconds = time % 60;
+		long minutes = (time-seconds) / 60;	
+		String str = String.format("%d:%02d", minutes, seconds);
+		return str;
+	}
 
 	// get n setterz
 
@@ -383,6 +393,14 @@ public class ActionCard {
 
 	public void setListaAlunoRelatorio(List<Relatorio> listaAlunoRelatorio) {
 		this.listaAlunoRelatorio = listaAlunoRelatorio;
+	}
+
+	public List<Agenda> getListaAgendaAluno() {
+		return listaAgendaAluno;
+	}
+
+	public void setListaAgendaAluno(List<Agenda> listaAgendaAluno) {
+		this.listaAgendaAluno = listaAgendaAluno;
 	}
 
 

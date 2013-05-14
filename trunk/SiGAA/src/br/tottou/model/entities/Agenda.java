@@ -73,8 +73,8 @@ public class Agenda implements Serializable {
 	private List<Tarefa> tarefas;
 	
 	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-	@JoinColumn(name = "id_rel")
-	private Set<Relatorio> relatorio;
+	@IndexColumn(base=1,name = "id_rel")
+	private List<Relatorio> relatorio;
 	
 	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_empresat")
@@ -127,17 +127,6 @@ public class Agenda implements Serializable {
 
 	public void setRemaining(long remaining) {
 		this.remaining = remaining;
-	}
-
-	public Set<Relatorio> getRelatorio() {
-		if (relatorio==null){
-			relatorio= new HashSet<Relatorio>();
-		}
-		return relatorio;
-	}
-
-	public void setRelatorio(Set<Relatorio> relatorio) {
-		this.relatorio = relatorio;
 	}
 
 	public Empresa getEmpresa() {
@@ -193,6 +182,17 @@ public class Agenda implements Serializable {
 
 	public void setFim(Date fim) {
 		this.fim = fim;
+	}
+
+	public List<Relatorio> getRelatorio() {
+		if (relatorio==null) {
+			relatorio = new ArrayList<Relatorio>();
+		}
+		return relatorio;
+	}
+
+	public void setRelatorio(List<Relatorio> relatorio) {
+		this.relatorio = relatorio;
 	}
 	
 	

@@ -69,7 +69,7 @@
 					</h:panelGrid>
 					<p:separator id="customSeparator" />
 					<h:panelGrid columns="2">
-						<p:commandButton value="Histórico" styleClass="botao" action="#{actionCard.gerarAlunoRelatorio(aluno.id)}"
+						<p:commandButton value="Histórico" styleClass="botao" action="#{actionCard.gerarAlunoRelatorio(aluno.id)}" update=":formC:pnlCorpo"
 							actionListener="#{controladora.historicoAluno}" icon="ui-icon-clock"></p:commandButton>
 						<p:commandButton value="Tarefas" styleClass="botao" update=":formC:pnlCorpo" action="#{actionCard.irTarefas(aluno.id)}"
 							icon="ui-icon-clipboard"  actionListener="#{controladora.cardTarefa}"> 
