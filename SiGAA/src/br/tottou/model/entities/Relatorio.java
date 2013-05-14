@@ -32,7 +32,7 @@ public class Relatorio implements Serializable {
 	private String status; // data de criação
 
 	@Column(name = "TEMPO")
-	private long tempo;
+	private String tempo;
 	
 	@Column(name = "SCORE")
 	private long score;
@@ -48,6 +48,9 @@ public class Relatorio implements Serializable {
 	
 	@Column(name="PROF_ID")
 	private long prof_id;
+	
+	@Column(name="PROF_NOME")
+	private String profNome;
 	
 	@Column(name = "REPETICOES")
 	private long repeticoes;
@@ -109,15 +112,6 @@ public class Relatorio implements Serializable {
 		this.passos_id = passos_id;
 	}
 
-
-	public long getTempo() {
-		return tempo;
-	}
-
-	public void setTempo(long tempo) {
-		this.tempo = tempo;
-	}
-
 	public long getScore() {
 		return score;
 	}
@@ -158,4 +152,21 @@ public class Relatorio implements Serializable {
 		this.data = data;
 	}
 
+	public String getTempo() {
+		return tempo;
+	}
+
+	public void setTempo(String tempo) {
+		this.tempo = tempo;
+	}
+
+	public String getProfNome() {
+		return profNome;
+	}
+
+	public void setProfNome(String profNome) {
+		this.profNome = profNome;
+	}
+
+	
 }

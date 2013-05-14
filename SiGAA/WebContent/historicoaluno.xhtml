@@ -7,11 +7,12 @@
       xmlns:p="http://primefaces.org/ui">
 <h:head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<meta http-equiv="refresh" content="5;url=index.jsf" />
+
 
 </h:head>
 <h:body>
-<p:panel header="Hisórico">
+
+<p:panel header="Hisórico" >
 <center>
 <p:panel>
 <h:panelGrid columns="2" style="width:100%">
@@ -31,9 +32,40 @@
 
 </p:panel>
 </center>
+<h3> Histórico </h3>
 
+<ui:repeat var="agenda" value="#{actionCard.listaAgendaAluno}">
+<h:panelGrid columns="1">
+<h:outputText value="Tarefa: #{agenda.nome}"></h:outputText>
+<h:outputText value="Status: #{agenda.status}"/>
+</h:panelGrid>
+<p:separator ></p:separator>
+<ui:repeat var="relatorio" value="#{agenda.relatorio}" >
+<h:panelGrid columns="2">
+<h:outputText value="Passo: " style="font-weight:bold"/>
+<h:outputText value=" #{relatorio.nome}" />
+<h:outputText value="Sessão: " style="font-weight:bold"/>
+<h:outputText value="#{relatorio.sessao}"/>
+<h:outputText value="Data: " style="font-weight:bold"/>
+<h:outputText value="#{relatorio.data}"/>
+<h:outputText value="Professor/Tutor: " style="font-weight:bold"/>
+<h:outputText value="#{relatorio.profNome}" />
+<h:outputText value="Acertou: " style="font-weight:bold"/>
+<h:outputText value="#{relatorio.success==1 ? 'sim' : 'não'}"/>
+<h:outputText value="Pontuação (Prompt): " style="font-weight:bold"/>
+<h:outputText value="#{relatorio.score}"/>
+<h:outputText value="Repetições: " style="font-weight:bold"/>
+<h:outputText value="#{relatorio.repeticoes}"/>
+<h:outputText value="Tempo decorrido: " style="font-weight:bold"/>
+<h:outputText value="#{relatorio.tempo}"/>
+<h:outputText value="Observações: " style="font-weight:bold"/>
+<h:outputText value="#{relatorio.observacoes}"/>
+<br/><br/>
+</h:panelGrid>
+</ui:repeat>
 
-
+<p:separator style="height:10px"></p:separator>
+</ui:repeat>
 
 
 

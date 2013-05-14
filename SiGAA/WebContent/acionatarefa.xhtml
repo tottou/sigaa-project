@@ -107,10 +107,12 @@
 			<br />	<br />
 			<br />	<br />
 			<br />
+			<h:outputText id="txt_count" value="#{actionCard.tempo}" /> 
 			<table align="right">
 				<tr>
 					<td valign="bottom"><p:commandButton value="Concluído"
 							onclick="resultp.show();poll.stop();" type="button"></p:commandButton></td>
+							
 
 				</tr>
 
@@ -148,7 +150,7 @@
 
 			</p:dialog>
 <p:growl id="growl2" showDetail="true" life="4500" />
-			<p:poll interval="1" listener="#{actionCard.incrementar}"
+			<p:poll interval="1" listener="#{actionCard.incrementar}" update="txt_count"
 				widgetVar="poll" />
 
 
