@@ -13,37 +13,18 @@
 <h:body>
 
 <p:panel header="Hisórico" >
-<center>
-<p:panel>
-<h:panelGrid columns="2" style="width:100%">
-						<h:graphicImage value="#{actionCard.aluno.foto}" height="100" width="80"
-							alt="Foto de actionCard.aluno" cache="false"></h:graphicImage>
-						<h:panelGrid columns="2" style="width:320px">
-							<h:outputText value="Nome: " />
-							<h:outputText value="#{actionCard.aluno.nome}" />
-							<h:outputText value="Responsável: " />
-							<h:outputText value="#{actionCard.aluno.nomeResponsavel}" />
-							<h:outputText value="Nascimento: " />
-							<h:outputText value="#{actionCard.aluno.nascimento}" />
 
-						</h:panelGrid>
 
-					</h:panelGrid>
-
-</p:panel>
-</center>
-<h3> Histórico </h3>
-<p:tabView value="#{actionCard.listaAgendaAluno}" var="agenda">
-
-<p:tab title="#{agenda.nome}">
 <h:panelGrid columns="2">
+<h:outputText value="Tarefa: "  style="font-weight:bold"/>
+<h:outputText value=" #{actionCard.agendaHistorico.nome}"/>
 <h:outputText value="Status: "  style="font-weight:bold"/>
-<h:outputText value=" #{agenda.status}"/>
+<h:outputText value=" #{actionCard.agendaHistorico.status}"/>
 </h:panelGrid>
 
 <p:separator style="height:10px"></p:separator>
 
-<ui:repeat var="relatorio" value="#{agenda.relatorio}" >
+<ui:repeat var="relatorio" value="#{actionCard.agendaHistorico.relatorio}" >
 <h:panelGrid columns="2">
 <h:outputText value="Passo: " style="font-weight:bold"/>
 <h:outputText value=" #{relatorio.nome}" />
@@ -68,14 +49,13 @@
 </h:panelGrid>
 </ui:repeat>
 
-</p:tab>
+
+<br></br>
 
 
-
-</p:tabView>
 
 <p:commandButton value="Voltar" update=":formC:pnlCorpo"
-							icon="ui-icon-arrowrefresh-1-e"  actionListener="#{controladora.card}"/> 
+							icon="ui-icon-arrowrefresh-1-e"  actionListener="#{controladora.cardTarefa}"/> 
 </p:panel>
 
 

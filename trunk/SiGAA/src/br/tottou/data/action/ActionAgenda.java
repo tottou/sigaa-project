@@ -69,6 +69,10 @@ public class ActionAgenda {
 	
 	
 	public ActionAgenda() {
+	construtor();
+	}
+	
+	public void construtor() {
 		Sessao sessao = new Sessao();
 		long userid=sessao.getUsuario().getId();
 		long empid=sessao.getUsuario().getEmpresa().getId();
@@ -84,6 +88,7 @@ public class ActionAgenda {
 		for (int i = 0; i < listaAgenda.size(); i++) {
 			eventModel.addEvent(new EventoAgenda(listaAgenda.get(i), listaAgenda.get(i).getInicio(), listaAgenda.get(i).getFim()));  			
 		}
+		
 	}
 	
 
@@ -146,10 +151,15 @@ public class ActionAgenda {
 		getAgenda().setNome(getEvent().getTitle());
 		getAgenda().setRemaining(1l);	
 		getAgenda().setStatus("Em andamento");
-		 if(event.getId() == null)  
-	            eventModel.addEvent(event);  
-	        else  
-	            eventModel.updateEvent(event); 
+//		 if(event.getId() == null)  {
+//			 eventModel.addEvent(new EventoAgenda(getAgenda(), event.getStartDate(), event.getEndDate()));  
+//		 }
+//			 
+//	           
+//	        else  {
+//	        	 eventModel.updateEvent(new EventoAgenda(getAgenda(), event.getStartDate(), event.getEndDate())); 
+//	        }
+//	           
 		 
 		try {
 			AgendaDao.atualizarAgenda(getAgenda());
@@ -158,6 +168,7 @@ public class ActionAgenda {
 			setAluno(new Aluno());
 			setListaDualTarefa(new DualListModel<Tarefa>());
 			setCheck(true);
+			construtor();
 			FacesContext context = FacesContext.getCurrentInstance();
 			 context.addMessage(null, new FacesMessage("Agenda criada",
 			 "com sucesso!"));			 
@@ -196,7 +207,8 @@ public class ActionAgenda {
 	      
 	    public void onEventMove(ScheduleEntryMoveEvent event) {  
 	    	EventoAgenda ea= (EventoAgenda) eventModel.getEvent(event.getScheduleEvent().getId());
-	    	Agenda ag=AgendaDao.getAgenda( ea.getObjetoAgenda().getId());
+	    	Agenda ag = new Agenda();
+	    	ag=AgendaDao.getAgenda( ea.getObjetoAgenda().getId());
 	    	ag.setInicio(ea.getStartDate());
 	    	ag.setFim(ea.getEndDate());
 	    	AgendaDao.atualizarAgenda(ag);
@@ -206,7 +218,8 @@ public class ActionAgenda {
 	      
 	    public void onEventResize(ScheduleEntryResizeEvent event) {  
 	    	EventoAgenda ea= (EventoAgenda) eventModel.getEvent(event.getScheduleEvent().getId());
-	    	Agenda ag=AgendaDao.getAgenda( ea.getObjetoAgenda().getId());
+	    	Agenda ag = new Agenda();
+	    	ag=AgendaDao.getAgenda( ea.getObjetoAgenda().getId());
 	    	ag.setInicio(ea.getStartDate());
 	    	ag.setFim(ea.getEndDate());
 	    	AgendaDao.atualizarAgenda(ag);

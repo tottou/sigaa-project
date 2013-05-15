@@ -53,7 +53,8 @@
 					<table align="center" cellspacing="5" >
 					<tr valign="middle" align="center" >
 					<td>
-					<p:commandButton value="Relatório" styleClass="botao" icon="ui-icon-clock"></p:commandButton>
+					<p:commandButton value="Histórico" styleClass="botao" action="#{actionCard.gerarTarefaRelatorio(agenda.id)}" update=":formC:pnlCorpo" 
+							actionListener="#{controladora.historicoTarefa}" icon="ui-icon-clock"></p:commandButton>
 					</td><td>
 					<p:commandButton value="Iniciar tarefa" styleClass="botao" icon="ui-icon-clipboard" action="#{actionCard.iniciarTarefa(agenda.id)}" rendered="#{agenda.remaining!=agenda.sessoes+1}"
 					 onsuccess="window.open('/SiGAA/acionatarefa.jsf');" actionListener="#{controladora.card}" update=":formC:pnlCorpo" ></p:commandButton>	

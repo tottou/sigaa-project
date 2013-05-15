@@ -104,28 +104,36 @@
 					<h:panelGrid columns="2">
 					<h:outputText value="Nome da Tarefa: "  style="font-weight:bold;"></h:outputText>
 					<h:outputText value="#{actionCard.agenda.nome}"></h:outputText>
+					<h:outputText value="Nome da ALuno: "  style="font-weight:bold;"></h:outputText>
+					<h:outputText value="#{actionCard.agenda.aluno.nome}"></h:outputText>
 					<h:outputText value="Sessão atual: " style="font-weight:bold;"></h:outputText>
-					<h:outputText value="#{actionCard.agenda.remaining}"></h:outputText>
+					<h:outputText value="#{actionCard.agenda.remaining}" rendered="#{actionCard.agenda.remaining!=(actionCard.agenda.sessoes+1)}"></h:outputText>
+					<h:outputText value="Sessões finalizadas" rendered="#{actionCard.agenda.remaining==(actionCard.agenda.sessoes+1)}"></h:outputText>
 					<h:outputText value="Total de sessões: "  style="font-weight:bold;"></h:outputText>
 					<h:outputText value="#{actionCard.agenda.sessoes}"></h:outputText>
 					
 					</h:panelGrid>
+				
+					
 					<br/><br/>
 					<h:outputText value="Tarefas: "  style="font-weight:bold;"></h:outputText>
 					<p:dataGrid var="tarefa" value="#{actionCard.listaTarefa}"
 						columns="3">
-						<p:panel>
+						<p:column>
 
 							<h:graphicImage value="#{tarefa.imagem}" height="100" width="80"
 								alt="Foto de aluno" cache="false"></h:graphicImage>
 								<br/>
 							<h:outputText value="#{tarefa.nome}" />
 
-						</p:panel>
+						</p:column>
 					</p:dataGrid>
 					<h:panelGrid columns="2">
-						<p:commandButton value="Iniciar tarefa(s)" icon="ui-icon-clock"
-							oncomplete="eventDialog2.hide()"></p:commandButton>
+					<p:commandButton value="Iniciar tarefa"  icon="ui-icon-clipboard" action="#{actionCard.iniciarTarefa(actionCard.agenda.id)}" rendered="#{actionCard.agenda.remaining!=actionCard.agenda.sessoes+1}"
+					 onsuccess="window.open('/SiGAA/acionatarefa.jsf');" actionListener="#{controladora.cardTarefa}" update=":formC:pnlCorpo" ></p:commandButton>	
+						<p:commandButton value="Tarefa finalizada" icon="ui-icon-clipboard" rendered="#{actionCard.agenda.remaining==actionCard.agenda.sessoes+1}"
+					 onclick="donez2.show();eventDialog2.hide();"></p:commandButton>			
+						
 						<p:commandButton value="Cancelar" 
 							type="button" onclick="eventDialog2.hide()"></p:commandButton>
 
@@ -133,15 +141,15 @@
 				
 				</h:panelGrid>
 			</p:dialog>
-
+							
 		</p:tab>
 
 
 	</p:tabView>
 
-		
-
-
+		<p:dialog widgetVar="donez2">
+				Todas sessões para esta tarefa já foram realizadas.
+				</p:dialog>
 
 </h:body>
 </html>
