@@ -57,6 +57,9 @@ public class Controladora {
 	public void historicoAluno (ActionEvent e) {
 		setTarget("historicoaluno.xhtml");
 	}
+	public void historicoTarefa (ActionEvent e) {
+		setTarget("historicotarefa.xhtml");
+	}
 	public void cardTarefa (ActionEvent e) {
 		setTarget("cardtarefa.xhtml");
 	}

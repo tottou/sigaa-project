@@ -20,6 +20,7 @@ import br.tottou.action.login.Sessao;
 import br.tottou.data.AgendaDao;
 import br.tottou.data.AlunoDao;
 import br.tottou.data.PerfilDao;
+import br.tottou.engine.util.Cronometro;
 import br.tottou.model.EventoAgenda;
 import br.tottou.model.entities.Agenda;
 import br.tottou.model.entities.Aluno;
@@ -40,6 +41,7 @@ public class ActionCard {
 	private int tempo;
 
 	private Agenda agenda = new Agenda();
+	private Agenda agendaHistorico = new Agenda();
 	private Agenda agendaAtiva = new Agenda();
 	private ProgPassos passoAtivo = new ProgPassos();
 	private Aluno aluno = new Aluno();
@@ -113,6 +115,7 @@ public class ActionCard {
 
 	List<ProgPassos> listaP = new ArrayList<ProgPassos>();
 	List<Relatorio> listaR = new ArrayList<Relatorio>();
+	Cronometro crono = new Cronometro();
 	int contP;
 	int maxP;
 
@@ -133,11 +136,12 @@ public class ActionCard {
 		maxP = listaP.size();
 		setPassoAtivo(listaP.get(contP));
 		contP++;
+		crono.start();
 
 	}
 
 	public void proximoPasso() {
-		
+		tempo=(int) crono.getSeconds();
 		if (getIguais()==0) { // testar se size eh o ultimo elemento da lista
 			listaR.add(gerarRelatorio());
 			setPassoAtivo(listaP.get(contP));
@@ -152,6 +156,7 @@ public class ActionCard {
 		acertou=false;
 		observacoes="";
 		repeticoes=0;
+		crono.start();
 	}
 	
 	public void repetirPasso() {
@@ -160,6 +165,7 @@ public class ActionCard {
 		rating=0;
 		acertou=false;
 		observacoes="";
+		crono.start();
 	}
 
 	private void finalizou(){
@@ -171,6 +177,7 @@ public class ActionCard {
 		AgendaDao.atualizarAgenda(agendaAtiva);
 		agendaAtiva = new Agenda();
 		setPassoAtivo(new ProgPassos());
+		instanciar();
 		 FacesContext context = FacesContext.getCurrentInstance();
 		 context.addMessage(null, new FacesMessage("",
 		 "Tarefa Concluída com sucesso"));
@@ -198,9 +205,7 @@ public class ActionCard {
 		return relatorio;
 	}
 
-	public void incrementar() {
-		tempo++;
-	}
+	
 	private void limpaAll() {
 		contP = 0;
 		maxP = 0;
@@ -222,6 +227,15 @@ public class ActionCard {
 		
 		
 	}
+	
+	public void gerarTarefaRelatorio(long id_agenda){
+		setAgendaHistorico(AgendaDao.getAgenda(id_agenda));
+	}
+	
+	public void stop() {
+		crono.stop();
+	}
+	
 	
 
 	
@@ -401,6 +415,14 @@ public class ActionCard {
 
 	public void setListaAgendaAluno(List<Agenda> listaAgendaAluno) {
 		this.listaAgendaAluno = listaAgendaAluno;
+	}
+
+	public Agenda getAgendaHistorico() {
+		return agendaHistorico;
+	}
+
+	public void setAgendaHistorico(Agenda agendaHistorico) {
+		this.agendaHistorico = agendaHistorico;
 	}
 
 

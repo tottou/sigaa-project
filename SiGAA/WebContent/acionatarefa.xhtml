@@ -107,11 +107,11 @@
 			<br />	<br />
 			<br />	<br />
 			<br />
-			<h:outputText id="txt_count" value="#{actionCard.tempo}" /> 
+		
 			<table align="right">
 				<tr>
-					<td valign="bottom"><p:commandButton value="Concluído"
-							onclick="resultp.show();poll.stop();" type="button"></p:commandButton></td>
+					<td valign="bottom"><p:commandButton value="Concluído" action="#{actionCard.stop}" 
+							onclick="resultp.show()" ></p:commandButton></td>
 							
 
 				</tr>
@@ -119,7 +119,7 @@
 
 			</table>
 
-			<p:dialog id="resultpid" width="500" 
+			<p:dialog id="resultpid" width="500" modal="true"
 				message="Avalie o resultado do passo ' #{actionCard.passoAtivo.nome}"
 				header="Resultado do passo #{actionCard.contP} de #{actionCard.maxP} passos "
 				severity="info" widgetVar="resultp" closable="false">
@@ -135,11 +135,11 @@
 
 					<p:commandButton id="repete" value="Repetir passo" update="formT"
 						action="#{actionCard.repetirPasso}"
-						onclick="resultp.hide();poll.start();" />
+						onclick="resultp.hide();" />
 					<p:commandButton id="nextbt" value="Próximo passo" update="formT" rendered="#{actionCard.iguais==0}"
 						action="#{actionCard.proximoPasso}"
-						onclick="resultp.hide();poll.start();" />
-						<p:commandButton id="finaliza" value="Finalizar" update="formT,growl2" rendered="#{actionCard.iguais==1}"
+						onclick="resultp.hide();" />
+						<p:commandButton id="finaliza" value="Finalizar" update="formT" rendered="#{actionCard.iguais==1}"
 						action="#{actionCard.proximoPasso}"
 						onclick="resultp.hide();window.close();" />
 						
@@ -149,9 +149,8 @@
 
 
 			</p:dialog>
-<p:growl id="growl2" showDetail="true" life="4500" />
-			<p:poll interval="1" listener="#{actionCard.incrementar}" update="txt_count"
-				widgetVar="poll" />
+
+			
 
 
 		</h:form>
