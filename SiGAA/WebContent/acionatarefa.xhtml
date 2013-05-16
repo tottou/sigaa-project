@@ -14,17 +14,32 @@
 		<f:facet name="tarefa">
 			<title>Tarefa</title>
 		</f:facet>
-		<link type="text/css" rel="stylesheet" href="/css/default.css" />
+		<link type="text/css" rel="stylesheet" href="/SiGAA/css/default.css" />
 		<link type="text/css" rel="stylesheet"
-			href="/css/syntaxhighlighter/syntaxhighlighter.css" />
+			href="/SiGAA/css/syntaxhighlighter/syntaxhighlighter.css" />
 		<link rel="shortcut icon" type="image/png"
 			href="#{request.contextPath}/imagens/favicon.png" />
 
 		<script type="text/javascript">
-			
+			function goFS() {
+				var elem = document.body;
+				if (elem.requestFullscreen) {
+					elem.requestFullscreen();
+				} else if (elem.mozRequestFullScreen) {
+					elem.mozRequestFullScreen();
+				} else if (elem.webkitRequestFullscreen) {
+					elem.webkitRequestFullscreen();
+				}
+
+			}
 		</script>
 
 		<style type="text/css">
+body {
+	width: 99%;
+	height: 99%;
+}
+
 .ui-widget {
 	font-size: 90% !important;
 }
@@ -37,7 +52,8 @@
 	</h:head>
 	<h:body>
 		<h:form id="formT">
-			<p:commandButton type="button" onclick="maxWindow();"></p:commandButton>
+			<p:commandButton id="botaofs" action="#{actionCard.fs}" rendered="#{actionCard.fullscreen}" update="formT" icon="ui-icon-arrow-4-diag"
+				onclick="goFS()"></p:commandButton>
 
 			<center>
 				<h1>
@@ -103,16 +119,24 @@
 			<br />
 			<br />
 			<br />
-			<br />	<br />
-			<br />	<br />
-			<br />	<br />
 			<br />
-		
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+
 			<table align="right">
 				<tr>
-					<td valign="bottom"><p:commandButton value="Concluído" action="#{actionCard.stop}" 
-							onclick="resultp.show()" ></p:commandButton></td>
-							
+					<td valign="bottom"><p:commandButton value="Concluído"
+							action="#{actionCard.stop}" onclick="resultp.show()"></p:commandButton></td>
+
 
 				</tr>
 
@@ -123,7 +147,8 @@
 				message="Avalie o resultado do passo ' #{actionCard.passoAtivo.nome}"
 				header="Resultado do passo #{actionCard.contP} de #{actionCard.maxP} passos "
 				severity="info" widgetVar="resultp" closable="false">
-				<h3>Avalie o resultado do passo ' #{actionCard.passoAtivo.nome} '</h3>
+				<h3>Avalie o resultado do passo ' #{actionCard.passoAtivo.nome}
+					'</h3>
 				<h:panelGrid columns="2">
 					<h:outputText value="Acertou?"></h:outputText>
 					<p:selectBooleanCheckbox value="#{actionCard.acertou}"></p:selectBooleanCheckbox>
@@ -131,26 +156,26 @@
 					<p:rating value="#{actionCard.rating}"></p:rating>
 					<h:outputText value="Observações:"></h:outputText>
 					<p:inputTextarea value="#{actionCard.observacoes}"></p:inputTextarea>
-				
+
 
 					<p:commandButton id="repete" value="Repetir passo" update="formT"
-						action="#{actionCard.repetirPasso}"
-						onclick="resultp.hide();" />
-					<p:commandButton id="nextbt" value="Próximo passo" update="formT" rendered="#{actionCard.iguais==0}"
-						action="#{actionCard.proximoPasso}"
-						onclick="resultp.hide();" />
-						<p:commandButton id="finaliza" value="Finalizar" update="formT" rendered="#{actionCard.iguais==1}"
+						action="#{actionCard.repetirPasso}" onclick="resultp.hide();" />
+					<p:commandButton id="nextbt" value="Próximo passo" update="formT"
+						rendered="#{actionCard.iguais==0}"
+						action="#{actionCard.proximoPasso}" onclick="resultp.hide();" />
+					<p:commandButton id="finaliza" value="Finalizar" update="formT"
+						rendered="#{actionCard.iguais==1}"
 						action="#{actionCard.proximoPasso}"
 						onclick="resultp.hide();window.close();" />
-						
-						
+
+
 
 				</h:panelGrid>
 
 
 			</p:dialog>
 
-			
+
 
 
 		</h:form>

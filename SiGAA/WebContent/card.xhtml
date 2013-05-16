@@ -20,7 +20,7 @@
 					'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro',
 					'Novembro', 'Dezembro' ],
 			monthNamesShort : [ 'Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun',
-					'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Des' ],
+					'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez' ],
 			dayNames : [ 'Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta',
 					'Sexta', 'Sábado' ],
 			dayNamesShort : [ 'Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb' ],
@@ -42,6 +42,8 @@
 			day : 'Dia',
 			allDayText : 'Dia todo'
 		};
+		
+		
 	</script>
 
 </h:head>
@@ -104,7 +106,7 @@
 					<h:panelGrid columns="2">
 					<h:outputText value="Nome da Tarefa: "  style="font-weight:bold;"></h:outputText>
 					<h:outputText value="#{actionCard.agenda.nome}"></h:outputText>
-					<h:outputText value="Nome da ALuno: "  style="font-weight:bold;"></h:outputText>
+					<h:outputText value="Nome da Aluno: "  style="font-weight:bold;"></h:outputText>
 					<h:outputText value="#{actionCard.agenda.aluno.nome}"></h:outputText>
 					<h:outputText value="Sessão atual: " style="font-weight:bold;"></h:outputText>
 					<h:outputText value="#{actionCard.agenda.remaining}" rendered="#{actionCard.agenda.remaining!=(actionCard.agenda.sessoes+1)}"></h:outputText>

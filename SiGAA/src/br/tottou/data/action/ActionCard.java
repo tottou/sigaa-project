@@ -39,6 +39,7 @@ public class ActionCard {
 	private boolean acertou;
 	private int iguais;
 	private int tempo;
+	private boolean fullscreen=true;
 
 	private Agenda agenda = new Agenda();
 	private Agenda agendaHistorico = new Agenda();
@@ -121,6 +122,7 @@ public class ActionCard {
 
 	public void iniciarTarefa(long id_agenda) {
 		limpaAll();
+		setFullscreen(true);
 		agendaAtiva = AgendaDao.getAgenda(id_agenda);
 		agendaAtiva.getTarefas();
 		for (int i = 0; i < agendaAtiva.getTarefas().size(); i++) {
@@ -178,6 +180,7 @@ public class ActionCard {
 		agendaAtiva = new Agenda();
 		setPassoAtivo(new ProgPassos());
 		instanciar();
+		setFullscreen(true);
 		 FacesContext context = FacesContext.getCurrentInstance();
 		 context.addMessage(null, new FacesMessage("",
 		 "Tarefa Concluída com sucesso"));
@@ -216,6 +219,10 @@ public class ActionCard {
 		rating=0;
 		acertou=false;
 		observacoes="";
+	}
+	
+	public void fs() {
+		setFullscreen(false);
 	}
 
 	// historico
@@ -423,6 +430,15 @@ public class ActionCard {
 
 	public void setAgendaHistorico(Agenda agendaHistorico) {
 		this.agendaHistorico = agendaHistorico;
+	}
+
+	public boolean isFullscreen() {
+		return fullscreen;
+	}
+	
+	
+	public void setFullscreen(boolean fullscreen) {
+		this.fullscreen = fullscreen;
 	}
 
 
