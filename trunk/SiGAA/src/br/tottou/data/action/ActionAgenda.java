@@ -107,7 +107,7 @@ public class ActionAgenda {
 		if (getAgenda().getSessoes()<1) {
 			 FacesContext context = FacesContext.getCurrentInstance();
 			 context.addMessage(null, new FacesMessage("Falha ao salvar",
-			 "O número de sessões tem que ser maior que 1"));
+			 "Selecione corretamente o número de sessões"));
 			 return;
 		}
 		

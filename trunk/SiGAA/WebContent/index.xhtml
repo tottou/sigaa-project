@@ -57,9 +57,9 @@
     <br/><br/>
 <center>
 
- 
+   <h:form >
  <p:panel id="loginPanel" header="Login"  style="width: 25%" rendered="true" visible="true" >  
-  <h:form >
+
  <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"  />  
   <h:panelGrid columns="2" cellpadding="4" >  
  <h:outputText value =" Usuário : "  />
@@ -70,9 +70,9 @@
 
 <br/> <h:commandButton value =" Entrar " action ="#{loginBean.autenticar}"/>
    </h:panelGrid>  
-   </h:form >
-   </p:panel>
  
+   </p:panel>
+   </h:form >
    
  </center>
   
