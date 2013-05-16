@@ -18,6 +18,14 @@
 <h:panelGrid columns="2">
 <h:outputText value="Tarefa: "  style="font-weight:bold"/>
 <h:outputText value=" #{actionCard.agendaHistorico.nome}"/>
+<h:outputText value="Data de início: "  style="font-weight:bold"/>
+<h:outputText value="#{actionCard.agendaHistorico.inicio}">  
+  <f:convertDateTime pattern="dd/MM/yyyy"/>  
+</h:outputText>
+<h:outputText value="Data de término: "  style="font-weight:bold"/>
+<h:outputText value="#{actionCard.agendaHistorico.fim}">  
+  <f:convertDateTime pattern="dd/MM/yyyy"/>  
+</h:outputText>
 <h:outputText value="Status: "  style="font-weight:bold"/>
 <h:outputText value=" #{actionCard.agendaHistorico.status}"/>
 </h:panelGrid>
