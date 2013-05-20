@@ -89,7 +89,16 @@
 </p:panel>
 
 
+<p:ajaxStatus onstart="statusDialog11.show();"
+			onsuccess="statusDialog11.hide();" />
 
+		<p:dialog modal="true" widgetVar="statusDialog11"
+			header="Carregando..." resizable="false" appendToBody="true"
+			draggable="false" closable="false">
+			<center>
+				<p:graphicImage value="/imagens/ajax-loader.gif" />
+			</center>
+		</p:dialog>
 
 </h:body>
 </html>

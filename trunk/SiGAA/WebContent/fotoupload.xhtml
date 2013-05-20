@@ -70,5 +70,7 @@ invalidSizeMessage="tamanho inválido" oncomplete="statusDialogFA.show();timed();
     		<p:commandButton id="backz" value="Voltar"  actionListener="#{controladora.editUsuario}" update="formC:pnlCorpo" ajax="false"/>
     		</p:panel>
     		<p:remoteCommand name="remoteCA" update="photos"></p:remoteCommand>
+    			<p:ajaxStatus onstart="statusDialog1.show();" onerror="erro();"
+			onsuccess="statusDialog1.hide();" />
 </h:body>
 </html>
