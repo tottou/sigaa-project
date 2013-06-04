@@ -796,6 +796,18 @@ public class ActionPrograma {
 	//picklist
 	
 	private void pickSequencia() {
+		if (programa.getNome() == null) {
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_WARN,
+							"Programas de ensino",
+							"Por favor, atualize o nome do programa antes dos outros módulos."));
+			
+			setSeqPas( new DualListModel<ProgPassos>(new ArrayList<ProgPassos>(), new ArrayList<ProgPassos>()) );
+		} else {
+			
+		
 		sequencia = new ProgSequencia();		
 		 List<ProgPassos> source = new ArrayList<ProgPassos>();  
 	        List<ProgPassos> target = new ArrayList<ProgPassos>();
@@ -807,6 +819,7 @@ public class ActionPrograma {
 			}
 			
 			setSeqPas( new DualListModel<ProgPassos>(source, target) );
+		}
 	}
 	
 	
