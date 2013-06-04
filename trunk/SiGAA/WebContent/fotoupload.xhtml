@@ -55,7 +55,7 @@ remoteCA();
 <br/>
 	<p:panel header="Opção 2: Upload de uma imagem">
 	<center>
-        <p:fileUpload fileUploadListener="#{actionPerfil.upload}" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" sizeLimit="300000" auto="true" immediate="true" rendered="true" 
+        <p:fileUpload fileUploadListener="#{actionPerfil.upload}" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" sizeLimit="300000" auto="true" immediate="true" rendered="true" disabled="false" 
 description="Selecione foto do usuário" cancelLabel="Cancelar" label="Escolher arquivo" validatorMessage="Arquivo inválido" invalidFileMessage="Arquivo inválido." update="growl,photos"
 invalidSizeMessage="tamanho inválido" oncomplete="statusDialogFA.show();timed();" />
 </center>
