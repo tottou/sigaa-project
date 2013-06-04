@@ -26,7 +26,7 @@
      
 	<h:outputText id="textoTree1" value="Selecione a categoria "  />
 
-				 <p:tree id="treeS" value="#{actionCategoria.root}" var="node"  
+				 <p:tree id="treeS" value="#{actionCategoria.root}" var="node"  cache="true" dynamic="true"
             selectionMode="single"  
             selection="#{actionCategoria.noSelecionado}" >  
 <p:ajax update=":formC:painelCat" event="select" listener="#{actionCategoria.popular}" ></p:ajax> 

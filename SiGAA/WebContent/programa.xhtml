@@ -14,7 +14,7 @@
 	<h:panelGrid columns="2">
 		<p:panel header="Categorias">
 
-			<p:tree id="treeSz" value="#{actionPrograma.root}" var="node" 
+			<p:tree id="treeSz" value="#{actionPrograma.root}" var="node" cache="true"
 				dynamic="true" selectionMode="single"
 				selection="#{actionPrograma.noSelecionado}">
 				<p:ajax update=":formC:programas" event="select"
@@ -26,7 +26,7 @@
 		</p:panel>
 
 		<p:panel id="programas" header="Programas de ensino">
-			<p:tree id="treezz" value="#{actionPrograma.prog}" var="node" 
+			<p:tree id="treezz" value="#{actionPrograma.prog}" var="node" cache="true"
 				dynamic="true" selectionMode="single"
 				selection="#{actionPrograma.noProg}">
 				<p:ajax update=":formC:botoes" event="select"

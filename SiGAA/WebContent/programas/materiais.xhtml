@@ -48,7 +48,7 @@
 
 				<h:panelGrid rendered="#{actionPrograma.selecaoMaterial==1}">
 
-					<p:fileUpload fileUploadListener="#{actionPrograma.uploadImg}" rendered="true" immediate="true"
+					<p:fileUpload fileUploadListener="#{actionPrograma.uploadImg}" rendered="true" immediate="true" disabled="false"
 						allowTypes="/(\.|\/)(gif|jpe?g|png)$/" sizeLimit="3000000"
 						auto="true" description="Selecione uma imagem"
 						cancelLabel="Cancelar" label="Escolher arquivo"
@@ -64,7 +64,7 @@
 
 				<h:panelGrid rendered="#{actionPrograma.selecaoMaterial==2}">
 
-					<p:fileUpload fileUploadListener="#{actionPrograma.uploadSom}" rendered="true" immediate="true"
+					<p:fileUpload fileUploadListener="#{actionPrograma.uploadSom}" rendered="true" immediate="true" disabled="false"
 						allowTypes="/(\.|\/)(wav|mp3|wma)$/" sizeLimit="15000000"
 						auto="true" description="Selecione um arquivo de audio"
 						cancelLabel="Cancelar" label="Escolher arquivo"
@@ -78,7 +78,7 @@
 
 				<h:panelGrid rendered="#{actionPrograma.selecaoMaterial==3}" columns="2">
 
-					<p:fileUpload fileUploadListener="#{actionPrograma.uploadVideo}" rendered="true" immediate="true"
+					<p:fileUpload fileUploadListener="#{actionPrograma.uploadVideo}" rendered="true" immediate="true" disabled="false"
 						allowTypes="/(\.|\/)(mp4|wmv|avi|mov)$/" sizeLimit="128000000"
 						auto="true" description="Selecione um vídeo"
 						cancelLabel="Cancelar" label="Escolher arquivo"
@@ -91,7 +91,7 @@
 
 				<h:panelGrid rendered="#{actionPrograma.selecaoMaterial==4}">
 
-					<p:fileUpload fileUploadListener="#{actionPrograma.uploadArq}" rendered="true" immediate="true"
+					<p:fileUpload fileUploadListener="#{actionPrograma.uploadArq}" rendered="true" immediate="true" disabled="false"
 						allowTypes="/(\.|\/)(pdf|doc|txt|docx|xls|xlsx|ppt|pptx|rtf)$/" sizeLimit="15000000"
 						auto="true" description="Selecione um arquivo"
 						cancelLabel="Cancelar" label="Escolher arquivo"

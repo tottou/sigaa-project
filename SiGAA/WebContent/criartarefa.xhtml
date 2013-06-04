@@ -51,8 +51,8 @@
 
 		<p:panel header="Selecionar Sequências" id="seseq">
 			<h:panelGrid columns="3">
-				<p:tree id="tree_tar" value="#{actionTarefa.tarefaTree}" var="node"
-					dynamic="true" selectionMode="single"
+				<p:tree id="tree_tar" value="#{actionTarefa.tarefaTree}" var="node" cache="true" dynamic="true"
+					 selectionMode="single"
 					selection="#{actionTarefa.tarefaTreeSelect}">
 					<p:ajax update=":formC:panelNTar" event="select"
 						listener="#{actionTarefa.popularProg}"></p:ajax>
@@ -61,8 +61,8 @@
 					</p:treeNode>
 				</p:tree>
 
-				<p:tree id="tree_seqz0r" value="#{actionTarefa.seqTree}" var="node"
-					dynamic="true" selectionMode="single"
+				<p:tree id="tree_seqz0r" value="#{actionTarefa.seqTree}" var="node" cache="true" dynamic="true"
+					 selectionMode="single"
 					selection="#{actionTarefa.seqTreeSelect}">
 					<p:ajax update=":formC:panelNTar,:formC:growl" event="select"
 						listener="#{actionTarefa.popularSeq}"></p:ajax>
@@ -71,8 +71,8 @@
 					</p:treeNode>
 				</p:tree>
 
-				<p:tree id="tree_seq" value="#{actionTarefa.passosTree}" var="node"
-					dynamic="true" selectionMode="single"
+				<p:tree id="tree_seq" value="#{actionTarefa.passosTree}" var="node" cache="true" dynamic="true"
+				selectionMode="single"
 					selection="#{actionTarefa.passosTreeSelect}">
 					<p:ajax update=":formC:panelNTar,:formC:growl" event="select"
 						listener="#{actionTarefa.popularPas}"></p:ajax>

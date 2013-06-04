@@ -13,7 +13,7 @@
 <h:panelGrid columns="2">
 <p:panel id="um" header="Programas de Ensino"  >
 
-				 <p:tree id="tree_2" value="#{actionPrograma.treePrograma}" var="node"  dynamic="true"
+				 <p:tree id="tree_2" value="#{actionPrograma.treePrograma}" var="node"  cache="true" dynamic="true"
             selectionMode="single"  
             selection="#{actionPrograma.treeProgramaSelect}" >  
 <p:ajax update=":formC:dois" event="select" listener="#{actionPrograma.modulo}" ></p:ajax> 
