@@ -2,6 +2,7 @@ package br.tottou.data.action;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -84,9 +85,15 @@ public class ActionAgenda {
 		if (sessao.getUsuario().getCategoria()>1) {
 			listaAgenda.addAll(PerfilDao.getPerfil(userid).getAgenda());
 		}
-	
+		Calendar c = Calendar.getInstance();
+		
 		for (int i = 0; i < listaAgenda.size(); i++) {
-			eventModel.addEvent(new EventoAgenda(listaAgenda.get(i), listaAgenda.get(i).getInicio(), listaAgenda.get(i).getFim()));  			
+			eventModel.addEvent(new EventoAgenda(listaAgenda.get(i), listaAgenda.get(i).getInicio(), listaAgenda.get(i).getFim()));  
+			c.setTime(listaAgenda.get(i).getInicio());
+			c.add(Calendar.DATE, 7);			
+			eventModel.addEvent(new EventoAgenda(listaAgenda.get(i), c.getTime(), c.getTime())); 
+			c.add(Calendar.DATE, 7);			
+			eventModel.addEvent(new EventoAgenda(listaAgenda.get(i), c.getTime(), c.getTime())); 
 		}
 		
 	}
