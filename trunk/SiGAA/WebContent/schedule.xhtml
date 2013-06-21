@@ -64,22 +64,12 @@
               
   
             <h:outputLabel for="from" value="Início:" />  
-            <p:inputMask id="from" value="#{actionAgenda.event.startDate}" mask="99/99/9999" required="true" rendered="#{actionAgenda.event.id==null}">  
-                <f:convertDateTime pattern="dd/MM/yyyy" />  
-            </p:inputMask>  
-  			<h:outputText id="inicioz" value="#{actionAgenda.event.startDate}" rendered="#{actionAgenda.event.id!=null}">
-  			<f:convertDateTime pattern="dd/MM/yyyy - kk:mm" />  
+              
+  			<h:outputText id="inicioz" value="#{actionAgenda.event.startDate}" >
+  			<f:convertDateTime pattern="dd/MM/yyyy" />  
   			</h:outputText>
   			
-            <h:outputLabel for="to" value="Fim:" />  
-            <p:inputMask id="to" value="#{actionAgenda.event.endDate}" mask="99/99/9999" required="true" rendered="#{actionAgenda.event.id==null}">  
-                <f:convertDateTime pattern="dd/MM/yyyy" />  
-            </p:inputMask>  
-       		<h:outputText id="titends" value="#{actionAgenda.event.endDate}" rendered="#{actionAgenda.event.id!=null}">
-       		<f:convertDateTime pattern="dd/MM/yyyy - kk:mm" /> 
-       		</h:outputText>
-       		
-                 
+                          
             <p:commandButton value="Criar sessão" actionListener="#{controladora.agenda}" oncomplete="myschedule.update();eventDialog.hide();" 
             update=":formC:pnlCorpo,growl" rendered="#{actionAgenda.event.id==null and (sessao.usuario.categoria==0 || sessao.usuario.categoria==1)}">
             	<f:actionListener binding="#{actionAgenda.ajustaHora}" />
