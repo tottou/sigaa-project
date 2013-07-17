@@ -61,16 +61,7 @@
 			<br/><br/> <br/><br/>
     		<p:commandButton id="btnSalvarA" value="Cadastrar"  actionListener="#{actionAluno.save}" update="growl,panelA" />
     		<p:commandButton id="btnLimparA" value="Limpar campos"  type="reset" update="panelA" />
-    		<p:ajaxStatus onstart="statusDialog11.show();"
-			onsuccess="statusDialog11.hide();" />
-
-		<p:dialog modal="true" widgetVar="statusDialog11"
-			header="Carregando..." resizable="false" appendToBody="true"
-			draggable="false" closable="false">
-			<center>
-				<p:graphicImage value="/imagens/ajax-loader.gif" />
-			</center>
-		</p:dialog>
+    		
 		</p:panel>
 </h:body>
 </html>

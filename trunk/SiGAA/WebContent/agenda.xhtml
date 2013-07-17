@@ -16,10 +16,10 @@
 
 
 	<p:panel header="Criando sessão" id="paneSs" rendered="#{!actionAgenda.check}">
-	<h:outputText value="#{actionAgenda.event.title}"></h:outputText>
-	<br/>
-<h:outputText value="Início: #{actionAgenda.inicio} - "></h:outputText>
-<h:outputText value="Fim: #{actionAgenda.fim}"></h:outputText>
+<!-- 	<h:outputText value="#{actionAgenda.event.title}"></h:outputText> -->
+<!-- 	<br/> -->
+<!-- <h:outputText value="Início: #{actionAgenda.inicio} - "></h:outputText> -->
+<!-- <h:outputText value="Fim: #{actionAgenda.fim}"></h:outputText> -->
 <h:panelGrid columns="2" >
 <h:column id="alunoseprofs">
 		<p:panel>
@@ -150,13 +150,13 @@
 		</p:panel>
 		
 		
-		<p:panel rendered="#{actionAgenda.aluno.id!=0}">
-		<h4>Número de sessões</h4>
-		 <h:panelGrid columns="1" style="margin-bottom:10px">  
-        <p:inputText id="txt1" value="#{actionAgenda.agenda.sessoes}" />  
-        <p:slider for="txt1" />  
-    </h:panelGrid> 
-        </p:panel>
+<!-- 		<p:panel rendered="#{actionAgenda.aluno.id!=0}"> -->
+<!-- 		<h4>Número de sessões</h4> -->
+<!-- 		 <h:panelGrid columns="1" style="margin-bottom:10px">   -->
+<!--         <p:inputText id="txt1" value="#{actionAgenda.agenda.sessoes}" />   -->
+<!--         <p:slider for="txt1" />   -->
+<!--     </h:panelGrid>  -->
+<!--         </p:panel> -->
 		</h:column>
 		</h:panelGrid>
 		<br/>
@@ -176,10 +176,10 @@
 		</center>
 	
 	</p:panel>
-	<p:ajaxStatus onstart="statusDialog11.show();"
-			onsuccess="statusDialog11.hide();" />
+	<p:ajaxStatus onstart="statusDialog11o.show();"
+			onsuccess="statusDialog11o.hide();" />
 
-		<p:dialog modal="true" widgetVar="statusDialog11"
+		<p:dialog modal="true" widgetVar="statusDialog11o"
 			header="Carregando..." resizable="false" appendToBody="true"
 			draggable="false" closable="false">
 			<center>

@@ -58,9 +58,8 @@
     <p:dialog widgetVar="eventDialog" header="Detalhes da agenda" showEffect="clip" hideEffect="clip">  
     <p:messages id="messages"  autoUpdate="true" closable="true" />  
         <h:panelGrid id="eventDetails" columns="2">  
-            <h:outputLabel for="title" value="Título:" />  
-            <p:inputText id="title" value="#{actionAgenda.event.title}" required="true" rendered="#{actionAgenda.event.id==null}"/>
-            <h:outputText id="title2" value="#{actionAgenda.event.title}" rendered="#{actionAgenda.event.id!=null}"/>
+            <h:outputLabel for="title" value="Dia da semana:" />        
+            <h:outputText id="title2" value="#{actionAgenda.diaSemana}"/>
               
   
             <h:outputLabel for="from" value="Início:" />  
