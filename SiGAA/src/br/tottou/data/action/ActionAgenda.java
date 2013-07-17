@@ -3,6 +3,7 @@ package br.tottou.data.action;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -54,6 +55,7 @@ public class ActionAgenda {
 	private String fim;
 	private String mudarValor;
 	private String ajustaHora;
+	private String diaSemana;
 	
 	private boolean check=false;
 
@@ -90,6 +92,7 @@ public class ActionAgenda {
 		for (int i = 0; i < listaAgenda.size(); i++) {
 			eventModel.addEvent(new EventoAgenda(listaAgenda.get(i), listaAgenda.get(i).getInicio(), listaAgenda.get(i).getFim()));  
 			c.setTime(listaAgenda.get(i).getInicio());
+			c.get(Calendar.DAY_OF_WEEK); 
 			c.add(Calendar.DATE, 7);			
 			eventModel.addEvent(new EventoAgenda(listaAgenda.get(i), c.getTime(), c.getTime())); 
 			c.add(Calendar.DATE, 7);			
@@ -98,7 +101,42 @@ public class ActionAgenda {
 		
 	}
 	
-
+	private String setarDiaSemana(Date data) {
+		String dia=" ";
+		Calendar c = Calendar.getInstance();
+		c.setTime(data);
+		int num=c.get(Calendar.DAY_OF_WEEK);
+		if (num==1) {
+			dia="Domingo";
+		}
+		if (num==2) {
+			dia="Segunda";
+		}
+		
+		if (num==3) {
+			dia="Terça";
+		}
+		
+		if (num==4) {
+			dia="Quarta";
+		}
+		
+		if (num==5) {
+			dia="Quinta";
+		}
+		
+		if (num==6) {
+			dia="Sexta";
+		}
+		if (num==7) {
+			dia="Sábado";
+		}
+	return dia;
+		
+		
+		
+	}
+	
 	public void popular() {
 		setAluno(AlunoDao.getAluno(getAluno().getId()));
 
@@ -111,12 +149,13 @@ public class ActionAgenda {
 			 "Selecione um professor para a sessão"));
 			 return;
 		}
-		if (getAgenda().getSessoes()<1) {
-			 FacesContext context = FacesContext.getCurrentInstance();
-			 context.addMessage(null, new FacesMessage("Falha ao salvar",
-			 "Selecione corretamente o número de sessões"));
-			 return;
-		}
+		//caso de uso modificado.
+//		if (getAgenda().getSessoes()<1) {
+//			 FacesContext context = FacesContext.getCurrentInstance();
+//			 context.addMessage(null, new FacesMessage("Falha ao salvar",
+//			 "Selecione corretamente o número de sessões"));
+//			 return;
+//		}
 		
 		if (getListaDualTarefa().getTarget().size()<1) {
 			 FacesContext context = FacesContext.getCurrentInstance();
@@ -156,7 +195,8 @@ public class ActionAgenda {
 		getAgenda().setInicio(getEvent().getStartDate());
 		getAgenda().setFim(getEvent().getEndDate());
 		getAgenda().setNome(getEvent().getTitle());
-		getAgenda().setRemaining(1l);	
+		getAgenda().setRemaining(1l);
+		getAgenda().setSessoes(1000l);
 		getAgenda().setStatus("Em andamento");
 //		 if(event.getId() == null)  {
 //			 eventModel.addEvent(new EventoAgenda(getAgenda(), event.getStartDate(), event.getEndDate()));  
@@ -206,10 +246,13 @@ public class ActionAgenda {
 	      
 	    public void onEventSelect(ScheduleEntrySelectEvent selectEvent) {	    	
 	        event = selectEvent.getScheduleEvent();  
+	        setDiaSemana(setarDiaSemana(event.getStartDate()));
+	        
 	    }  
 	      
 	    public void onDateSelect(DateSelectEvent selectEvent) {  
 	        event = new EventoAgenda(new Agenda(), selectEvent.getDate(), selectEvent.getDate());  
+	        setDiaSemana(setarDiaSemana(event.getStartDate()));
 	    }  
 	      
 	    public void onEventMove(ScheduleEntryMoveEvent event) {  
@@ -501,6 +544,14 @@ public class ActionAgenda {
 
 	public void setCount(int count) {
 		this.count = count;
+	}
+
+	public String getDiaSemana() {
+		return diaSemana;
+	}
+
+	public void setDiaSemana(String diaSemana) {
+		this.diaSemana = diaSemana;
 	}
 
 

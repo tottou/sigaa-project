@@ -42,6 +42,9 @@ public class Relatorio implements Serializable {
 
 	@Column(name = "SESSAO")
 	private long sessao;
+	
+	@Column(name = "NOMEPASSO")
+	private String nomePasso;
 
 	@Column(name = "PASSOS_ID")
 	private long passos_id;
@@ -166,6 +169,14 @@ public class Relatorio implements Serializable {
 
 	public void setProfNome(String profNome) {
 		this.profNome = profNome;
+	}
+
+	public String getNomePasso() {
+		return nomePasso;
+	}
+
+	public void setNomePasso(String nomePasso) {
+		this.nomePasso = nomePasso;
 	}
 
 	

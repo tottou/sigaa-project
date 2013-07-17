@@ -191,6 +191,7 @@ public class ActionCard {
 		Relatorio relatorio = new Relatorio();
 		relatorio.setNome(getPassoAtivo().getNome());
 		relatorio.setPassos_id(getPassoAtivo().getId());
+		relatorio.setNomePasso(passoAtivo.getNome());
 		relatorio.setRepeticoes(getRepeticoes());		
 		relatorio.setObservacoes(getObservacoes());
 		relatorio.setProf_id(sessao.getUsuario().getId());
@@ -252,6 +253,8 @@ public class ActionCard {
 		String str = String.format("%d:%02d", minutes, seconds);
 		return str;
 	}
+	
+	
 
 	// get n setterz
 
