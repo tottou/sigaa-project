@@ -18,13 +18,12 @@
 	<p:panel header="Tarefas">
 		<p:dataGrid var="agenda" value="#{actionCard.listaAgendaCard}" columns="2" emptyMessage="Não há tarefas agendadas para este aluno.">
 			<p:column>
-			<p:panel header="#{agenda.nome}" >
+			<p:panel  >
 				<h:panelGrid columns="2">		
 						<h:outputText value="Sessão atual: " style="font-weight:bold;"></h:outputText>
 					<h:outputText value="#{agenda.remaining}" rendered="#{agenda.remaining!=agenda.sessoes+1}"></h:outputText>
 					<h:outputText value="Sessões finalizadas" rendered="#{agenda.remaining==agenda.sessoes+1}"></h:outputText>
-					<h:outputText value="Total de sessões: "  style="font-weight:bold;"></h:outputText>
-					<h:outputText value="#{agenda.sessoes}"></h:outputText>
+					
 			
 					</h:panelGrid>
 					
@@ -34,10 +33,16 @@
 			<ui:repeat var="tarefa" value="#{agenda.tarefas}" varStatus="status" >
 			
 				<td>
-						<p:panel>
-							<h:graphicImage value="#{tarefa.imagem}" height="40" width="40"
-								alt="Imagem tarefa" cache="false"></h:graphicImage><br/>
-								<h:outputText value="#{tarefa.nome}"></h:outputText>
+						<p:panel header="Agenda - #{agenda.id}">
+			
+						
+						<p:commandLink   action="#{actionCard.iniciarTarefaSolo(tarefa.id)}" rendered="#{agenda.remaining!=agenda.sessoes+1}" title="Iniciar tarefa"
+					 onsuccess="window.open('/SiGAA/acionatarefa.jsf');" actionListener="#{controladora.card}" update=":formC:pnlCorpo">
+					 <p:graphicImage value="#{tarefa.imagem}"/>
+					 <br/>
+					 #{tarefa.nome}
+					 </p:commandLink>
+					
 							
 						
 					</p:panel>
