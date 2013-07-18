@@ -194,7 +194,7 @@ public class ActionAgenda {
 		getAgenda().setEmpresa(ses.getUsuario().getEmpresa());		
 		getAgenda().setInicio(getEvent().getStartDate());
 		getAgenda().setFim(getEvent().getEndDate());
-		getAgenda().setNome(getEvent().getTitle());
+		getAgenda().setNome(getAluno().getNome());
 		getAgenda().setRemaining(1l);
 		getAgenda().setSessoes(1000l);
 		getAgenda().setStatus("Em andamento");
