@@ -5,11 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
 
 import org.primefaces.event.ScheduleEntrySelectEvent;
 import org.primefaces.model.DefaultScheduleModel;
@@ -20,6 +17,7 @@ import br.tottou.action.login.Sessao;
 import br.tottou.data.AgendaDao;
 import br.tottou.data.AlunoDao;
 import br.tottou.data.PerfilDao;
+import br.tottou.data.TarefaDao;
 import br.tottou.engine.util.Cronometro;
 import br.tottou.model.EventoAgenda;
 import br.tottou.model.entities.Agenda;
@@ -39,16 +37,17 @@ public class ActionCard {
 	private boolean acertou;
 	private int iguais;
 	private int tempo;
-	private boolean fullscreen=true;
+	private boolean fullscreen = true;
 
 	private Agenda agenda = new Agenda();
 	private Agenda agendaHistorico = new Agenda();
 	private Agenda agendaAtiva = new Agenda();
+	private Tarefa tarefaAtiva = new Tarefa();
 	private ProgPassos passoAtivo = new ProgPassos();
 	private Aluno aluno = new Aluno();
 	private List<Relatorio> listaAlunoRelatorio = new ArrayList<Relatorio>();
 	private List<Agenda> listaAgendaAluno = new ArrayList<Agenda>();
-	
+
 	private List<Aluno> listaAluno;
 	private List<Tarefa> listaTarefa;
 	private ScheduleEvent event = new EventoAgenda(agenda, null, null);
@@ -116,6 +115,7 @@ public class ActionCard {
 
 	List<ProgPassos> listaP = new ArrayList<ProgPassos>();
 	List<Relatorio> listaR = new ArrayList<Relatorio>();
+	List<Long> ListaT = new ArrayList<Long>();
 	Cronometro crono = new Cronometro();
 	int contP;
 	int maxP;
@@ -132,6 +132,7 @@ public class ActionCard {
 						.getSequencia().get(j).getPassosTarget().size(); j2++) {
 					listaP.add(agendaAtiva.getTarefas().get(i).getSequencia()
 							.get(j).getPassosTarget().get(j2));
+					ListaT.add(agendaAtiva.getTarefas().get(i).getId());
 				}
 			}
 		}
@@ -141,10 +142,30 @@ public class ActionCard {
 		crono.start();
 
 	}
+	
+	public void iniciarTarefaSolo(long id_tarefa) {
+		limpaAll();
+		setFullscreen(true);
+		tarefaAtiva = TarefaDao.getTarefa(id_tarefa);
+		
+		
+			for (int j = 0; j < tarefaAtiva.getSequencia().size(); j++) {
+				for (int j2 = 0; j2 < tarefaAtiva.getSequencia().get(j).getPassosTarget().size(); j2++) {
+					listaP.add(tarefaAtiva.getSequencia().get(j).getPassosTarget().get(j2));
+					ListaT.add(tarefaAtiva.getId());
+				}
+			}
+		
+		maxP = listaP.size();
+		setPassoAtivo(listaP.get(contP));
+		contP++;
+		crono.start();
+
+	}
 
 	public void proximoPasso() {
-		tempo=(int) crono.getSeconds();
-		if (getIguais()==0) { // testar se size eh o ultimo elemento da lista
+		tempo = (int) crono.getSeconds();
+		if (getIguais() == 0) { // testar se size eh o ultimo elemento da lista
 			listaR.add(gerarRelatorio());
 			setPassoAtivo(listaP.get(contP));
 
@@ -153,27 +174,27 @@ public class ActionCard {
 			finalizou();
 		}
 		contP++;
-		tempo=0;
-		rating=0;
-		acertou=false;
-		observacoes="";
-		repeticoes=0;
-		crono.start();
-	}
-	
-	public void repetirPasso() {
-		tempo=0;
-		repeticoes++;
-		rating=0;
-		acertou=false;
-		observacoes="";
+		tempo = 0;
+		rating = 0;
+		acertou = false;
+		observacoes = "";
+		repeticoes = 0;
 		crono.start();
 	}
 
-	private void finalizou(){
-		agendaAtiva.setRemaining(agendaAtiva.getRemaining()+1);
-		if (agendaAtiva.getRemaining()==agendaAtiva.getSessoes()) { 
-			agendaAtiva.setStatus("Finalizado");			
+	public void repetirPasso() {
+		tempo = 0;
+		repeticoes++;
+		rating = 0;
+		acertou = false;
+		observacoes = "";
+		crono.start();
+	}
+
+	private void finalizou() {
+		agendaAtiva.setRemaining(agendaAtiva.getRemaining() + 1);
+		if (agendaAtiva.getRemaining() == agendaAtiva.getSessoes()) {
+			agendaAtiva.setStatus("Finalizado");
 		}
 		agendaAtiva.getRelatorio().addAll(listaR);
 		AgendaDao.atualizarAgenda(agendaAtiva);
@@ -181,18 +202,19 @@ public class ActionCard {
 		setPassoAtivo(new ProgPassos());
 		instanciar();
 		setFullscreen(true);
-		 FacesContext context = FacesContext.getCurrentInstance();
-		 context.addMessage(null, new FacesMessage("",
-		 "Tarefa Concluída com sucesso"));
-		
+		// FacesContext context = FacesContext.getCurrentInstance();
+		// context.addMessage(null, new FacesMessage("",
+		// "Tarefa Concluída com sucesso"));
+		//
 	}
-	
+
 	private Relatorio gerarRelatorio() {
 		Relatorio relatorio = new Relatorio();
+		relatorio.setTarefa_id(ListaT.get(contP - 1));
 		relatorio.setNome(getPassoAtivo().getNome());
 		relatorio.setPassos_id(getPassoAtivo().getId());
 		relatorio.setNomePasso(passoAtivo.getNome());
-		relatorio.setRepeticoes(getRepeticoes());		
+		relatorio.setRepeticoes(getRepeticoes());
 		relatorio.setObservacoes(getObservacoes());
 		relatorio.setProf_id(sessao.getUsuario().getId());
 		relatorio.setProfNome(sessao.getUsuario().getNome());
@@ -209,52 +231,47 @@ public class ActionCard {
 		return relatorio;
 	}
 
-	
 	private void limpaAll() {
 		contP = 0;
 		maxP = 0;
-		tempo=0;
+		tempo = 0;
 		listaP = new ArrayList<ProgPassos>();
+		listaR = new ArrayList<Relatorio>();
+		ListaT = new ArrayList<Long>();
 		agendaAtiva = new Agenda();
 		setRepeticoes(0);
-		rating=0;
-		acertou=false;
-		observacoes="";
+		rating = 0;
+		acertou = false;
+		observacoes = "";
 	}
-	
+
 	public void fs() {
 		setFullscreen(false);
 	}
 
 	// historico
-	
-	public void gerarAlunoRelatorio(long aluno_id){
+
+	public void gerarAlunoRelatorio(long aluno_id) {
 		setListaAgendaAluno(AgendaDao.listAluno(aluno_id));
 		setAluno(AlunoDao.getAluno(aluno_id));
-		
-		
-		
+		// futricar aqui for teh new shittz
+
 	}
-	
-	public void gerarTarefaRelatorio(long id_agenda){
+
+	public void gerarTarefaRelatorio(long id_agenda) {
 		setAgendaHistorico(AgendaDao.getAgenda(id_agenda));
 	}
-	
+
 	public void stop() {
 		crono.stop();
 	}
-	
-	
 
-	
-	private String formatTime(long time) {			
+	private String formatTime(long time) {
 		long seconds = time % 60;
-		long minutes = (time-seconds) / 60;	
+		long minutes = (time - seconds) / 60;
 		String str = String.format("%d:%02d", minutes, seconds);
 		return str;
 	}
-	
-	
 
 	// get n setterz
 
@@ -380,22 +397,21 @@ public class ActionCard {
 		this.tempo = tempo;
 	}
 
-	
 	public int getMaxP() {
-		return maxP; 
+		return maxP;
 	}
-	
+
 	public int getContP() {
 		return contP;
 	}
 
 	public int getIguais() {
-		if (getMaxP()==getContP()) {
-			iguais=1;
-		}else {
-			iguais=0;
+		if (getMaxP() == getContP()) {
+			iguais = 1;
+		} else {
+			iguais = 0;
 		}
-		
+
 		return iguais;
 	}
 
@@ -438,11 +454,17 @@ public class ActionCard {
 	public boolean isFullscreen() {
 		return fullscreen;
 	}
-	
-	
+
 	public void setFullscreen(boolean fullscreen) {
 		this.fullscreen = fullscreen;
 	}
 
+	public Tarefa getTarefaAtiva() {
+		return tarefaAtiva;
+	}
+
+	public void setTarefaAtiva(Tarefa tarefaAtiva) {
+		this.tarefaAtiva = tarefaAtiva;
+	}
 
 }
