@@ -47,10 +47,9 @@ public class ActionCard {
 	private Aluno aluno = new Aluno();
 	private List<Relatorio> listaAlunoRelatorio = new ArrayList<Relatorio>();
 	private List<Agenda> listaAgendaAluno = new ArrayList<Agenda>();
-	private List<Tarefa> listaTarefaAluno = new ArrayList<Tarefa>();
-
 	private List<Aluno> listaAluno;
 	private List<Tarefa> listaTarefa;
+	private List<Relatorio> listaRel = new ArrayList<Relatorio>();
 	private ScheduleEvent event = new EventoAgenda(agenda, null, null);
 	private ScheduleModel eventModel = new DefaultScheduleModel();
 
@@ -288,6 +287,20 @@ public class ActionCard {
 		return str;
 	}
 
+	//
+	
+	public List<Relatorio> filtraLista(List<Relatorio> lista, long id) {
+		List<Relatorio> lista2 = new ArrayList<Relatorio>();
+		for (int i = 0; i < lista.size(); i++) {
+			if (lista.get(i).getTarefa_id()==id) {
+				lista2.add(lista.get(i));
+			}
+			
+		}
+		return lista2;
+	}
+	
+	
 	// get n setterz
 
 	public List<Aluno> getListaAluno() {
@@ -480,6 +493,24 @@ public class ActionCard {
 
 	public void setTarefaAtiva(Tarefa tarefaAtiva) {
 		this.tarefaAtiva = tarefaAtiva;
+	}
+
+	public List<Relatorio> listaRel(List<Relatorio> lista, long id) {
+		List<Relatorio> lista2 = new ArrayList<Relatorio>();
+		for (int i = 0; i < lista.size(); i++) {
+			if (lista.get(i).getTarefa_id()==id) {
+				lista2.add(lista.get(i));
+			}
+			
+		}
+		listaRel.clear();
+		listaRel.addAll(lista2);
+		lista2.clear();
+		return listaRel;
+	}
+
+	public void setListaRel(List<Relatorio> listaRel) {
+		this.listaRel = listaRel;
 	}
 
 }
