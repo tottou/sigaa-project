@@ -47,6 +47,7 @@ public class ActionCard {
 	private Aluno aluno = new Aluno();
 	private List<Relatorio> listaAlunoRelatorio = new ArrayList<Relatorio>();
 	private List<Agenda> listaAgendaAluno = new ArrayList<Agenda>();
+	private List<Tarefa> listaTarefaAluno = new ArrayList<Tarefa>();
 
 	private List<Aluno> listaAluno;
 	private List<Tarefa> listaTarefa;
@@ -162,15 +163,28 @@ public class ActionCard {
 		crono.start();
 
 	}
+	
+	private void tarefando(long t_id, Relatorio rela) {
+		for (int i = 0; i < agendaAtiva.getTarefas().size(); i++) {
+			if (agendaAtiva.getTarefas().get(i).getId() == t_id) {
+				agendaAtiva.getTarefas().get(i).getRelatorio().add(rela);
+			}
+		}
+		
+	}
 
 	public void proximoPasso() {
 		tempo = (int) crono.getSeconds();
 		if (getIguais() == 0) { // testar se size eh o ultimo elemento da lista
-			listaR.add(gerarRelatorio());
+			Relatorio relatorio = gerarRelatorio();
+			listaR.add(relatorio);
+			tarefando(relatorio.getTarefa_id(),relatorio);
 			setPassoAtivo(listaP.get(contP));
 
 		} else {
-			listaR.add(gerarRelatorio());
+			Relatorio relatoriob = gerarRelatorio();
+			listaR.add(relatoriob);
+			tarefando(relatoriob.getTarefa_id(),relatoriob);
 			finalizou();
 		}
 		contP++;
@@ -255,6 +269,7 @@ public class ActionCard {
 		setListaAgendaAluno(AgendaDao.listAluno(aluno_id));
 		setAluno(AlunoDao.getAluno(aluno_id));
 		// futricar aqui for teh new shittz
+		
 
 	}
 
