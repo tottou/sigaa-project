@@ -51,31 +51,40 @@
 <p:tabView value="#{agenda.tarefas}" var="tarefa" >
 <p:tab title="#{tarefa.nome}">
 
-<p:dataTable var="relatorio" value="#{tarefa.relatorio}" emptyMessage="Não há">
-  <p:column headerText="Sessão" r>  
+<p:dataTable var="relatorio" value="#{actionCard.listaRel(agenda.relatorio,tarefa.id)}" emptyMessage="Não há">
+
+  <p:column headerText="tarefa id" rendered="#{true}">  
+           <h:outputText value="#{tarefa.id}"/> 
+        </p:column> 
+          <p:column headerText="reatorio tarefa id" rendered="#{true}">  
+           <h:outputText value="#{relatorio.tarefa_id}"/> 
+        </p:column>
+
+  <p:column headerText="Sessão">  
            <h:outputText value="#{relatorio.sessao}"/> 
         </p:column>  
-  <p:column headerText="Passo">  
+  <p:column headerText="Passo"  >  
            <h:outputText value="#{relatorio.nomePasso}"/> 
         </p:column> 
-          <p:column headerText="Professor/Tutor">  
-           <h:outputText value="#{relatorio.profNome}"/> 
+          <p:column headerText="Professor/Tutor" >  
+           <h:outputText value="#{relatorio.profNome}" /> 
         </p:column> 
-          <p:column headerText="Acertou">  
+          <p:column headerText="Acertou" >  
            <h:outputText value="#{relatorio.success==1 ? 'sim' : 'não'}"/>
         </p:column> 
-          <p:column headerText="Pontuação (Prompt)">  
+          <p:column headerText="Pontuação (Prompt)" >  
            <h:outputText value="#{relatorio.score}"/> 
         </p:column> 
-          <p:column headerText="Repetições">  
+          <p:column headerText="Repetições" >  
            <h:outputText value="#{relatorio.repeticoes}"/> 
         </p:column> 
-          <p:column headerText="Tempo decorrido">  
+          <p:column headerText="Tempo decorrido" >  
            <h:outputText value="#{relatorio.tempo}"/> 
         </p:column> 
-          <p:column headerText="Observações">  
+          <p:column headerText="Observações" >  
            <h:outputText value="#{relatorio.observacoes}"/> 
-        </p:column> 
+        </p:column>
+        
 </p:dataTable>
 </p:tab>
 
@@ -92,7 +101,7 @@
 </p:tabView>
 
 <p:commandButton value="Voltar" update=":formC:pnlCorpo"
-							icon="ui-icon-arrowrefresh-1-e"  actionListener="#{controladora.card}"/> 
+							icon="ui-icon-arrowrefresh-1-e"  actionListener="#{controladora.card}"/>
 </p:panel>
 
 
