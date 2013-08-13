@@ -2,6 +2,8 @@ package br.tottou.data.action;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -297,7 +299,27 @@ public class ActionCard {
 			}
 			
 		}
-		return lista2;
+		return lista2; 
+	}
+	
+	public List<Relatorio> listaRel(List<Relatorio> lista, long id) {
+		List<Relatorio> lista2 = new ArrayList<Relatorio>();
+		for (int i = 0; i < lista.size(); i++) {
+			if (lista.get(i).getTarefa_id()==id) {
+				lista2.add(lista.get(i));
+			}
+			
+		}
+		listaRel.clear();
+		listaRel.addAll(lista2);
+		lista2.clear();
+		Collections.sort(listaRel, new Comparator<Relatorio>() {
+		    public int compare(Relatorio a, Relatorio b) {
+		        return Long.signum(a.getSessao() - b.getSessao());
+		    }
+		    
+		});
+		return listaRel;
 	}
 	
 	
@@ -495,17 +517,7 @@ public class ActionCard {
 		this.tarefaAtiva = tarefaAtiva;
 	}
 
-	public List<Relatorio> listaRel(List<Relatorio> lista, long id) {
-		List<Relatorio> lista2 = new ArrayList<Relatorio>();
-		for (int i = 0; i < lista.size(); i++) {
-			if (lista.get(i).getTarefa_id()==id) {
-				lista2.add(lista.get(i));
-			}
-			
-		}
-		listaRel.clear();
-		listaRel.addAll(lista2);
-		lista2.clear();
+	public List<Relatorio> getListaRel() {
 		return listaRel;
 	}
 
