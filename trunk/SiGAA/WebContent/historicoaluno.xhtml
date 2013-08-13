@@ -33,9 +33,13 @@
 </p:panel>
 </center>
 <h3> Histórico </h3>
-<p:tabView value="#{actionCard.listaAgendaAluno}" var="agenda">
+<p:tabView value="#{actionCard.listaAgendaAluno}" var="agenda" >
 
-<p:tab title=" --">
+<p:tab title="Agenda #{agenda.id}" >
+
+<p:tabView value="#{agenda.tarefas}" var="tarefa" >
+<p:tab title="#{tarefa.nome}">
+
 <h:panelGrid columns="2">
 <h:outputText value="Data de início: "  style="font-weight:bold"/>
 <h:outputText value="#{agenda.inicio}">  
@@ -45,15 +49,9 @@
 <h:outputText value=" #{agenda.status}"/>
 
 </h:panelGrid>
-
-<p:separator style="height:10px"></p:separator>
-
-<p:tabView value="#{agenda.tarefas}" var="tarefa" >
-<p:tab title="#{tarefa.nome}">
-
 <p:dataTable var="relatorio" value="#{actionCard.listaRel(agenda.relatorio,tarefa.id)}" emptyMessage="Não há">
 
-  <p:column headerText="Sessão">  
+  <p:column headerText="Sessão"  >   
            <h:outputText value="#{relatorio.sessao}"/> 
         </p:column>  
   <p:column headerText="Passo"  >  
