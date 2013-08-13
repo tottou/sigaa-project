@@ -53,13 +53,6 @@
 
 <p:dataTable var="relatorio" value="#{actionCard.listaRel(agenda.relatorio,tarefa.id)}" emptyMessage="Não há">
 
-  <p:column headerText="tarefa id" rendered="#{true}">  
-           <h:outputText value="#{tarefa.id}"/> 
-        </p:column> 
-          <p:column headerText="reatorio tarefa id" rendered="#{true}">  
-           <h:outputText value="#{relatorio.tarefa_id}"/> 
-        </p:column>
-
   <p:column headerText="Sessão">  
            <h:outputText value="#{relatorio.sessao}"/> 
         </p:column>  
