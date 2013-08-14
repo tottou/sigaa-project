@@ -12,7 +12,7 @@
 </h:head>
 <h:body>
 
-<p:panel header="Hisórico" >
+<p:panel header="Histórico" id="hist" >
 <center>
 <p:panel>
 <h:panelGrid columns="2" style="width:100%">
@@ -35,14 +35,22 @@
 <h3> Histórico </h3>
 <p:tabView value="#{actionCard.listaAgendaAluno}" var="agenda" >
 
-<p:tab title="Agenda #{agenda.id}" >
+<p:tab title="#{actionCard.diaSemana(agenda.inicio)}" >
+	<p:commandButton value="Finalizar Tarefa"
+							action="#{actionCard.finalizando(agenda.id)}" onclick="confirmationTT.show()" rendered="#{agenda.inicio==agenda.fim}"></p:commandButton>
 
+
+		
 <p:tabView value="#{agenda.tarefas}" var="tarefa" >
 <p:tab title="#{tarefa.nome}">
 
 <h:panelGrid columns="2">
 <h:outputText value="Data de início: "  style="font-weight:bold"/>
 <h:outputText value="#{agenda.inicio}">  
+  <f:convertDateTime pattern="dd/MM/yyyy"/>  
+</h:outputText>
+<h:outputText value="Data de finalização: "  style="font-weight:bold" rendered="#{agenda.inicio!=agenda.fim}"/>
+<h:outputText value="#{agenda.fim}" rendered="#{agenda.inicio!=agenda.fim}">  
   <f:convertDateTime pattern="dd/MM/yyyy"/>  
 </h:outputText>
 <h:outputText value="Status: "  style="font-weight:bold"/>
@@ -94,6 +102,15 @@
 <p:commandButton value="Voltar" update=":formC:pnlCorpo"
 							icon="ui-icon-arrowrefresh-1-e"  actionListener="#{controladora.card}"/>
 </p:panel>
+
+	     <p:confirmDialog id="confirmDialohhg" appendToBody="true" message= " Ao finalizar a tarefa você não poderá mais executá-la. Você tem certeza? "
+    		      header="Exclusão" severity="alert" widgetVar="confirmationTT">  
+                  
+        <p:commandButton id="confirmu" value="Sim" update="growl,@form" oncomplete="confirmationTT.hide()"  
+                    actionListener="#{actionCard.finaliza}" />  
+        <p:commandButton id="declineu" value="Não" onclick="confirmationTT.hide()" type="button" />   
+                  
+    </p:confirmDialog> 
 
 
 <p:ajaxStatus onstart="statusDialog1fr1.show();"

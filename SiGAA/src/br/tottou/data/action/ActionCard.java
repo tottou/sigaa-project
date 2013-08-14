@@ -2,13 +2,16 @@ package br.tottou.data.action;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 import org.primefaces.event.ScheduleEntrySelectEvent;
 import org.primefaces.model.DefaultScheduleModel;
@@ -54,11 +57,12 @@ public class ActionCard {
 	private List<Relatorio> listaRel = new ArrayList<Relatorio>();
 	private ScheduleEvent event = new EventoAgenda(agenda, null, null);
 	private ScheduleModel eventModel = new DefaultScheduleModel();
-
+	private Agenda agendaFinaliza = new Agenda();
+	
 	private List<Agenda> listaAgendaCard;
 
 	Sessao sessao = new Sessao();
-
+	long idAluno;
 	public ActionCard() {
 		instanciar();
 
@@ -263,11 +267,29 @@ public class ActionCard {
 	public void fs() {
 		setFullscreen(false);
 	}
+	
 
 	// historico
+	
+	public void finalizando(long id_agenda) {
+		setAgendaFinaliza(AgendaDao.getAgenda(id_agenda));
+		
+	}
+	
+	public void finaliza(){
+		getAgendaFinaliza().setFim(new Date());
+		getAgendaFinaliza().setStatus("Finalizada");
+		AgendaDao.atualizarAgenda(getAgendaFinaliza());
+		setListaAgendaAluno(AgendaDao.listAluno(idAluno));
+		 FacesContext context = FacesContext.getCurrentInstance();
+		 
+			context.addMessage(null, new FacesMessage("",
+			"Tarefa finalizada com sucesso"));
+	}
 
 	public void gerarAlunoRelatorio(long aluno_id) {
-		setListaAgendaAluno(AgendaDao.listAluno(aluno_id));
+		idAluno=aluno_id; //pog for another place. /\
+		setListaAgendaAluno(AgendaDao.listAluno(idAluno));
 		setAluno(AlunoDao.getAluno(aluno_id));
 		// futricar aqui for teh new shittz
 		
@@ -322,6 +344,39 @@ public class ActionCard {
 		return listaRel;
 	}
 	
+	public String diaSemana(Date data) {
+		String dia = " ";
+		Calendar c = Calendar.getInstance();
+		c.setTime(data);
+		int num = c.get(Calendar.DAY_OF_WEEK);
+		if (num == 1) {
+			dia = "Domingo";
+		}
+		if (num == 2) {
+			dia = "Segunda";
+		}
+
+		if (num == 3) {
+			dia = "Terça";
+		}
+
+		if (num == 4) {
+			dia = "Quarta";
+		}
+
+		if (num == 5) {
+			dia = "Quinta";
+		}
+
+		if (num == 6) {
+			dia = "Sexta";
+		}
+		if (num == 7) {
+			dia = "Sábado";
+		}
+		return dia;
+
+	}
 	
 	// get n setterz
 
@@ -523,6 +578,14 @@ public class ActionCard {
 
 	public void setListaRel(List<Relatorio> listaRel) {
 		this.listaRel = listaRel;
+	}
+
+	public Agenda getAgendaFinaliza() {
+		return agendaFinaliza;
+	}
+
+	public void setAgendaFinaliza(Agenda agendaFinaliza) {
+		this.agendaFinaliza = agendaFinaliza;
 	}
 
 }
