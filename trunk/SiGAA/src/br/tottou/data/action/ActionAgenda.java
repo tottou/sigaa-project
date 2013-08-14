@@ -92,14 +92,17 @@ public class ActionAgenda {
 		for (int i = 0; i < listaAgenda.size(); i++) {
 			eventModel
 					.addEvent(new EventoAgenda(listaAgenda.get(i), listaAgenda
-							.get(i).getInicio(), listaAgenda.get(i).getFim()));
+							.get(i).getInicio(), listaAgenda.get(i).getInicio()));
 			c.setTime(listaAgenda.get(i).getInicio());
 			cc.setTime(new Date());
 			cc.add(Calendar.DATE, 14);
 			c.get(Calendar.DAY_OF_WEEK);
 			bolz=true;
-			if (listaAgenda.get(i).getInicio()
-					.equals(listaAgenda.get(i).getFim())) {
+			if (!(listaAgenda.get(i).getInicio()
+					.equals(listaAgenda.get(i).getFim()))) {
+				cc.setTime(listaAgenda.get(i).getFim());
+				cc.add(Calendar.DATE,-6);
+			}
 				while (bolz == true) {
 					if (c.getTime().before(cc.getTime())) {
 						c.add(Calendar.DATE, 7);
@@ -109,7 +112,7 @@ public class ActionAgenda {
 						bolz = false;
 					}
 				}
-			}
+			
 
 		}
 

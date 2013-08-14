@@ -52,25 +52,19 @@
 	<p:tabView>
 		<p:tab title="Cards">
 		 
-			<p:dataGrid var="aluno" value="#{actionCard.listaAluno}" columns="3" emptyMessage="Não há alunos atribuidos para este perfil.">
-		<p:column>
-				<p:panel header="ID - #{aluno.id}" style="width:100%">
-					<h:panelGrid columns="2" style="width:100%">
+			<p:dataGrid var="aluno" value="#{actionCard.listaAluno}" columns="3" emptyMessage="Não há alunos atribuidos para este perfil." >
+		<p:column >
+				<p:panel header="ID - #{aluno.id}" style="text-align:center" >
+			<h:panelGrid columns="1" style="width:100%" >
+					
+							<h:outputText value="#{aluno.nome}" />
 						<h:graphicImage value="#{aluno.foto}" height="100" width="80"
 							alt="Foto de aluno" cache="false"></h:graphicImage>
-						<h:panelGrid columns="2" style="width:320px">
-							<h:outputText value="Nome: " />
-							<h:outputText value="#{aluno.nome}" />
-							<h:outputText value="Responsável: " />
-							<h:outputText value="#{aluno.nomeResponsavel}" />
-							<h:outputText value="Nascimento: " />
-							<h:outputText value="#{aluno.nascimento}" />
+					
 
-						</h:panelGrid>
-
-					</h:panelGrid>
+				</h:panelGrid>
 					<p:separator id="customSeparator" />
-					<h:panelGrid columns="2">
+				
 						<p:commandButton value="Histórico" styleClass="botao" action="#{actionCard.gerarAlunoRelatorio(aluno.id)}" update=":formC:pnlCorpo"
 							actionListener="#{controladora.historicoAluno}" icon="ui-icon-clock"></p:commandButton>
 						<p:commandButton value="Tarefas" styleClass="botao" update=":formC:pnlCorpo" action="#{actionCard.irTarefas(aluno.id)}"
@@ -78,7 +72,6 @@
 											
 							</p:commandButton>
 
-					</h:panelGrid>
 				</p:panel>
 </p:column>
 
