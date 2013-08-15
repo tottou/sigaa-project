@@ -77,6 +77,16 @@
 	height: 30px !important;
 }
 
+.boj {
+	border-width: 0px !important;
+	text-align: center !important;
+	font-weight: bold !important;	
+	font-size: x-small !important;	
+	width: 100% !important;
+	background: #FFFFFF ;	
+	
+}
+
 
 .ui-logado {
 	background-image: url('./imagens/user.png') !important;
@@ -113,9 +123,9 @@
 
 							<p:menuitem>
 								<ui:repeat var="empresa" value="#{actionEmpresa.listaEmpresa}">
-									<p:commandButton value="#{empresa.nome}"
+									<p:commandButton value="#{empresa.nome}" styleClass="boj"
 										action="#{actionEmpresa.selecionarEmpresaId(empresa.id)}"
-										update=":formC:growl,:barra" ></p:commandButton>
+										update=":formC:growl,:barra" />
 
 								</ui:repeat>
 							</p:menuitem>

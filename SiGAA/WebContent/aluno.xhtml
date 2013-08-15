@@ -177,10 +177,10 @@
     		
     		</h:panelGrid>
     		</p:panel>
-    			     <p:confirmDialog id="confirmDialog" appendToBody="true" message= " Você tem certeza que deseja excluir permanentemente o cadastro de aluno selecionado?"
-    		      header="Exclusão" severity="alert" widgetVar="confirmationA">  
+    			     <p:confirmDialog id="confirmDialogc" appendToBody="true" message= " Você tem certeza que deseja excluir permanentemente o cadastro de aluno selecionado?"
+    		      header="Exclusão" severity="alert" widgetVar="confirmationA" closable="true">  
                   
-        <p:commandButton id="confirm" value="Sim" update="growl,:formC:panelA" oncomplete="confirmationA.hide()"  
+        <p:commandButton id="confirm" value="Sim" update="growl,:formC:panelA" onerror="confirmationA.hide()"  oncomplete="confirmationA.hide()" onclick="confirmationA.hide()"
                     actionListener="#{actionAluno.deletar}" />  
         <p:commandButton id="decline" value="Não" onclick="confirmationA.hide()" type="button" />   
                   

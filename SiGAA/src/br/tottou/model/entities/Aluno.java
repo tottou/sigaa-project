@@ -2,6 +2,7 @@ package br.tottou.model.entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -15,6 +16,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.IndexColumn;
 
@@ -52,7 +55,11 @@ public class Aluno implements Serializable {
 
 	@Column(name = "NASCIMENTO")
 	private String nascimento;
-
+	
+	@Column( name = "INICIO")
+	@Temporal( TemporalType.TIMESTAMP )
+	private Date nascimentoDate;
+	
 	@Column(name = "DIAGNOSTICO", length = 9000)
 	private String diagnostico;
 
@@ -189,6 +196,14 @@ public class Aluno implements Serializable {
 
 	public void setProfessores(List<Perfil> professores) {
 		this.professores = professores;
+	}
+
+	public Date getNascimentoDate() {
+		return nascimentoDate;
+	}
+
+	public void setNascimentoDate(Date nascimentoDate) {
+		this.nascimentoDate = nascimentoDate;
 	}
 
 }

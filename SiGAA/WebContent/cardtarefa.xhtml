@@ -33,10 +33,10 @@
 			<ui:repeat var="tarefa" value="#{agenda.tarefas}" varStatus="status" >
 			
 				<td>
-						<p:panel header="Agenda - #{agenda.id}">
+						<p:panel header="#{actionCard.diaSemana(agenda.inicio)}">
 			
 						
-						<p:commandLink   action="#{actionCard.iniciarTarefaSolo(tarefa.id)}" rendered="#{agenda.remaining!=agenda.sessoes+1}" title="Iniciar tarefa"
+						<p:commandLink   action="#{actionCard.iniciarTarefaSolo(tarefa.id,agenda.id)}" rendered="#{agenda.remaining!=agenda.sessoes+1}" title="Iniciar tarefa"
 					 onsuccess="window.open('/SiGAA/acionatarefa.jsf');" actionListener="#{controladora.card}" update=":formC:pnlCorpo">
 					 <p:graphicImage value="#{tarefa.imagem}"/>
 					 <br/>
@@ -61,7 +61,7 @@
 					<p:commandButton value="Histórico" styleClass="botao" action="#{actionCard.gerarTarefaRelatorio(agenda.id)}" update=":formC:pnlCorpo" 
 							actionListener="#{controladora.historicoTarefa}" icon="ui-icon-clock"></p:commandButton>
 					</td><td>
-					<p:commandButton value="Iniciar todas as tarefa" styleClass="botao" icon="ui-icon-clipboard" action="#{actionCard.iniciarTarefa(agenda.id)}" rendered="#{agenda.inicio==agenda.fim}"
+					<p:commandButton value="Todas as tarefas" styleClass="botao" icon="ui-icon-clipboard" action="#{actionCard.iniciarTarefa(agenda.id)}" rendered="#{agenda.inicio==agenda.fim}"
 					 onsuccess="window.open('/SiGAA/acionatarefa.jsf');" actionListener="#{controladora.card}" update=":formC:pnlCorpo" ></p:commandButton>	
 						<p:commandButton value="Tarefa finalizada" styleClass="botao" icon="ui-icon-clipboard" rendered="#{agenda.inicio!=agenda.fim}"
 					 onclick="donez1.show()"></p:commandButton>	

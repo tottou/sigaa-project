@@ -20,6 +20,7 @@ import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DualListModel;
 
 import br.tottou.action.login.Sessao;
+import br.tottou.data.AgendaDao;
 import br.tottou.data.AlunoDao;
 import br.tottou.data.EmpresaDao;
 import br.tottou.data.PerfilDao;
@@ -95,6 +96,7 @@ public class ActionAluno {
 			Date data = new Date();
 			aluno.setData(sdf.format(data) + " - " + sdf2.format(data));
 			aluno.setNascimento(sdf.format(getDataNascimento()));
+			aluno.setNascimentoDate(getDataNascimento());
 			aluno.setFoto("/imagens/semFoto.png");
 			setEmpresa(EmpresaDao.getEmpresa(getEmpresa().getId()));
 			aluno.setEmpresa(getEmpresa());
@@ -231,11 +233,22 @@ public class ActionAluno {
 	public void deletar(ActionEvent ae) {
 
 		if (aluno.getId() != 0L) {
-			AlunoDao.remove(aluno);
-			FacesContext context = FacesContext.getCurrentInstance();
-			context.addMessage(null, new FacesMessage("Edição de aluno",
-					"Perfil de aluno removido."));
-			aluno = new Aluno();
+			
+			if (AgendaDao.listAluno(aluno.getId()).size()==0) {
+				AlunoDao.remove(aluno);
+				aluno = new Aluno();
+				FacesContext context = FacesContext.getCurrentInstance();
+				context.addMessage(null, new FacesMessage("Edição de aluno",
+						"Perfil de aluno removido."));
+			}else {
+				FacesContext context = FacesContext.getCurrentInstance();
+				context.addMessage(null, new FacesMessage("Erro",
+						"Aluno já possui agendas/tarefas. Não é possível executar a exclusão."));
+				
+			}
+		
+			
+		
 		} else {
 			FacesContext context = FacesContext.getCurrentInstance();
 			context.addMessage(null, new FacesMessage("Edição de aluno",
