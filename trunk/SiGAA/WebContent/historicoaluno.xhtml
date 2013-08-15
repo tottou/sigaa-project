@@ -13,33 +13,57 @@
 <h:body>
 
 <p:panel header="Histórico" id="hist" >
-<center>
-<p:panel>
-<h:panelGrid columns="2" style="width:100%">
+
+<p:panel >
+
+
+<h:panelGrid columns="2"  style="width:100%" >
+	<h:panelGrid columns="1"  >
+			<h:outputText value="#{actionCard.aluno.nome}" style="font-weight:bold;" />
 						<h:graphicImage value="#{actionCard.aluno.foto}" height="100" width="80"
 							alt="Foto de actionCard.aluno" cache="false"></h:graphicImage>
-						<h:panelGrid columns="2" style="width:320px">
-							<h:outputText value="Nome: " />
+							</h:panelGrid>
+						<h:panelGrid columns="2" >
+							<h:outputText value="Nome: " style="font-weight:bold;" />
 							<h:outputText value="#{actionCard.aluno.nome}" />
-							<h:outputText value="Responsável: " />
+							<h:outputText value="Responsável: " style="font-weight:bold;" />
 							<h:outputText value="#{actionCard.aluno.nomeResponsavel}" />
-							<h:outputText value="Nascimento: " />
-							<h:outputText value="#{actionCard.aluno.nascimento}" />
+							<h:outputText value="Idade: " style="font-weight:bold;" />
+							<h:outputText value="#{actionCard.idade}" />
+						</h:panelGrid>						
 
-						</h:panelGrid>
-
+				
+			
+					<p:panel  >
+					<h:outputText value="Professores "  style="font-weight:bold;"/>
+					<br/>	<br/>
+					<ui:repeat var="professor" value="#{actionCard.aluno.professores}">
+					<h:outputText value="#{professor.nome}" rendered="#{professor.categoria==2}"></h:outputText>
+					</ui:repeat>
+					</p:panel>
+					
+						<p:panel  >
+						<h:outputText value="Tutores "  style="font-weight:bold;"/>
+							<br/>	<br/>
+					<ui:repeat var="professor" value="#{actionCard.aluno.professores}">
+					<h:outputText value="#{professor.nome}" rendered="#{professor.categoria>2}"></h:outputText>
+					</ui:repeat>
+					</p:panel>
 					</h:panelGrid>
+					
 
 </p:panel>
-</center>
+
 <h3> Histórico </h3>
 <p:tabView value="#{actionCard.listaAgendaAluno}" var="agenda" >
 
+    
 <p:tab title="#{actionCard.diaSemana(agenda.inicio)}" >
-	<p:commandButton value="Finalizar Tarefa"
+<div align="right">
+	<p:commandButton value="Finalizar Tarefa" styleClass="botao" icon="ui-icon-alert"
 							action="#{actionCard.finalizando(agenda.id)}" onclick="confirmationTT.show()" rendered="#{agenda.inicio==agenda.fim}"></p:commandButton>
 
-
+</div>
 		
 <p:tabView value="#{agenda.tarefas}" var="tarefa" >
 <p:tab title="#{tarefa.nome}">
@@ -104,7 +128,7 @@
 </p:panel>
 
 	     <p:confirmDialog id="confirmDialohhg" appendToBody="true" message= " Ao finalizar a tarefa você não poderá mais executá-la. Você tem certeza? "
-    		      header="Exclusão" severity="alert" widgetVar="confirmationTT">  
+    		      header="Finalizar" severity="alert" widgetVar="confirmationTT">  
                   
         <p:commandButton id="confirmu" value="Sim" update="growl,@form" oncomplete="confirmationTT.hide()"  
                     actionListener="#{actionCard.finaliza}" />  

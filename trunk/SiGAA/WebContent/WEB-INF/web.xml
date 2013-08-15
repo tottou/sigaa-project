@@ -26,9 +26,17 @@
 		<exception-type>javax.el.PropertyNotFoundException</exception-type>
 		<location>/error.jsf</location>
 	</error-page>
-
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>Allow Facelets
+      </web-resource-name>
+      <url-pattern>/faces/javax.faces.resource/*
+      </url-pattern>
+       <http-method>GET</http-method>
+    </web-resource-collection> 
+  </security-constraint> 
 	<welcome-file-list>
-		<welcome-file>faces/index.xhtml</welcome-file>
+		<welcome-file>index.xhtml</welcome-file>
 	</welcome-file-list>
 	<filter>
 		<filter-name>PrimeFaces FileUpload Filter</filter-name>

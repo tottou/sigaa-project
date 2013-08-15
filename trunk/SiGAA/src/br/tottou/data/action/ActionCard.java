@@ -24,6 +24,7 @@ import br.tottou.data.AlunoDao;
 import br.tottou.data.PerfilDao;
 import br.tottou.data.TarefaDao;
 import br.tottou.engine.util.Cronometro;
+import br.tottou.engine.util.Tempo;
 import br.tottou.model.EventoAgenda;
 import br.tottou.model.entities.Agenda;
 import br.tottou.model.entities.Aluno;
@@ -58,6 +59,7 @@ public class ActionCard {
 	private ScheduleEvent event = new EventoAgenda(agenda, null, null);
 	private ScheduleModel eventModel = new DefaultScheduleModel();
 	private Agenda agendaFinaliza = new Agenda();
+	private int idade;
 	
 	private List<Agenda> listaAgendaCard;
 
@@ -102,8 +104,7 @@ public class ActionCard {
 		// ae.getComponent().getAttributes().get("id_aluno");
 		if (sessao.getUsuario().getCategoria() == 0) {
 			listaAgendaCard = new ArrayList<Agenda>();
-			listaAgendaCard.addAll(AgendaDao.listEmpresa(sessao.getUsuario()
-					.getEmpresa().getId()));
+			listaAgendaCard.addAll(AgendaDao.listAluno(id_aluno));
 		}
 		if (sessao.getUsuario().getCategoria() != 0) {
 			listaAgendaCard = new ArrayList<Agenda>();
@@ -149,9 +150,10 @@ public class ActionCard {
 
 	}
 	
-	public void iniciarTarefaSolo(long id_tarefa) {
+	public void iniciarTarefaSolo(long id_tarefa,long agenda_id) {
 		limpaAll();
 		setFullscreen(true);
+		agendaAtiva = AgendaDao.getAgenda(agenda_id);
 		tarefaAtiva = TarefaDao.getTarefa(id_tarefa);
 		
 		
@@ -212,9 +214,9 @@ public class ActionCard {
 
 	private void finalizou() {
 		agendaAtiva.setRemaining(agendaAtiva.getRemaining() + 1);
-		if (agendaAtiva.getRemaining() == agendaAtiva.getSessoes()) {
-			agendaAtiva.setStatus("Finalizado");
-		}
+//		if (agendaAtiva.getRemaining() == agendaAtiva.getSessoes()) {
+//			agendaAtiva.setStatus("Finalizado");
+//		}
 		agendaAtiva.getRelatorio().addAll(listaR);
 		AgendaDao.atualizarAgenda(agendaAtiva);
 		agendaAtiva = new Agenda();
@@ -294,6 +296,11 @@ public class ActionCard {
 		// futricar aqui for teh new shittz
 		
 
+	}
+	
+	public int calcIdade (Date data) {
+		return (Tempo.calcIdade(data));
+		
 	}
 
 	public void gerarTarefaRelatorio(long id_agenda) {
@@ -586,6 +593,15 @@ public class ActionCard {
 
 	public void setAgendaFinaliza(Agenda agendaFinaliza) {
 		this.agendaFinaliza = agendaFinaliza;
+	}
+
+	public int getIdade() {
+		idade = calcIdade(aluno.getNascimentoDate());
+		return idade;
+	}
+
+	public void setIdade(int idade) {
+		this.idade = idade;
 	}
 
 }

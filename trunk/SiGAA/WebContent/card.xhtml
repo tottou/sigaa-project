@@ -57,7 +57,7 @@
 				<p:panel header="ID - #{aluno.id}" style="text-align:center" >
 			<h:panelGrid columns="1" style="width:100%" >
 					
-							<h:outputText value="#{aluno.nome}" />
+							<h:outputText value="#{aluno.nome}" style="font-weight:bold;"/>
 						<h:graphicImage value="#{aluno.foto}" height="100" width="80"
 							alt="Foto de aluno" cache="false"></h:graphicImage>
 					
@@ -96,16 +96,11 @@
 				
 					<p:messages id="messages2" autoUpdate="true" closable="true" />
 					
-					<h:panelGrid columns="2">
-					<h:outputText value="Nome da Tarefa: "  style="font-weight:bold;"></h:outputText>
-					<h:outputText value="#{actionCard.agenda.nome}"></h:outputText>
+					<h:panelGrid columns="2">					
 					<h:outputText value="Nome da Aluno: "  style="font-weight:bold;"></h:outputText>
 					<h:outputText value="#{actionCard.agenda.aluno.nome}"></h:outputText>
-					<h:outputText value="Sessão atual: " style="font-weight:bold;"></h:outputText>
-					<h:outputText value="#{actionCard.agenda.remaining}" rendered="#{actionCard.agenda.remaining!=(actionCard.agenda.sessoes+1)}"></h:outputText>
-					<h:outputText value="Sessões finalizadas" rendered="#{actionCard.agenda.remaining==(actionCard.agenda.sessoes+1)}"></h:outputText>
-					<h:outputText value="Total de sessões: "  style="font-weight:bold;"></h:outputText>
-					<h:outputText value="#{actionCard.agenda.sessoes}"></h:outputText>
+					
+					
 					
 					</h:panelGrid>
 				
