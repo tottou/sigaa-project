@@ -23,11 +23,11 @@ public class LoginFilter implements Filter {
         HttpSession session = req.getSession();  
   
         if (session.getAttribute("usuario") != null  
-                || req.getRequestURI().endsWith("index.jsf")) {  
+                || req.getRequestURI().endsWith("index.xhtml")) {  
             chain.doFilter(request, response);  
         } else {  
             HttpServletResponse res = (HttpServletResponse) response;  
-            res.sendRedirect("index.jsf");  
+            res.sendRedirect("index.xhtml");  
         }  
   
     }  
