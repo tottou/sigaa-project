@@ -18,23 +18,15 @@
 		<servlet-name>Faces Servlet</servlet-name>
 		<url-pattern>*.xhtml</url-pattern>
 	</servlet-mapping>
+	
 	<error-page>
 		<exception-type>javax.faces.application.ViewExpiredException</exception-type>
-		<location>/expired.jsf</location>
+		<location>/faces/expired.xhtml</location>		
 	</error-page> 
 	<error-page>
 		<exception-type>javax.el.PropertyNotFoundException</exception-type>
-		<location>/error.jsf</location>
+		<location>/faces/error.xhtml</location>
 	</error-page>
-  <security-constraint>
-    <web-resource-collection>
-      <web-resource-name>Allow Facelets
-      </web-resource-name>
-      <url-pattern>/faces/javax.faces.resource/*
-      </url-pattern>
-       <http-method>GET</http-method>
-    </web-resource-collection> 
-  </security-constraint> 
 	<welcome-file-list>
 		<welcome-file>index.xhtml</welcome-file>
 	</welcome-file-list>
