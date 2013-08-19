@@ -21,8 +21,8 @@
 			<p:panel  >
 				<h:panelGrid columns="2">		
 						<h:outputText value="Sessão atual: " style="font-weight:bold;"></h:outputText>
-					<h:outputText value="#{agenda.remaining}" rendered="#{agenda.remaining!=agenda.sessoes+1}"></h:outputText>
-					<h:outputText value="Sessões finalizadas" rendered="#{agenda.remaining==agenda.sessoes+1}"></h:outputText>
+					<h:outputText value="#{agenda.remaining}" rendered="#{agenda.inicio==agenda.fim}"></h:outputText>
+					<h:outputText value="Sessões finalizadas" rendered="#{agenda.inicio!=agenda.fim}"></h:outputText>
 					
 			
 					</h:panelGrid>
@@ -33,17 +33,23 @@
 			<ui:repeat var="tarefa" value="#{agenda.tarefas}" varStatus="status" >
 			
 				<td>
-						<p:panel header="#{actionCard.diaSemana(agenda.inicio)}">
+						<p:panel >
 			
 						
-						<p:commandLink   action="#{actionCard.iniciarTarefaSolo(tarefa.id,agenda.id)}" rendered="#{agenda.remaining!=agenda.sessoes+1}" title="Iniciar tarefa"
-					 onsuccess="window.open('/SiGAA/acionatarefa.jsf');" actionListener="#{controladora.card}" update=":formC:pnlCorpo">
+						<p:commandLink   action="#{actionCard.iniciarTarefaSolo(tarefa.id,agenda.id)}" rendered="#{agenda.inicio==agenda.fim}" title="Iniciar tarefa" 
+						style="text-decoration: none;" onsuccess="window.open('/SiGAA/acionatarefa.jsf');" actionListener="#{controladora.card}" update=":formC:pnlCorpo">
 					 <p:graphicImage value="#{tarefa.imagem}"/>
 					 <br/>
 					 #{tarefa.nome}
 					 </p:commandLink>
+					 <p:panel  rendered="#{agenda.inicio!=agenda.fim}" title="Iniciar tarefa" 
+						style="border-style: none" >
+					 <p:graphicImage value="#{tarefa.imagem}"/>
+					 <br/>
+					 #{tarefa.nome}
 					
-							
+					
+							</p:panel>
 						
 					</p:panel>
 						</td>

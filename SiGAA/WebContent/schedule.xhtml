@@ -40,6 +40,12 @@
                         allDayText : 'Dia todo'  
                     };  
 </script> 
+<style type="text/css">
+.fc-event-time {
+display: none;
+}
+</style>
+
 </h:head>
 <h:body>
 
@@ -58,11 +64,11 @@
     <p:dialog widgetVar="eventDialog" header="Detalhes da agenda" showEffect="clip" hideEffect="clip">  
     <p:messages id="messages"  autoUpdate="true" closable="true" />  
         <h:panelGrid id="eventDetails" columns="2">  
-            <h:outputLabel for="title" value="Dia da semana:" />        
+            <h:outputLabel for="title2" value="Dia da semana:" />        
             <h:outputText id="title2" value="#{actionAgenda.diaSemana}"/>
               
   
-            <h:outputLabel for="from" value="Início:" />  
+            <h:outputLabel for="inicioz" value="Início:" />  
               
   			<h:outputText id="inicioz" value="#{actionAgenda.event.startDate}" >
   			<f:convertDateTime pattern="dd/MM/yyyy" />  
