@@ -45,6 +45,11 @@
 		
 		
 	</script>
+	<style type="text/css">
+.fc-event-time {
+display: none;
+}
+</style>
 
 </h:head>
 <h:body>
@@ -81,7 +86,7 @@
 		</p:tab>
 
 		<p:tab title="Agenda">
-			<p:schedule value="#{actionCard.eventModel}" widgetVar="myschedule"
+			<p:schedule value="#{actionCard.eventModel}" widgetVar="myschedule" 
 				locale="pt" draggable="false" resizable="false">
 
 				<p:ajax event="eventSelect" listener="#{actionCard.onEventSelect}"
@@ -109,19 +114,28 @@
 					<h:outputText value="Tarefas: "  style="font-weight:bold;"></h:outputText>
 					<p:dataGrid var="tarefa" value="#{actionCard.listaTarefa}"
 						columns="3">
-						<p:column>
+						<p:column style="text-align:center" >
 
-							<h:graphicImage value="#{tarefa.imagem}" height="100" width="80"
-								alt="Foto de aluno" cache="false"></h:graphicImage>
-								<br/>
-							<h:outputText value="#{tarefa.nome}" />
+													
+								<p:commandLink   action="#{actionCard.iniciarTarefaSolo(tarefa.id,actionCard.agenda.id)}" rendered="#{actionCard.agenda.inicio==actionCard.agenda.fim}" title="Iniciar tarefa" 
+						style="text-decoration: none;" onsuccess="window.open('/SiGAA/acionatarefa.jsf');" actionListener="#{controladora.card}" update=":formC:pnlCorpo">
+					 <p:graphicImage value="#{tarefa.imagem}"/>
+					 <br/>
+					 #{tarefa.nome}
+					 </p:commandLink>
+					 <p:panel   rendered="#{actionCard.agenda.inicio!=actionCard.agenda.fim}" title="Iniciar tarefa" 
+						style="border-style: none" >
+					 <p:graphicImage value="#{tarefa.imagem}"/>
+					 <br/>
+					 #{tarefa.nome}
+					 </p:panel>
 
 						</p:column>
 					</p:dataGrid>
 					<h:panelGrid columns="2">
-					<p:commandButton value="Iniciar tarefa"  icon="ui-icon-clipboard" action="#{actionCard.iniciarTarefa(actionCard.agenda.id)}" rendered="#{actionCard.agenda.remaining!=actionCard.agenda.sessoes+1}"
+					<p:commandButton value="Todas tarefas"  icon="ui-icon-clipboard" action="#{actionCard.iniciarTarefa(actionCard.agenda.id)}" rendered="#{actionCard.agenda.inicio==actionCard.agenda.fim}"
 					 onsuccess="window.open('/SiGAA/acionatarefa.jsf');" actionListener="#{controladora.cardTarefa}" update=":formC:pnlCorpo" ></p:commandButton>	
-						<p:commandButton value="Tarefa finalizada" icon="ui-icon-clipboard" rendered="#{actionCard.agenda.remaining==actionCard.agenda.sessoes+1}"
+						<p:commandButton value="Tarefa finalizada" icon="ui-icon-clipboard" rendered="#{actionCard.agenda.inicio!=actionCard.agenda.fim}"
 					 onclick="donez2.show();eventDialog2.hide();"></p:commandButton>			
 						
 						<p:commandButton value="Cancelar" 

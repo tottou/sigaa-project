@@ -16,48 +16,50 @@
 
 
 <h:panelGrid columns="2">
-<h:outputText value="Tarefa: "  style="font-weight:bold"/>
+<h:outputText value="Aluno: "  style="font-weight:bold"/>
 <h:outputText value=" #{actionCard.agendaHistorico.nome}"/>
 <h:outputText value="Data de início: "  style="font-weight:bold"/>
 <h:outputText value="#{actionCard.agendaHistorico.inicio}">  
   <f:convertDateTime pattern="dd/MM/yyyy"/>  
 </h:outputText>
-<h:outputText value="Data de término: "  style="font-weight:bold"/>
-<h:outputText value="#{actionCard.agendaHistorico.fim}">  
+<h:outputText value="Data de término: "  style="font-weight:bold" rendered="#{actionCard.agendaHistorico.inicio!=actionCard.agendaHistorico.fim}"/>
+<h:outputText value="#{actionCard.agendaHistorico.fim}" rendered="#{actionCard.agendaHistorico.inicio!=actionCard.agendaHistorico.fim}" >  
   <f:convertDateTime pattern="dd/MM/yyyy"/>  
 </h:outputText>
 <h:outputText value="Status: "  style="font-weight:bold"/>
 <h:outputText value=" #{actionCard.agendaHistorico.status}"/>
 </h:panelGrid>
 
-<p:separator style="height:10px"></p:separator>
+<p:separator></p:separator>
 
-<ui:repeat var="relatorio" value="#{actionCard.agendaHistorico.relatorio}" >
-<h:panelGrid columns="2">
-<h:outputText value="Passo: " style="font-weight:bold"/>
-<h:outputText value=" #{relatorio.nome}" />
-<h:outputText value="Sessão: " style="font-weight:bold"/>
-<h:outputText value="#{relatorio.sessao}"/>
-<h:outputText value="Data: " style="font-weight:bold"/>
-<h:outputText value="#{relatorio.data}"/>
-<h:outputText value="Professor/Tutor: " style="font-weight:bold"/>
-<h:outputText value="#{relatorio.profNome}" />
-<h:outputText value="Acertou: " style="font-weight:bold"/>
-<h:outputText value="#{relatorio.success==1 ? 'sim' : 'não'}"/>
-<h:outputText value="Pontuação (Prompt): " style="font-weight:bold"/>
-<h:outputText value="#{relatorio.score}"/>
-<h:outputText value="Repetições: " style="font-weight:bold"/>
-<h:outputText value="#{relatorio.repeticoes}"/>
-<h:outputText value="Tempo decorrido: " style="font-weight:bold"/>
-<h:outputText value="#{relatorio.tempo}"/>
-<h:outputText value="Observações: " style="font-weight:bold"/>
-<h:outputText value="#{relatorio.observacoes}"/>
-<br/>
-<p:separator ></p:separator>
-</h:panelGrid>
-</ui:repeat>
+<p:dataTable var="relatorio" value="#{actionCard.agendaHistorico.relatorio}" emptyMessage="Não existem dados cadastrados">
 
-
+  <p:column headerText="Sessão"  >   
+           <h:outputText value="#{relatorio.sessao}"/> 
+        </p:column>  
+  <p:column headerText="Passo"  >  
+           <h:outputText value="#{relatorio.nomePasso}"/> 
+        </p:column> 
+          <p:column headerText="Professor/Tutor" >  
+           <h:outputText value="#{relatorio.profNome}" /> 
+        </p:column> 
+          <p:column headerText="Acertou" >  
+           <h:outputText value="#{relatorio.success==1 ? 'sim' : 'não'}"/>
+        </p:column> 
+          <p:column headerText="Pontuação (Prompt)" >  
+           <h:outputText value="#{relatorio.score}"/> 
+        </p:column> 
+          <p:column headerText="Repetições" >  
+           <h:outputText value="#{relatorio.repeticoes}"/> 
+        </p:column> 
+          <p:column headerText="Tempo decorrido" >  
+           <h:outputText value="#{relatorio.tempo}"/> 
+        </p:column> 
+          <p:column headerText="Observações" >  
+           <h:outputText value="#{relatorio.observacoes}"/> 
+        </p:column>
+        
+</p:dataTable>
 <br></br>
 
 
